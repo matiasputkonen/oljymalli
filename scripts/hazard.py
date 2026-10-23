@@ -107,7 +107,7 @@ for root in ["CL", "BZ"]:
     now[root] = dict(hazard=round(h, 4), hazard_date=hd, nowcast=round(hn, 4), adj_3d=round(adj, 4), p_open={str(k): round(float(1 - (1 - h) ** k), 3) for k in [1, 3, 6, 12, 24]}, p_open_nowcast={str(k): round(float(1 - (1 - hn) ** k), 3) for k in [1, 3, 6, 12, 24]},
                      front=round(float(A[f"front_{root}"].dropna().iloc[-1]), 2), back=round(float(A[f"back_{root}"].dropna().iloc[-1]), 2), expected_months=round(1 / h, 1))
     print(f"{root} nyt: hasardi {h*100:.1f} %/kk ({hd}), nowcast {hn*100:.1f} %/kk (3 pv säätö {adj*100:+.2f} %-yks); P(auki) 3/6/12 kk {now[root]['p_open']['3']*100:.0f}/{now[root]['p_open']['6']*100:.0f}/{now[root]['p_open']['12']*100:.0f} %")
-sig = dict(date=str(last.date()), transits7=round(float(A.tr7.iloc[-1]), 1), dtr7=round(float(A.dtr7.iloc[-1]), 1), transits_normal=round(float(hz.loc["2025"].mean()), 1), gpr7=round(float(A.gpr7.iloc[-1]), 1), dgpr7=round(float(A.dgpr7.iloc[-1]), 1),
+sig = dict(date=str(last.date()), transits7=round(float(A.tr7.iloc[-1]), 1), dtr7=round(float(A.dtr7.iloc[-1]), 1), transits_normal=round(float(hz.loc["2019":"2025"].mean()), 1), gpr7=round(float(A.gpr7.iloc[-1]), 1), dgpr7=round(float(A.dgpr7.iloc[-1]), 1),
            gpr_last=round(float(gprd.dropna().iloc[-1]), 1), gpr_date=str(gprd.dropna().index[-1].date()), gpr_mean_2025=round(float(gprd.loc["2025"].mean()), 1), ovx=round(float(A.ovx.dropna().iloc[-1]), 1), m1m2=round(float(A.m1m2.dropna().iloc[-1]), 2), transits_date=str(hz.index[-1].date()))
 print("signaalit:", sig)
 S = A.loc["2026-01-01":]

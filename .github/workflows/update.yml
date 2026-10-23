@@ -47,10 +47,9 @@ jobs:
           git commit -m "Päivitys $(date -u +'%Y-%m-%d %H:%M') UTC" || echo "nothing to commit"
           git pull --rebase origin main || true
           git push
-      - name: Configure Pages (enables Pages with the Actions source on first run)
+      - name: Configure Pages (requires Settings → Pages → Source: GitHub Actions)
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
+        continue-on-error: true
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

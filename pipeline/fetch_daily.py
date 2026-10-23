@@ -16,6 +16,12 @@ def step(name, fn):
         STATUS[name] = dict(ok=False, error=str(e)[:200], secs=round(time.time() - t0, 1)); print(f"FAIL {name}: {str(e)[:160]}", flush=True)
 
 sys.path.insert(0, f"{ROOT}/scripts")
+def newer_or_equal(new_last, path, col="date"):
+    """Guard: refuse to overwrite a file with data that ends earlier than what we already have."""
+    try:
+        old = pd.read_csv(path); old_last = pd.to_datetime(old[col]).max()
+        return pd.Timestamp(new_last) >= old_last, str(old_last.date())
+    except Exception: return True, None
 # ---------------- FRED ----------------
 FRED = {"WTI_m": "MCOILWTICO", "Brent_m": "MCOILBRENTEU", "Dubai_m": "POILDUBUSDM", "APSP_m": "POILAPSPUSDM", "WTI_d": "DCOILWTICO", "Brent_d": "DCOILBRENTEU",
         "HenryHub_m": "MHHNGSP", "EUgas_m": "PNGASEUUSDM", "Gasoline_US_m": "GASREGM", "Diesel_US_m": "GASDESM", "USprod_m": "MCRFPUS2",
@@ -31,7 +37,10 @@ def fred_all():
         try:
             r = get(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={sid}", timeout=(10, 45)); df = pd.read_csv(io.StringIO(r.text))
             if df.shape[1] < 2 or len(df) < 10: raise ValueError("short")
-            df.columns = ["date", "value"]; df["value"] = pd.to_numeric(df["value"], errors="coerce"); df.to_csv(f"{RAW}/fred_{name}.csv", index=False); ok += 1
+            df.columns = ["date", "value"]; df["value"] = pd.to_numeric(df["value"], errors="coerce")
+            good, _ = newer_or_equal(pd.to_datetime(df.dropna().date).max(), f"{RAW}/fred_{name}.csv")
+            if not good: raise ValueError("older than existing")
+            df.to_csv(f"{RAW}/fred_{name}.csv", index=False); ok += 1
             if name in ("WTI_d", "Brent_d"): last[name] = df.dropna().iloc[-1].tolist()
         except Exception as e: print("  fred fail", name, str(e)[:60])
         time.sleep(0.15)
@@ -81,19 +90,29 @@ def cftc():
     return got
 step("cftc", cftc)
 # ---------------- PortWatch chokepoints ----------------
+def newer_or_equal(new_last, path, col="date"):
+    """Guard: refuse to overwrite a file with data that ends earlier than what we already have."""
+    try:
+        old = pd.read_csv(path); old_last = pd.to_datetime(old[col]).max()
+        return pd.Timestamp(new_last) >= old_last, str(old_last.date())
+    except Exception: return True, None
 def portwatch():
     base = "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/Daily_Chokepoints_Data/FeatureServer/0/query"; rows = []
     for pid in ["chokepoint1", "chokepoint4", "chokepoint5", "chokepoint6", "chokepoint7"]:
         off = 0
         while True:
-            r = get(base, params={"where": f"portid='{pid}'", "outFields": "date,portid,portname,n_tanker,n_cargo,n_total,capacity_tanker,capacity", "f": "json", "resultOffset": off, "resultRecordCount": 2000, "orderByFields": "date"}, timeout=(10, 90))
-            feats = r.json().get("features", []); rows += [f["attributes"] for f in feats]
-            if len(feats) < 2000: break
-            off += 2000
+            r = get(base, params={"where": f"portid='{pid}'", "outFields": "date,portid,portname,n_tanker,n_cargo,n_total,capacity_tanker,capacity", "f": "json", "resultOffset": off, "resultRecordCount": 1000, "orderByFields": "date"}, timeout=(10, 90))
+            js = r.json(); feats = js.get("features", []); rows += [f["attributes"] for f in feats]
+            if len(feats) < 1000 and not js.get("exceededTransferLimit"): break
+            off += len(feats)
+            if off > 60000: break
     pw = pd.DataFrame(rows)
     if len(pw) < 1000: raise ValueError("too few rows")
-    pw["date"] = pd.to_datetime(pw["date"], unit="ms").dt.normalize(); pw.to_csv(f"{R3}/portwatch_chokepoints.csv", index=False)
-    hz = pw[pw.portname == "Strait of Hormuz"]; return f"{len(pw)} rows; Hormuz last {hz.date.max().date()} n_tanker {hz.sort_values('date').n_tanker.iloc[-1]}"
+    pw["date"] = pd.to_datetime(pw["date"], unit="ms").dt.normalize(); hz = pw[pw.portname == "Strait of Hormuz"]
+    ok, old_last = newer_or_equal(hz.date.max(), f"{R3}/portwatch_chokepoints.csv")
+    if not ok: raise ValueError(f"new data ends {hz.date.max().date()} < existing {old_last}; keeping old file")
+    pw.to_csv(f"{R3}/portwatch_chokepoints.csv", index=False)
+    return f"{len(pw)} rows; Hormuz last {hz.date.max().date()} n_tanker {hz.sort_values('date').n_tanker.iloc[-1]}"
 step("portwatch", portwatch)
 # ---------------- GPR daily + monthly ----------------
 def gpr():
@@ -103,58 +122,57 @@ def gpr():
     except Exception as e: print("  gpr monthly fail", str(e)[:60])
     return f"daily last {last['date']} GPRD {float(last['GPRD']):.0f}"
 step("gpr", gpr)
-# ---------------- Yahoo: futures contracts (append), S&P monthly, WTI options chain (best effort) ----------------
-YH = {"Accept": "application/json"}
-def yahoo_get(url, params=None):
-    for host in ["query1", "query2"]:
-        for attempt in range(2):
-            r = S.get(url.replace("HOST", host), params=params, headers=YH, timeout=(10, 40))
-            if r.status_code == 200: return r
-            time.sleep(3 + 5 * attempt)
-    raise RuntimeError(f"yahoo {r.status_code}")
+# ---------------- Yahoo via yfinance: futures contracts (append), S&P monthly, WTI options chain (best effort) ----------------
+def _yf():
+    import yfinance as yf; return yf
 def yahoo_contracts():
-    months = "FGHJKMNQUVXZ"; today = dt.date.today(); ok = 0; tried = 0
+    yf = _yf(); months = "FGHJKMNQUVXZ"; today = dt.date.today(); ok = 0; tried = 0; fails = 0
     for root in ["CL", "BZ"]:
         for yr in [today.year % 100, today.year % 100 + 1, today.year % 100 + 2]:
             for m in months:
-                code = f"{root}{m}{yr:02d}.NYM"; fn = f"{R3}/yahoo/{code}.json"
-                exp = dt.date(2000 + yr, months.index(m) + 1, 1)
+                code = f"{root}{m}{yr:02d}.NYM"; fn = f"{R3}/yahoo/{code}.json"; exp = dt.date(2000 + yr, months.index(m) + 1, 1)
                 if exp < today.replace(day=1): continue
                 tried += 1
                 try:
-                    r = yahoo_get(f"https://HOST.finance.yahoo.com/v8/finance/chart/{code}", {"range": "3mo" if os.path.exists(fn) else "5y", "interval": "1d"}); j = r.json()["chart"]["result"][0]
-                    if os.path.exists(fn):   # merge
-                        old = json.load(open(fn))["chart"]["result"][0]; ts = old["timestamp"]; cl = old["indicators"]["quote"][0]["close"]; have = set(ts)
-                        for t, c in zip(j["timestamp"], j["indicators"]["quote"][0]["close"]):
-                            if t not in have: ts.append(t); cl.append(c)
-                        order = sorted(range(len(ts)), key=lambda i: ts[i]); old["timestamp"] = [ts[i] for i in order]; old["indicators"]["quote"][0]["close"] = [cl[i] for i in order]
+                    h = yf.Ticker(code).history(period="3mo" if os.path.exists(fn) else "5y", interval="1d", auto_adjust=False)
+                    if h is None or len(h) == 0: continue
+                    ts = [int(pd.Timestamp(t).tz_localize(None).timestamp()) if pd.Timestamp(t).tzinfo is None else int(pd.Timestamp(t).timestamp()) for t in h.index]; cl = [None if pd.isna(v) else float(v) for v in h["Close"]]
+                    if os.path.exists(fn):
+                        old = json.load(open(fn))["chart"]["result"][0]; ots = old["timestamp"]; ocl = old["indicators"]["quote"][0]["close"]
+                        od = {pd.Timestamp(t, unit="s").normalize(): (t, c) for t, c in zip(ots, ocl)}
+                        for t, c in zip(ts, cl): od[pd.Timestamp(t, unit="s").normalize()] = (t, c)
+                        keys = sorted(od); old["timestamp"] = [od[k][0] for k in keys]; old["indicators"]["quote"][0]["close"] = [od[k][1] for k in keys]
                         json.dump({"chart": {"result": [old]}}, open(fn, "w"))
-                    else: open(fn, "w").write(r.text)
+                    else: json.dump({"chart": {"result": [{"meta": {"symbol": code}, "timestamp": ts, "indicators": {"quote": [{"close": cl}]}}]}}, open(fn, "w"))
                     ok += 1
                 except Exception as e:
-                    if "404" in str(e): continue
-                    print("  yahoo fail", code, str(e)[:50]);
-                    if "429" in str(e): raise
-                time.sleep(0.5)
+                    fails += 1; print("  yahoo fail", code, str(e)[:60])
+                    if fails > 6: raise RuntimeError("yahoo failing repeatedly: " + str(e)[:80])
+                time.sleep(0.3)
+    if ok == 0: raise RuntimeError("no contracts fetched")
     return f"{ok}/{tried} contracts"
 step("yahoo_contracts", yahoo_contracts)
 def yahoo_sp():
-    r = yahoo_get("https://HOST.finance.yahoo.com/v8/finance/chart/%5EGSPC", {"range": "20y", "interval": "1mo"}); open(f"{R3}/yahoo_%5EGSPC_m.json", "w").write(r.text); return "ok"
+    yf = _yf(); h = yf.Ticker("^GSPC").history(period="20y", interval="1mo", auto_adjust=False)
+    if h is None or len(h) < 100: raise ValueError("short")
+    ts = [int(pd.Timestamp(t).timestamp()) for t in h.index]; cl = [None if pd.isna(v) else float(v) for v in h["Close"]]
+    json.dump({"chart": {"result": [{"meta": {"symbol": "^GSPC"}, "timestamp": ts, "indicators": {"quote": [{"close": cl}]}}]}}, open(f"{R3}/yahoo_%5EGSPC_m.json", "w")); return f"{len(h)} months, last {h.index[-1].date()}"
 step("yahoo_sp500_monthly", yahoo_sp)
 def yahoo_options():
-    """WTI options chains for the listed expirations; written in the same 'exp|C/P|strike|price|oi' format as the CME settlement file, with expiries.json."""
-    r = yahoo_get("https://HOST.finance.yahoo.com/v7/finance/options/CL%3DF"); j = r.json()["optionChain"]["result"][0]; exps = j["expirationDates"]; lines = []; meta = {}
-    for ts in exps[:12]:
-        rr = yahoo_get("https://HOST.finance.yahoo.com/v7/finance/options/CL%3DF", {"date": ts}); o = rr.json()["optionChain"]["result"][0]["options"][0]; expd = dt.datetime.utcfromtimestamp(ts).date()
-        code = f"Y{expd.strftime('%y%m%d')}"; meta[code] = str(expd); n = 0
-        for side, key in [("C", "calls"), ("P", "puts")]:
-            for c in o.get(key, []):
+    """WTI options for the listed expirations, same 'exp|C/P|strike|price|oi' format as the CME settlement file, plus expiries.json."""
+    yf = _yf(); tk = yf.Ticker("CL=F"); exps = list(tk.options)[:12]
+    if not exps: raise ValueError("no expirations")
+    lines = []; meta = {}
+    for e in exps:
+        oc = tk.option_chain(e); code = "Y" + e.replace("-", "")[2:]; meta[code] = e
+        for side, df in [("C", oc.calls), ("P", oc.puts)]:
+            for _, c in df.iterrows():
                 px = c.get("lastPrice"); bid = c.get("bid"); ask = c.get("ask")
-                if bid and ask and ask > 0: px = (bid + ask) / 2
-                if px and px > 0: lines.append(f"{code}|{side}|{c['strike']}|{px}|{c.get('openInterest', 0)}"); n += 1
-        time.sleep(0.5)
+                if pd.notna(bid) and pd.notna(ask) and ask > 0: px = (bid + ask) / 2
+                if pd.notna(px) and px > 0: lines.append(f"{code}|{side}|{float(c['strike'])}|{float(px)}|{int(c.get('openInterest', 0) or 0)}")
+        time.sleep(0.4)
     if len(lines) < 100: raise ValueError("too few options")
-    open(f"{R4}/yahoo_options_CL.txt", "w").write("\n".join(lines)); json.dump(dict(date=str(dt.date.today()), expiries=meta, underlying=j.get("quote", {}).get("regularMarketPrice")), open(f"{R4}/yahoo_options_CL.json", "w")); return f"{len(lines)} quotes, {len(meta)} expiries"
+    open(f"{R4}/yahoo_options_CL.txt", "w").write("\n".join(lines)); json.dump(dict(date=str(dt.date.today()), expiries=meta), open(f"{R4}/yahoo_options_CL.json", "w")); return f"{len(lines)} quotes, {len(meta)} expiries"
 step("yahoo_options", yahoo_options)
 # ---------------- weekly: NASA, World Bank, OWID, BDI/freight ----------------
 if FULL:
