@@ -25,12 +25,13 @@ if len(log):
         if any(pd.isna(qs)): continue
         res["scored"].append(dict(run=r.run, target=r.target, h=int(r.h), target_month=str(tm.date())[:7], actual=round(a, 2), forecast=round(float(r.comb), 2), curve=(None if pd.isna(r.curve) else round(float(r.curve), 2)), error=round(a - float(r.comb), 2),
                                   abs_err_pct=round(abs(a - float(r.comb)) / float(r.anchor) * 100, 2), pit=round(pit(a, *qs), 3), in50=bool(r.p25 <= a <= r.p75), in90=bool(r.p05 <= a <= r.p95), crps=round(crps_q(a, qs), 2),
-                                  nochange_err=round(a - float(r.anchor), 2), curve_err=(None if pd.isna(r.curve) else round(a - float(r.curve), 2))))
+                                  nochange_err=round(a - float(r.anchor), 2), curve_err=(None if pd.isna(r.curve) else round(a - float(r.curve), 2)), base_err=(None if ("comb_base" not in r or pd.isna(r.get("comb_base"))) else round(a - float(r.comb_base), 2)), view_err=(None if ("view" not in r or pd.isna(r.get("view"))) else round(a - float(r.view), 2)), steo_err=(None if ("steo" not in r or pd.isna(r.get("steo"))) else round(a - float(r.steo), 2))))
     sc = pd.DataFrame(res["scored"])
     if len(sc):
         for (t, h), g in sc.groupby(["target", "h"]):
             res["summary"][f"{t}_{h}"] = dict(n=int(len(g)), mae=round(float(g.error.abs().mean()), 2), rmse=round(float(np.sqrt((g.error**2).mean())), 2), rmse_nochange=round(float(np.sqrt((g.nochange_err**2).mean())), 2),
-                                             rmse_curve=(round(float(np.sqrt((g.curve_err.dropna()**2).mean())), 2) if g.curve_err.notna().any() else None), cov50=round(float(g.in50.mean()), 2), cov90=round(float(g.in90.mean()), 2), pit_mean=round(float(g.pit.mean()), 3), crps=round(float(g.crps.mean()), 2))
+                                             rmse_curve=(round(float(np.sqrt((g.curve_err.dropna()**2).mean())), 2) if g.curve_err.notna().any() else None), cov50=round(float(g.in50.mean()), 2), cov90=round(float(g.in90.mean()), 2), pit_mean=round(float(g.pit.mean()), 3), crps=round(float(g.crps.mean()), 2),
+                                             rmse_base=(round(float(np.sqrt((g.base_err.dropna()**2).mean())), 2) if g.base_err.notna().any() else None), rmse_view=(round(float(np.sqrt((g.view_err.dropna()**2).mean())), 2) if g.view_err.notna().any() else None), rmse_steo=(round(float(np.sqrt((g.steo_err.dropna()**2).mean())), 2) if g.steo_err.notna().any() else None))
 # hazard / P(open) Brier: resolution file marks the month the strait reopened (>= 50 % of normal transits for a full month)
 try:
     hz = pd.read_csv(f"{D}/hormuz_daily.csv", parse_dates=["date"]).set_index("date")["n_tanker"].astype(float); normal = float(hz.loc["2019":"2025"].mean()); mm = hz.resample("MS").mean()

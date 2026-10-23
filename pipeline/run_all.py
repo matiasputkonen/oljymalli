@@ -55,7 +55,7 @@ try:
     for t in ["wti", "brent"]:
         md = pg["model"][t]; st = pg.get("d8", {}).get("stack", {}).get(t, {}).get("horizons", {}); w = pg.get("wts", {}).get(t, {})
         for f in md["forecast"]:
-            h = str(f["h"]); rows.append(dict(run=now, target=t, h=f["h"], target_month=f["date"][:7], anchor=md["P0"], anchor_date=md.get("P0_day"), fv_now=md["fv_now"], model_median=f["median"], curve=f["curve"], comb=f["comb"], p25=f["p25"], p75=f["p75"], p05=f["p05"], p95=f["p95"],
+            h = str(f["h"]); rows.append(dict(run=now, target=t, h=f["h"], target_month=f["date"][:7], anchor=md["P0"], anchor_date=md.get("P0_day"), fv_now=md["fv_now"], model_median=f["median"], curve=f["curve"], comb=f["comb"], comb_base=f.get("comb_base"), view=f.get("view"), p25=f["p25"], p75=f["p75"], p05=f["p05"], p95=f["p95"],
                              stack_dossier=st.get(h, {}).get("stack"), stack_shrunk=w.get(h, {}).get("stack_shrunk_now"), steo=st.get(h, {}).get("steo"), hazard=pg.get("hz", {}).get("now", {}).get("CL" if t == "wti" else "BZ", {}).get("hazard")))
     log = pd.DataFrame(rows); fn = f"{D}/forecast_log.csv"
     if os.path.exists(fn): old = pd.read_csv(fn); log = pd.concat([old, log], ignore_index=True)
