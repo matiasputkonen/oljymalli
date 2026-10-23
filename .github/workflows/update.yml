@@ -1,0 +1,62 @@
+name: Päivitä öljyennuste
+on:
+  schedule:
+    - cron: "30 5 * * *"    # 05:30 UTC: edellisen päivän päätöshinnat, EIA/CFTC yöllä
+    - cron: "30 17 * * *"   # 17:30 UTC: EIA:n viikkoraportti (ke 14:30 UTC) ja US-session puoliväli
+  workflow_dispatch:
+    inputs:
+      full:
+        description: "Täysi haku (myös World Bank, OWID, NASA)"
+        default: "false"
+concurrency:
+  group: update
+  cancel-in-progress: false
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Link workspace to the path the scripts use
+        run: sudo mkdir -p /home/claude && sudo ln -sfn "$GITHUB_WORKSPACE" /home/claude/oil && ls -la /home/claude/oil | head -3
+      - name: Run pipeline
+        env:
+          OIL_ROOT: /home/claude/oil
+          PYTHONUNBUFFERED: "1"
+        run: |
+          ARGS=""
+          if [ "${{ github.event.inputs.full }}" = "true" ] || [ "$(date -u +%u)" = "1" ]; then ARGS="--full"; fi
+          python pipeline/run_all.py $ARGS
+      - name: Commit results
+        run: |
+          git config user.name "oljymalli-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A data docs page/oljymarkkina.html
+          git commit -m "Päivitys $(date -u +'%Y-%m-%d %H:%M') UTC" || echo "nothing to commit"
+          git pull --rebase origin main || true
+          git push
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+  deploy:
+    needs: update
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

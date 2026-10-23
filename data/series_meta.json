@@ -1,0 +1,1196 @@
+{
+ "monthly": {
+  "brent": {
+   "label": "Brent (USD/bbl)",
+   "group": "Öljyn hinnat",
+   "unit": "USD/bbl",
+   "source": "FRED/EIA (MCOILBRENTEU, DCOILBRENTEU)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "wti": {
+   "label": "WTI (USD/bbl)",
+   "group": "Öljyn hinnat",
+   "unit": "USD/bbl",
+   "source": "FRED/EIA (MCOILWTICO, DCOILWTICO)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "dubai": {
+   "label": "Dubai Fateh (USD/bbl)",
+   "group": "Öljyn hinnat",
+   "unit": "USD/bbl",
+   "source": "IMF via FRED (POILDUBUSDM)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "apsp": {
+   "label": "IMF APSP keskihinta (USD/bbl)",
+   "group": "Öljyn hinnat",
+   "unit": "USD/bbl",
+   "source": "IMF via FRED (POILAPSPUSDM)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "brent_wti_spread": {
+   "label": "Brent–WTI-ero (USD/bbl)",
+   "group": "Öljyn hinnat",
+   "unit": "USD/bbl",
+   "source": "laskettu",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "dubai_brent_spread": {
+   "label": "Dubai–Brent-ero (USD/bbl)",
+   "group": "Öljyn hinnat",
+   "unit": "USD/bbl",
+   "source": "laskettu",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "henryhub": {
+   "label": "Maakaasu Henry Hub (USD/MMBtu)",
+   "group": "Öljyn hinnat",
+   "unit": "USD/MMBtu",
+   "source": "FRED (MHHNGSP)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "eugas": {
+   "label": "Maakaasu Eurooppa (USD/MMBtu)",
+   "group": "Öljyn hinnat",
+   "unit": "USD/MMBtu",
+   "source": "IMF via FRED (PNGASEUUSDM)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "gasoline_us": {
+   "label": "Bensiini USA (USD/gal)",
+   "group": "Polttoaineet",
+   "unit": "USD/gal",
+   "source": "EIA via FRED (GASREGM)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "diesel_us": {
+   "label": "Diesel USA (USD/gal)",
+   "group": "Polttoaineet",
+   "unit": "USD/gal",
+   "source": "EIA via FRED (GASDESM)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "us_crude_stocks": {
+   "label": "USA raakaöljyvarastot pl. SPR (milj. bbl)",
+   "group": "Varastot",
+   "unit": "milj. bbl",
+   "source": "EIA WCESTUS1 (viikko→kk-keskiarvo)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "us_spr": {
+   "label": "USA strateginen varasto SPR (milj. bbl)",
+   "group": "Varastot",
+   "unit": "milj. bbl",
+   "source": "EIA WCSSTUS1",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "us_total_stocks": {
+   "label": "USA öljy+tuotteet varastot yht. (milj. bbl)",
+   "group": "Varastot",
+   "unit": "milj. bbl",
+   "source": "EIA WTTSTUS1",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "us_gasoline_stocks": {
+   "label": "USA bensiinivarastot (milj. bbl)",
+   "group": "Varastot",
+   "unit": "milj. bbl",
+   "source": "EIA WGTSTUS1",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "us_distillate_stocks": {
+   "label": "USA tislevarastot (milj. bbl)",
+   "group": "Varastot",
+   "unit": "milj. bbl",
+   "source": "EIA WDISTUS1",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "cushing": {
+   "label": "Cushing-varastot (milj. bbl)",
+   "group": "Varastot",
+   "unit": "milj. bbl",
+   "source": "EIA W_EPC0_SAX_YCUOK",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "us_crude_stock_chg": {
+   "label": "USA raakaöljyvarastojen muutos (milj. bbl/kk)",
+   "group": "Varastot",
+   "unit": "milj. bbl/kk",
+   "source": "laskettu EIA:sta",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "world_prod": {
+   "label": "Maailman öljyntuotanto (mb/d)",
+   "group": "Tarjonta & kysyntä",
+   "unit": "mb/d",
+   "source": "EIA STEO (arkistot + lokakuu 2026)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "world_cons": {
+   "label": "Maailman öljynkulutus (mb/d)",
+   "group": "Tarjonta & kysyntä",
+   "unit": "mb/d",
+   "source": "EIA STEO",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "opec_prod": {
+   "label": "OPEC-tuotanto (mb/d)",
+   "group": "Tarjonta & kysyntä",
+   "unit": "mb/d",
+   "source": "EIA STEO",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "china_cons": {
+   "label": "Kiinan öljynkulutus (mb/d)",
+   "group": "Tarjonta & kysyntä",
+   "unit": "mb/d",
+   "source": "EIA STEO",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "world_stock_draw": {
+   "label": "Maailman varastojen nettopurku (mb/d, + = purku)",
+   "group": "Varastot",
+   "unit": "mb/d",
+   "source": "EIA STEO",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "world_balance": {
+   "label": "Tarjonta–kysyntä-tase (mb/d)",
+   "group": "Tarjonta & kysyntä",
+   "unit": "mb/d",
+   "source": "laskettu STEO:sta",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "oecd_stocks": {
+   "label": "OECD kaupalliset varastot (milj. bbl)",
+   "group": "Varastot",
+   "unit": "milj. bbl",
+   "source": "EIA STEO (saatavilla 2018→)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "us_prod": {
+   "label": "USA raakaöljyn tuotanto (mb/d)",
+   "group": "Tarjonta & kysyntä",
+   "unit": "mb/d",
+   "source": "EIA WCRFPUS2 (viikko)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "us_exports": {
+   "label": "USA raakaöljyn vienti (mb/d)",
+   "group": "Tarjonta & kysyntä",
+   "unit": "mb/d",
+   "source": "EIA MCREXUS2",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "us_imports": {
+   "label": "USA raakaöljyn tuonti (mb/d)",
+   "group": "Tarjonta & kysyntä",
+   "unit": "mb/d",
+   "source": "EIA MCRIMUS2",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "us_product_supplied": {
+   "label": "USA öljytuotteiden kulutus (mb/d)",
+   "group": "Tarjonta & kysyntä",
+   "unit": "mb/d",
+   "source": "EIA MTTUPUS2",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "us_jet_demand": {
+   "label": "USA lentopetrolin kulutus (mb/d)",
+   "group": "Toimialat",
+   "unit": "mb/d",
+   "source": "EIA MKJUPUS2",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "us_ref_util": {
+   "label": "USA jalostamoiden käyttöaste (%)",
+   "group": "Tarjonta & kysyntä",
+   "unit": "%",
+   "source": "EIA MOPUEUS2",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "us_rigs": {
+   "label": "USA öljynporauslautat (kpl)",
+   "group": "Tarjonta & kysyntä",
+   "unit": "kpl",
+   "source": "EIA/Baker Hughes (E_ERTRRO_XR0_NUS_C)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-08-01"
+  },
+  "ip_total": {
+   "label": "Teollisuustuotanto USA (indeksi)",
+   "group": "Toimialat",
+   "unit": "indeksi 2017=100",
+   "source": "FRED (IP_total)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "ip_manuf": {
+   "label": "Valmistava teollisuus USA",
+   "group": "Toimialat",
+   "unit": "indeksi 2017=100",
+   "source": "FRED (IP_manuf)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "ip_mining": {
+   "label": "Kaivannaisteollisuus USA",
+   "group": "Toimialat",
+   "unit": "indeksi 2017=100",
+   "source": "FRED (IP_mining)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "ip_oilgas": {
+   "label": "Öljyn & kaasun tuotanto USA (IP)",
+   "group": "Toimialat",
+   "unit": "indeksi 2017=100",
+   "source": "FRED (IP_oilgas_extr)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "ip_drilling": {
+   "label": "Poraustoiminta USA (IP)",
+   "group": "Toimialat",
+   "unit": "indeksi 2017=100",
+   "source": "FRED (IP_drilling)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "ip_chem": {
+   "label": "Kemianteollisuus USA (IP)",
+   "group": "Toimialat",
+   "unit": "indeksi 2017=100",
+   "source": "FRED (IP_chem)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "ip_autos": {
+   "label": "Autoteollisuus USA (IP)",
+   "group": "Toimialat",
+   "unit": "indeksi 2017=100",
+   "source": "FRED (IP_autos)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "ip_refining": {
+   "label": "Jalostus & hiilituotteet USA (IP)",
+   "group": "Toimialat",
+   "unit": "indeksi 2017=100",
+   "source": "FRED (IP_petrol_coal)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "air_rpm": {
+   "label": "Lentoliikenne USA (mrd matkustaja-mailia)",
+   "group": "Toimialat",
+   "unit": "mrd RPM",
+   "source": "BTS via FRED (AIRRPMTSI)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-06-01"
+  },
+  "vmt": {
+   "label": "Ajosuorite USA (mrd mailia/kk)",
+   "group": "Toimialat",
+   "unit": "mrd mailia",
+   "source": "FHWA via FRED (TRFVOLUSM227NFWA)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-08-01"
+  },
+  "tsi_freight": {
+   "label": "Rahtiliikenneindeksi USA (TSI)",
+   "group": "Rahti",
+   "unit": "indeksi",
+   "source": "BTS via FRED (TSIFRGHT)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "cass": {
+   "label": "Cass Freight -lähetysindeksi USA",
+   "group": "Rahti",
+   "unit": "indeksi",
+   "source": "FRED (FRGSHPUSM649NCIS)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2016-01-01",
+   "last": "2026-09-01"
+  },
+  "vehicle_sales_us": {
+   "label": "Autojen myynti USA (milj./v, SAAR)",
+   "group": "Toimialat",
+   "unit": "milj. kpl/v",
+   "source": "BEA via FRED (TOTALSA)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "gdp_us": {
+   "label": "BKT USA, reaalinen (mrd USD 2017, kvartaali→kk)",
+   "group": "Makrotalous",
+   "unit": "mrd USD",
+   "source": "BEA via FRED (GDPC1)",
+   "freq": "quarterly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-04-01"
+  },
+  "gdp_de": {
+   "label": "BKT Saksa, reaalinen (mrd EUR 2010, kvartaali→kk)",
+   "group": "Makrotalous",
+   "unit": "mrd EUR",
+   "source": "Eurostat via FRED (CLVMNACSCAB1GQDE)",
+   "freq": "quarterly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-04-01"
+  },
+  "cpi_us": {
+   "label": "Kuluttajahinnat USA (CPI)",
+   "group": "Makrotalous",
+   "unit": "indeksi",
+   "source": "BLS via FRED (CPIAUCSL)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "cpi_energy_us": {
+   "label": "Energian kuluttajahinnat USA (CPI energy)",
+   "group": "Makrotalous",
+   "unit": "indeksi",
+   "source": "BLS via FRED (CPIENGSL)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "fedfunds": {
+   "label": "Fed-ohjauskorko (%)",
+   "group": "Makrotalous",
+   "unit": "%",
+   "source": "FRED (FEDFUNDS)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "ust10y": {
+   "label": "USA 10 v korko (%)",
+   "group": "Makrotalous",
+   "unit": "%",
+   "source": "FRED (GS10)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "unemp_us": {
+   "label": "Työttömyys USA (%)",
+   "group": "Makrotalous",
+   "unit": "%",
+   "source": "BLS via FRED (UNRATE)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "usd_broad": {
+   "label": "Dollari-indeksi (broad)",
+   "group": "Makrotalous",
+   "unit": "indeksi",
+   "source": "Fed via FRED (DTWEXBGS)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "sp500": {
+   "label": "S&P 500",
+   "group": "Makrotalous",
+   "unit": "pistettä",
+   "source": "FRED (SP500)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2016-10-01",
+   "last": "2026-10-01"
+  },
+  "vix": {
+   "label": "VIX-volatiliteetti",
+   "group": "Makrotalous",
+   "unit": "pistettä",
+   "source": "Cboe via FRED (VIXCLS)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "copper": {
+   "label": "Kupari (USD/t)",
+   "group": "Raaka-aineet",
+   "unit": "USD/t",
+   "source": "FRED (Copper)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "aluminum": {
+   "label": "Alumiini (USD/t)",
+   "group": "Raaka-aineet",
+   "unit": "USD/t",
+   "source": "FRED (Aluminum)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "iron_ore": {
+   "label": "Rautamalmi (USD/t)",
+   "group": "Raaka-aineet",
+   "unit": "USD/t",
+   "source": "FRED (IronOre)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "nickel": {
+   "label": "Nikkeli (USD/t)",
+   "group": "Raaka-aineet",
+   "unit": "USD/t",
+   "source": "FRED (Nickel)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "steel_ppi": {
+   "label": "Teräs, tuottajahinnat USA (PPI)",
+   "group": "Raaka-aineet",
+   "unit": "indeksi",
+   "source": "FRED (Steel_PPI)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "lumber_ppi": {
+   "label": "Puutavara, PPI USA",
+   "group": "Raaka-aineet",
+   "unit": "indeksi",
+   "source": "FRED (Lumber_PPI)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "commod_all": {
+   "label": "Raaka-aineindeksi, kaikki (IMF)",
+   "group": "Raaka-aineet",
+   "unit": "indeksi",
+   "source": "FRED (Commodities_all)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "metals_idx": {
+   "label": "Metalli-indeksi (IMF)",
+   "group": "Raaka-aineet",
+   "unit": "indeksi",
+   "source": "FRED (Metals_idx)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "energy_idx": {
+   "label": "Energiaindeksi (IMF)",
+   "group": "Raaka-aineet",
+   "unit": "indeksi",
+   "source": "FRED (Energy_idx)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "food_idx": {
+   "label": "Ruokaindeksi (IMF)",
+   "group": "Raaka-aineet",
+   "unit": "indeksi",
+   "source": "FRED (Food_idx)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "nonfuel_idx": {
+   "label": "Ei-energia-raaka-aineet (IMF)",
+   "group": "Raaka-aineet",
+   "unit": "indeksi",
+   "source": "FRED (NonFuel_idx)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-07-01"
+  },
+  "ppi_all": {
+   "label": "Tuottajahinnat USA (PPI, kaikki)",
+   "group": "Raaka-aineet",
+   "unit": "indeksi",
+   "source": "FRED (PPI_all)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "temp_global": {
+   "label": "Lämpötilapoikkeama, maapallo (°C vs 1951–80)",
+   "group": "Ilmasto & energia",
+   "unit": "°C",
+   "source": "NASA GISTEMP v4",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "temp_nh": {
+   "label": "Lämpötilapoikkeama, pohj. pallonpuolisko (°C)",
+   "group": "Ilmasto & energia",
+   "unit": "°C",
+   "source": "NASA GISTEMP v4",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-09-01"
+  },
+  "wind_gen_us": {
+   "label": "Tuulisähkö USA (TWh/kk)",
+   "group": "Ilmasto & energia",
+   "unit": "TWh",
+   "source": "EIA Total Energy (WYETPUS)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-06-01"
+  },
+  "wind_share_us": {
+   "label": "Tuulen osuus sähköstä USA (%)",
+   "group": "Ilmasto & energia",
+   "unit": "%",
+   "source": "laskettu EIA:sta",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-06-01"
+  },
+  "bdi": {
+   "label": "Baltic Dry Index (kuivarahti)",
+   "group": "Rahti",
+   "unit": "pistettä",
+   "source": "Baltic Exchange (stock-marketdata.com)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "freight_fbx": {
+   "label": "Freightos FBX konttirahti (USD/FEU)",
+   "group": "Rahti",
+   "unit": "indeksi",
+   "source": "FBX (stock-marketdata.com)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2016-10-01",
+   "last": "2026-10-01"
+  },
+  "freight_wci": {
+   "label": "Drewry WCI konttirahti (USD/FEU)",
+   "group": "Rahti",
+   "unit": "indeksi",
+   "source": "WCI (stock-marketdata.com)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2016-10-01",
+   "last": "2026-10-01"
+  },
+  "freight_scfi": {
+   "label": "Shanghai SCFI konttirahti",
+   "group": "Rahti",
+   "unit": "indeksi",
+   "source": "SCFI (stock-marketdata.com)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2016-10-01",
+   "last": "2026-10-01"
+  },
+  "freight_ccfi": {
+   "label": "China CCFI konttirahti",
+   "group": "Rahti",
+   "unit": "indeksi",
+   "source": "CCFI (stock-marketdata.com)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2016-10-01",
+   "last": "2026-10-01"
+  },
+  "mm_net_wti": {
+   "label": "Rahastojen nettopositio WTI (tuhatta sopimusta)",
+   "group": "Positiot",
+   "unit": "tuhatta sop.",
+   "source": "CFTC COT (managed money, NYMEX WTI)",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  },
+  "oi_wti": {
+   "label": "Avoin positio WTI (tuhatta sopimusta)",
+   "group": "Positiot",
+   "unit": "tuhatta sop.",
+   "source": "CFTC COT",
+   "freq": "monthly",
+   "note": "",
+   "first": "2015-01-01",
+   "last": "2026-10-01"
+  }
+ },
+ "annual": {
+  "gdp_growth_usa": {
+   "label": "BKT:n kasvu USA (%)",
+   "group": "Makrotalous",
+   "unit": "%",
+   "source": "World Bank NY.GDP.MKTP.KD.ZG",
+   "freq": "annual",
+   "note": "",
+   "first": 2005,
+   "last": 2025
+  },
+  "gdp_pc_ppp_usa": {
+   "label": "BKT/asukas PPP USA (USD 2021)",
+   "group": "Väestö & elintaso",
+   "unit": "USD",
+   "source": "World Bank NY.GDP.PCAP.PP.KD",
+   "freq": "annual",
+   "note": "",
+   "first": 2005,
+   "last": 2025
+  },
+  "birth_rate_usa": {
+   "label": "Syntyvyys USA (per 1000)",
+   "group": "Väestö & elintaso",
+   "unit": "per 1000",
+   "source": "World Bank SP.DYN.CBRT.IN",
+   "freq": "annual",
+   "note": "",
+   "first": 2005,
+   "last": 2024
+  },
+  "tertiary_enrol_usa": {
+   "label": "Korkeakouluopiskelijat USA (% ikäluokasta, brutto)",
+   "group": "Väestö & elintaso",
+   "unit": "%",
+   "source": "World Bank SE.TER.ENRR",
+   "freq": "annual",
+   "note": "",
+   "first": 2005,
+   "last": 2022
+  },
+  "gdp_growth_chn": {
+   "label": "BKT:n kasvu Kiina (%)",
+   "group": "Makrotalous",
+   "unit": "%",
+   "source": "World Bank NY.GDP.MKTP.KD.ZG",
+   "freq": "annual",
+   "note": "",
+   "first": 2005,
+   "last": 2025
+  },
+  "gdp_pc_ppp_chn": {
+   "label": "BKT/asukas PPP Kiina (USD 2021)",
+   "group": "Väestö & elintaso",
+   "unit": "USD",
+   "source": "World Bank NY.GDP.PCAP.PP.KD",
+   "freq": "annual",
+   "note": "",
+   "first": 2005,
+   "last": 2025
+  },
+  "birth_rate_chn": {
+   "label": "Syntyvyys Kiina (per 1000)",
+   "group": "Väestö & elintaso",
+   "unit": "per 1000",
+   "source": "World Bank SP.DYN.CBRT.IN",
+   "freq": "annual",
+   "note": "",
+   "first": 2005,
+   "last": 2024
+  },
+  "tertiary_enrol_chn": {
+   "label": "Korkeakouluopiskelijat Kiina (% ikäluokasta, brutto)",
+   "group": "Väestö & elintaso",
+   "unit": "%",
+   "source": "World Bank SE.TER.ENRR",
+   "freq": "annual",
+   "note": "",
+   "first": 2005,
+   "last": 2024
+  },
+  "gdp_growth_deu": {
+   "label": "BKT:n kasvu Saksa (%)",
+   "group": "Makrotalous",
+   "unit": "%",
+   "source": "World Bank NY.GDP.MKTP.KD.ZG",
+   "freq": "annual",
+   "note": "",
+   "first": 2005,
+   "last": 2025
+  },
+  "gdp_pc_ppp_deu": {
+   "label": "BKT/asukas PPP Saksa (USD 2021)",
+   "group": "Väestö & elintaso",
+   "unit": "USD",
+   "source": "World Bank NY.GDP.PCAP.PP.KD",
+   "freq": "annual",
+   "note": "",
+   "first": 2005,
+   "last": 2025
+  },
+  "birth_rate_deu": {
+   "label": "Syntyvyys Saksa (per 1000)",
+   "group": "Väestö & elintaso",
+   "unit": "per 1000",
+   "source": "World Bank SP.DYN.CBRT.IN",
+   "freq": "annual",
+   "note": "",
+   "first": 2005,
+   "last": 2024
+  },
+  "tertiary_enrol_deu": {
+   "label": "Korkeakouluopiskelijat Saksa (% ikäluokasta, brutto)",
+   "group": "Väestö & elintaso",
+   "unit": "%",
+   "source": "World Bank SE.TER.ENRR",
+   "freq": "annual",
+   "note": "",
+   "first": 2013,
+   "last": 2024
+  },
+  "birth_rate_wld": {
+   "label": "Syntyvyys maailma (per 1000)",
+   "group": "Väestö & elintaso",
+   "unit": "per 1000",
+   "source": "World Bank",
+   "freq": "annual",
+   "note": "",
+   "first": 2005,
+   "last": 2024
+  },
+  "gdp_growth_wld": {
+   "label": "BKT:n kasvu maailma (%)",
+   "group": "Makrotalous",
+   "unit": "%",
+   "source": "World Bank",
+   "freq": "annual",
+   "note": "",
+   "first": 2005,
+   "last": 2025
+  },
+  "hdi_usa": {
+   "label": "Inhimillisen kehityksen indeksi HDI USA",
+   "group": "Väestö & elintaso",
+   "unit": "indeksi 0–1",
+   "source": "UNDP via OWID",
+   "freq": "annual",
+   "note": "",
+   "first": 1990,
+   "last": 2023
+  },
+  "tertiary_attain_usa": {
+   "label": "Korkeakoulutettujen osuus 25–64 v USA (%)",
+   "group": "Väestö & elintaso",
+   "unit": "%",
+   "source": "OECD via OWID",
+   "freq": "annual",
+   "note": "",
+   "first": 1870,
+   "last": 2020
+  },
+  "car_sales_usa": {
+   "label": "Henkilöautojen myynti USA (milj. kpl)",
+   "group": "Toimialat",
+   "unit": "milj. kpl",
+   "source": "IEA via OWID (ev + non-ev)",
+   "freq": "annual",
+   "note": "",
+   "first": 2010,
+   "last": 2025
+  },
+  "ev_share_usa": {
+   "label": "Sähköautojen osuus myynnistä USA (%)",
+   "group": "Teknologia",
+   "unit": "%",
+   "source": "IEA via OWID",
+   "freq": "annual",
+   "note": "",
+   "first": 2010,
+   "last": 2025
+  },
+  "hdi_chn": {
+   "label": "Inhimillisen kehityksen indeksi HDI Kiina",
+   "group": "Väestö & elintaso",
+   "unit": "indeksi 0–1",
+   "source": "UNDP via OWID",
+   "freq": "annual",
+   "note": "",
+   "first": 1990,
+   "last": 2023
+  },
+  "tertiary_attain_chn": {
+   "label": "Korkeakoulutettujen osuus 25–64 v Kiina (%)",
+   "group": "Väestö & elintaso",
+   "unit": "%",
+   "source": "OECD via OWID",
+   "freq": "annual",
+   "note": "",
+   "first": 1870,
+   "last": 2020
+  },
+  "car_sales_chn": {
+   "label": "Henkilöautojen myynti Kiina (milj. kpl)",
+   "group": "Toimialat",
+   "unit": "milj. kpl",
+   "source": "IEA via OWID (ev + non-ev)",
+   "freq": "annual",
+   "note": "",
+   "first": 2010,
+   "last": 2025
+  },
+  "ev_share_chn": {
+   "label": "Sähköautojen osuus myynnistä Kiina (%)",
+   "group": "Teknologia",
+   "unit": "%",
+   "source": "IEA via OWID",
+   "freq": "annual",
+   "note": "",
+   "first": 2010,
+   "last": 2025
+  },
+  "hdi_deu": {
+   "label": "Inhimillisen kehityksen indeksi HDI Saksa",
+   "group": "Väestö & elintaso",
+   "unit": "indeksi 0–1",
+   "source": "UNDP via OWID",
+   "freq": "annual",
+   "note": "",
+   "first": 1990,
+   "last": 2023
+  },
+  "tertiary_attain_deu": {
+   "label": "Korkeakoulutettujen osuus 25–64 v Saksa (%)",
+   "group": "Väestö & elintaso",
+   "unit": "%",
+   "source": "OECD via OWID",
+   "freq": "annual",
+   "note": "",
+   "first": 1870,
+   "last": 2020
+  },
+  "car_sales_deu": {
+   "label": "Henkilöautojen myynti Saksa (milj. kpl)",
+   "group": "Toimialat",
+   "unit": "milj. kpl",
+   "source": "IEA via OWID (ev + non-ev)",
+   "freq": "annual",
+   "note": "",
+   "first": 2010,
+   "last": 2025
+  },
+  "ev_share_deu": {
+   "label": "Sähköautojen osuus myynnistä Saksa (%)",
+   "group": "Teknologia",
+   "unit": "%",
+   "source": "IEA via OWID",
+   "freq": "annual",
+   "note": "",
+   "first": 2010,
+   "last": 2025
+  },
+  "ev_share_wld": {
+   "label": "Sähköautojen osuus myynnistä, maailma (%)",
+   "group": "Teknologia",
+   "unit": "%",
+   "source": "IEA via OWID",
+   "freq": "annual",
+   "note": "",
+   "first": 2010,
+   "last": 2025
+  },
+  "wind_gen_wld": {
+   "label": "Tuulisähkö maailma (TWh)",
+   "group": "Ilmasto & energia",
+   "unit": "TWh",
+   "source": "Energy Institute via OWID",
+   "freq": "annual",
+   "note": "",
+   "first": 1900,
+   "last": 2025
+  },
+  "solar_gen_wld": {
+   "label": "Aurinkosähkö maailma (TWh)",
+   "group": "Ilmasto & energia",
+   "unit": "TWh",
+   "source": "Energy Institute via OWID",
+   "freq": "annual",
+   "note": "",
+   "first": 1900,
+   "last": 2025
+  },
+  "oil_cons_wld": {
+   "label": "Öljynkulutus maailma (tuhatta TWh)",
+   "group": "Tarjonta & kysyntä",
+   "unit": "PWh",
+   "source": "Energy Institute via OWID",
+   "freq": "annual",
+   "note": "",
+   "first": 1900,
+   "last": 2025
+  },
+  "oil_cons_chn": {
+   "label": "Öljynkulutus Kiina (tuhatta TWh)",
+   "group": "Tarjonta & kysyntä",
+   "unit": "PWh",
+   "source": "Energy Institute via OWID",
+   "freq": "annual",
+   "note": "",
+   "first": 1965,
+   "last": 2025
+  },
+  "brent_avg": {
+   "label": "Brent (USD/bbl) (vuosikeskiarvo)",
+   "group": "Öljyn hinnat",
+   "unit": "USD/bbl",
+   "source": "FRED/EIA (MCOILBRENTEU, DCOILBRENTEU)",
+   "freq": "annual",
+   "note": "",
+   "first": 2015,
+   "last": 2026
+  },
+  "wti_avg": {
+   "label": "WTI (USD/bbl) (vuosikeskiarvo)",
+   "group": "Öljyn hinnat",
+   "unit": "USD/bbl",
+   "source": "FRED/EIA (MCOILWTICO, DCOILWTICO)",
+   "freq": "annual",
+   "note": "",
+   "first": 2015,
+   "last": 2026
+  },
+  "dubai_avg": {
+   "label": "Dubai Fateh (USD/bbl) (vuosikeskiarvo)",
+   "group": "Öljyn hinnat",
+   "unit": "USD/bbl",
+   "source": "IMF via FRED (POILDUBUSDM)",
+   "freq": "annual",
+   "note": "",
+   "first": 2015,
+   "last": 2026
+  },
+  "gasoline_us_avg": {
+   "label": "Bensiini USA (USD/gal) (vuosikeskiarvo)",
+   "group": "Polttoaineet",
+   "unit": "USD/gal",
+   "source": "EIA via FRED (GASREGM)",
+   "freq": "annual",
+   "note": "",
+   "first": 2015,
+   "last": 2026
+  },
+  "us_crude_stocks_avg": {
+   "label": "USA raakaöljyvarastot pl. SPR (milj. bbl) (vuosikeskiarvo)",
+   "group": "Varastot",
+   "unit": "milj. bbl",
+   "source": "EIA WCESTUS1 (viikko→kk-keskiarvo)",
+   "freq": "annual",
+   "note": "",
+   "first": 2015,
+   "last": 2026
+  },
+  "bdi_avg": {
+   "label": "Baltic Dry Index (kuivarahti) (vuosikeskiarvo)",
+   "group": "Rahti",
+   "unit": "pistettä",
+   "source": "Baltic Exchange (stock-marketdata.com)",
+   "freq": "annual",
+   "note": "",
+   "first": 2015,
+   "last": 2026
+  },
+  "copper_avg": {
+   "label": "Kupari (USD/t) (vuosikeskiarvo)",
+   "group": "Raaka-aineet",
+   "unit": "USD/t",
+   "source": "FRED (Copper)",
+   "freq": "annual",
+   "note": "",
+   "first": 2015,
+   "last": 2026
+  },
+  "usd_broad_avg": {
+   "label": "Dollari-indeksi (broad) (vuosikeskiarvo)",
+   "group": "Makrotalous",
+   "unit": "indeksi",
+   "source": "Fed via FRED (DTWEXBGS)",
+   "freq": "annual",
+   "note": "",
+   "first": 2015,
+   "last": 2026
+  },
+  "sp500_avg": {
+   "label": "S&P 500 (vuosikeskiarvo)",
+   "group": "Makrotalous",
+   "unit": "pistettä",
+   "source": "FRED (SP500)",
+   "freq": "annual",
+   "note": "",
+   "first": 2017,
+   "last": 2026
+  },
+  "temp_global_avg": {
+   "label": "Lämpötilapoikkeama, maapallo (°C vs 1951–80) (vuosikeskiarvo)",
+   "group": "Ilmasto & energia",
+   "unit": "°C",
+   "source": "NASA GISTEMP v4",
+   "freq": "annual",
+   "note": "",
+   "first": 2015,
+   "last": 2026
+  },
+  "vehicle_sales_us_avg": {
+   "label": "Autojen myynti USA (milj./v, SAAR) (vuosikeskiarvo)",
+   "group": "Toimialat",
+   "unit": "milj. kpl/v",
+   "source": "BEA via FRED (TOTALSA)",
+   "freq": "annual",
+   "note": "",
+   "first": 2015,
+   "last": 2026
+  }
+ }
+}

@@ -1,0 +1,132 @@
+FRED ok WTI_m (MCOILWTICO) rows=489 last={'date': '2026-09-01', 'value': 97.31}
+FRED ok Brent_m (MCOILBRENTEU) rows=473 last={'date': '2026-09-01', 'value': 114.16}
+FRED ok Dubai_m (POILDUBUSDM) rows=415 last={'date': '2026-07-01', 'value': 77.13181818181818}
+FRED ok APSP_m (POILAPSPUSDM) rows=415 last={'date': '2026-07-01', 'value': 80.19181818181823}
+FRED ok WTI_d (DCOILWTICO) rows=10644 last={'date': '2026-10-20', 'value': 107.89}
+FRED ok Brent_d (DCOILBRENTEU) rows=10285 last={'date': '2026-10-20', 'value': 115.22}
+FRED ok HenryHub_m (MHHNGSP) rows=357 last={'date': '2026-09-01', 'value': 2.95}
+FRED ok EUgas_m (PNGASEUUSDM) rows=415 last={'date': '2026-07-01', 'value': 17.93}
+FRED ok Gasoline_US_m (GASREGM) rows=433 last={'date': '2026-09-01', 'value': 4.355}
+FRED ok Diesel_US_m (GASDESM) rows=390 last={'date': '2026-09-01', 'value': 6.291}
+FRED FAIL USprod_m (MCRFPUS2): 404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=MCRFPUS2
+FRED FAIL CrudeStocksExSPR_w (WCESTUS1): 404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=WCESTUS1
+FRED FAIL SPR_w (WCSSTUS1): 404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=WCSSTUS1
+FRED FAIL TotalPetStocks_w (WTTSTUS1): 404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=WTTSTUS1
+FRED FAIL GasolineStocks_w (WGTSTUS1): 404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=WGTSTUS1
+FRED FAIL DistillateStocks_w (WDISTUS1): 404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=WDISTUS1
+FRED ok IP_total (INDPRO) rows=1293 last={'date': '2026-09-01', 'value': 103.9506}
+FRED ok IP_manuf (IPMAN) rows=657 last={'date': '2026-09-01', 'value': 99.4361}
+FRED ok IP_mining (IPMINE) rows=1293 last={'date': '2026-09-01', 'value': 124.5239}
+FRED ok IP_oilgas_extr (IPG211S) rows=657 last={'date': '2026-09-01', 'value': 154.0062}
+FRED ok IP_drilling (IPN213111S) rows=657 last={'date': '2026-09-01', 'value': 105.4904}
+FRED ok IP_chem (IPG325S) rows=657 last={'date': '2026-09-01', 'value': 102.6927}
+FRED ok IP_autos (IPG3361T3S) rows=657 last={'date': '2026-09-01', 'value': 107.5781}
+FRED ok IP_petrol_coal (IPG324S) rows=657 last={'date': '2026-09-01', 'value': 90.6339}
+FRED ok AirRPM (AIRRPMTSI) rows=318 last={'date': '2026-06-01', 'value': 105178144}
+FRED ok VMT (TRFVOLUSM227NFWA) rows=680 last={'date': '2026-08-01', 'value': 294124}
+FRED ok TSI_freight (TSIFRGHT) rows=319 last={'date': '2026-07-01', 'value': 135.7}
+FRED ok Cass_shipments (FRGSHPUSM649NCIS) rows=129 last={'date': '2026-09-01', 'value': 1.062}
+FRED ok VehicleSales_US (TOTALSA) rows=609 last={'date': '2026-09-01', 'value': 16.378}
+FRED ok GDP_US_q (GDPC1) rows=318 last={'date': '2026-04-01', 'value': 24408.011}
+FRED ok GDP_DE_q (CLVMNACSCAB1GQDE) rows=142 last={'date': '2026-04-01', 'value': 782934.3}
+FRED ok GDP_CN_q_nom (CHNGDPNQDSMEI) rows=127 last={'date': '2023-07-01', 'value': 31999230000000.0}
+FRED ok CPI_US (CPIAUCSL) rows=957 last={'date': '2026-09-01', 'value': 336.298}
+FRED ok CPI_energy_US (CPIENGSL) rows=837 last={'date': '2026-09-01', 'value': 337.834}
+FRED ok FedFunds (FEDFUNDS) rows=867 last={'date': '2026-09-01', 'value': 3.75}
+FRED ok UST10y (GS10) rows=882 last={'date': '2026-09-01', 'value': 4.99}
+FRED ok Unemp_US (UNRATE) rows=945 last={'date': '2026-09-01', 'value': 4.2}
+FRED ok DollarBroad_d (DTWEXBGS) rows=5425 last={'date': '2026-10-16', 'value': 121.4048}
+FRED ok SP500_d (SP500) rows=2608 last={'date': '2026-10-21', 'value': 7757.17}
+FRED ok VIX_d (VIXCLS) rows=9602 last={'date': '2026-10-21', 'value': 16.68}
+FRED ok IP_CN (CHNPRINTO01IXPYM) rows=299 last={'date': '2023-11-01', 'value': 106.6}
+FRED ok IP_DE (DEUPROINDMISMEI) rows=795 last={'date': '2024-03-01', 'value': 91.43041}
+FRED ok Copper (PCOPPUSDM) rows=415 last={'date': '2026-07-01', 'value': 13542.82086956522}
+FRED ok Aluminum (PALUMUSDM) rows=415 last={'date': '2026-07-01', 'value': 3158.265}
+FRED ok IronOre (PIORECRUSDM) rows=415 last={'date': '2026-07-01', 'value': 101.595652173913}
+FRED ok Nickel (PNICKUSDM) rows=415 last={'date': '2026-07-01', 'value': 16632.36136363636}
+FRED ok Steel_PPI (WPU1017) rows=1053 last={'date': '2026-09-01', 'value': 388.58}
+FRED ok Lumber_PPI (WPU081) rows=1209 last={'date': '2026-09-01', 'value': 282.34}
+FRED ok Commodities_all (PALLFNFINDEXM) rows=415 last={'date': '2026-07-01', 'value': 193.2044744461968}
+FRED ok Metals_idx (PMETAINDEXM) rows=415 last={'date': '2026-07-01', 'value': 226.1695145629516}
+FRED ok Energy_idx (PNRGINDEXM) rows=415 last={'date': '2026-07-01', 'value': 198.7038051292526}
+FRED ok Food_idx (PFOODINDEXM) rows=415 last={'date': '2026-07-01', 'value': 131.7799097770027}
+FRED FAIL Fertilizer_idx (PFERTINDEXM): 404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=PFERTINDEXM
+FRED ok NonFuel_idx (PNFUELINDEXM) rows=415 last={'date': '2026-07-01', 'value': 189.4025883554876}
+FRED ok PPI_all (PPIACO) rows=1365 last={'date': '2026-09-01', 'value': 295.708}
+EIA ok CrudeStocksExSPR_m rows=259 last={'date': Timestamp('2026-07-15 00:00:00'), 'value': 408533}
+EIA ok SPR_m rows=586 last={'date': Timestamp('2026-07-15 00:00:00'), 'value': 304810}
+EIA ok Cushing_w rows=1092 last={'date': Timestamp('2026-10-16 00:00:00'), 'value': 27594}
+EIA ok Rigs_m rows=644 last={'date': Timestamp('2026-08-15 00:00:00'), 'value': 452.0}
+EIA ok CrudeExports_m rows=1279 last={'date': Timestamp('2026-07-15 00:00:00'), 'value': 3556}
+EIA ok CrudeImports_m rows=1279 last={'date': Timestamp('2026-07-15 00:00:00'), 'value': 6224}
+EIA ok ProductSupplied_m rows=763 last={'date': Timestamp('2026-07-15 00:00:00'), 'value': 20612}
+EIA ok RefUtil_m rows=499 last={'date': Timestamp('2026-07-15 00:00:00'), 'value': 96.5}
+EIA ok Brent_EIA_m rows=473 last={'date': Timestamp('2026-09-15 00:00:00'), 'value': 114.16}
+EIA TotalEnergy ok T07.02A bytes=1144169
+EIA TotalEnergy ok T07.02B bytes=1236728
+EIA TotalEnergy ok T01.02 bytes=780726
+EIA TotalEnergy ok T03.07A bytes=877826
+STEO ok STEO_m.xlsx bytes=1098385
+STEO FAIL https://www.eia.gov/outlooks/steo/xls/3atab.xlsx: 404 Client Error: Not Found for url: https://www.eia.gov/outlooks/steo/xls/3atab.xlsx
+STEO FAIL https://www.eia.gov/outlooks/steo/xls/4atab.xlsx: 404 Client Error: Not Found for url: https://www.eia.gov/outlooks/steo/xls/4atab.xlsx
+OPEC basket FAIL: 403 Client Error: Forbidden for url: https://www.opec.org/basket/basketDayArchives.xml
+GISTEMP ok GLB bytes=12886
+GISTEMP ok NH bytes=12937
+GISTEMP ok SH bytes=12868
+WB ok GDPgrowth n=105
+WB ok GDPreal n=105
+WB ok GDPpcPPP n=105
+WB ok BirthRate n=105
+WB ok Fertility n=105
+WB ok TertiaryEnrol n=105
+WB ok TertiaryAttainBA n=105
+WB ok EnergyUsePC n=105
+WB FAIL CO2pc: list index out of range
+OWID FAIL human-development-index: unexpected content
+OWID FAIL wind-generation: unexpected content
+OWID FAIL electric-car-sales-share: unexpected content
+OWID FAIL electric-car-sales: unexpected content
+OWID FAIL oil-consumption-by-country: unexpected content
+OWID FAIL oil-production-by-country: unexpected content
+OWID FAIL share-electricity-wind: unexpected content
+OWID FAIL solar-energy-consumption: unexpected content
+OWID FAIL share-of-the-population-with-completed-tertiary-education: unexpected content
+OWID FAIL new-vehicles-type-area: 404 Client Error: Not Found for url: https://ourworldindata.org/grapher/new-vehicles-type-area.csv?v=1&csvType=full&useColumnShortNames=true
+OWID FAIL crude-birth-rate: unexpected content
+STOOQ FAIL cl.f: HTTPSConnectionPool(host='stooq.com', port=443): Read timed out. (read timeout=10)
+STOOQ FAIL cb.f: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+STOOQ FAIL bz.f: HTTPSConnectionPool(host='stooq.com', port=443): Read timed out. (read timeout=10)
+STOOQ FAIL brn.f: HTTPSConnectionPool(host='stooq.com', port=443): Read timed out. (read timeout=10)
+STOOQ FAIL ng.f: HTTPSConnectionPool(host='stooq.com', port=443): Read timed out. (read timeout=10)
+STOOQ FAIL xle.us: HTTPSConnectionPool(host='stooq.com', port=443): Read timed out. (read timeout=10)
+STOOQ FAIL xop.us: HTTPSConnectionPool(host='stooq.com', port=443): Read timed out. (read timeout=10)
+STOOQ FAIL ^spx: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=%5Espx&i=d
+STOOQ FAIL ^dxy: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=%5Edxy&i=d
+STOOQ FAIL jets.us: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=jets.us&i=d
+STOOQ FAIL tan.us: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=tan.us&i=d
+STOOQ FAIL ^bdi: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=%5Ebdi&i=d
+STOOQ FAIL bdi.e: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=bdi.e&i=d
+STOOQ FAIL hg.f: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=hg.f&i=d
+STOOQ FAIL rb.f: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=rb.f&i=d
+STOOQ FAIL ho.f: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=ho.f&i=d
+STOOQ FAIL ^shc: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=%5Eshc&i=d
+STOOQ FAIL ^dax: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=%5Edax&i=d
+STOOQ FAIL eurusd: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=eurusd&i=d
+STOOQ FAIL usdcnh: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=usdcnh&i=d
+STOOQ FAIL ^vix: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=%5Evix&i=d
+STOOQ FAIL uso.us: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=uso.us&i=d
+STOOQ FAIL oih.us: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=oih.us&i=d
+STOOQ FAIL tsla.us: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=tsla.us&i=d
+STOOQ FAIL xom.us: 404 Client Error: Not Found for url: https://stooq.com/q/d/l/?s=xom.us&i=d
+CFTC ok 2015 bytes=1697554
+CFTC ok 2016 bytes=1834436
+CFTC ok 2017 bytes=1805242
+CFTC ok 2018 bytes=1961740
+CFTC ok 2019 bytes=1981332
+CFTC ok 2020 bytes=1930322
+CFTC ok 2021 bytes=1943806
+CFTC ok 2022 bytes=2049193
+CFTC ok 2023 bytes=2202972
+CFTC ok 2024 bytes=2381296
+CFTC ok 2025 bytes=2420076
+CFTC ok 2026 bytes=1981329

@@ -1,0 +1,594 @@
+<title>Öljymarkkina 2015–2026</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.0/plotly.min.js"></script>
+<style>
+/* Layout: one wide chart column, custom grouped legend below the plot, long-form analysis under it. Trading-desk sobriety: cool neutrals, blue as the only accent, status colours reserved. */
+:root{
+  --bg:#f6f6f4; --surface:#fcfcfb; --surface-2:#eeeeea; --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781; --grid:#e1e0d9; --line:#c3c2b7; --border:rgba(11,11,11,.10);
+  --accent:#2a78d6; --accent-ink:#1c5cab; --warn:#d03b3b; --good:#006300;
+  --c-blue:#2a78d6; --c-orange:#eb6834; --c-aqua:#1baf7a; --c-yellow:#eda100; --c-magenta:#e87ba4; --c-green:#008300; --c-violet:#6250d6; --c-red:#e34948;
+  --font-ui:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif; --font-head:"IBM Plex Serif",Georgia,"Times New Roman",serif; --font-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0f0f0e; --surface:#1a1a19; --surface-2:#242423; --ink:#f0efec; --ink-2:#c3c2b7; --muted:#898781; --grid:#2c2c2a; --line:#383835; --border:rgba(255,255,255,.10);
+  --accent:#3987e5; --accent-ink:#86b6ef; --warn:#e66767; --good:#0ca30c;
+  --c-blue:#3987e5; --c-orange:#d95926; --c-aqua:#199e70; --c-yellow:#c98500; --c-magenta:#d55181; --c-green:#1a9a1a; --c-violet:#9085e9; --c-red:#e66767; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0f0f0e; --surface:#1a1a19; --surface-2:#242423; --ink:#f0efec; --ink-2:#c3c2b7; --muted:#898781; --grid:#2c2c2a; --line:#383835; --border:rgba(255,255,255,.10);
+  --accent:#3987e5; --accent-ink:#86b6ef; --warn:#e66767; --good:#0ca30c;
+  --c-blue:#3987e5; --c-orange:#d95926; --c-aqua:#199e70; --c-yellow:#c98500; --c-magenta:#d55181; --c-green:#1a9a1a; --c-violet:#9085e9; --c-red:#e66767; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;line-height:1.55;margin:0;padding-block:0 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1180px;margin:0 auto}
+header{padding:28px 0 14px;border-bottom:1px solid var(--border);margin-bottom:18px}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--font-head);font-weight:600;font-size:clamp(26px,3.4vw,38px);line-height:1.15;margin:6px 0 8px;text-wrap:balance}
+h2{font-family:var(--font-head);font-weight:600;font-size:22px;margin:34px 0 10px;text-wrap:balance}
+h3{font-size:16px;font-weight:600;margin:22px 0 6px}
+p{max-width:72ch}
+.lede{color:var(--ink-2);font-size:16px;max-width:80ch}
+.controls{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:10px 0 8px}
+.controls .lbl{font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-family:var(--font-mono)}
+.btn{font:inherit;font-size:13px;padding:5px 11px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);cursor:pointer}
+.btn:hover{border-color:var(--accent)} .btn:focus-visible,input:focus-visible,select:focus-visible,.chk:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+.btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+select{font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink)}
+#chart{width:100%;height:600px;background:var(--surface);border:1px solid var(--border);border-radius:6px}
+@media (max-width:640px){#chart{height:460px}} .narrow-only{display:none} @media (max-width:640px){.narrow-only{display:block}}
+.legend{columns:4;column-gap:16px;margin-top:14px}
+@media (max-width:1000px){.legend{columns:3}} @media (max-width:760px){.legend{columns:2}} @media (max-width:520px){.legend{columns:1}}
+.lg{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 10px;min-width:0;break-inside:avoid;margin-bottom:12px}
+.lg-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
+.lg-h b{font-size:13px;display:flex;align-items:center;gap:7px;min-width:0}
+.lg-h > span{white-space:nowrap;flex:none}
+.sw{width:14px;height:3px;border-radius:2px;display:inline-block;flex:none}
+.lg-h .mini{font-size:11px;color:var(--accent-ink);background:none;border:0;cursor:pointer;padding:2px 4px;font-family:var(--font-mono)}
+.chk{display:flex;align-items:center;gap:7px;font-size:12.5px;padding:2px 0;cursor:pointer;color:var(--ink-2);min-width:0}
+.chk input{margin:0;accent-color:var(--accent);flex:none}
+.chk span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chk small{color:var(--muted);font-family:var(--font-mono);font-size:10.5px;flex:none}
+.note{font-size:13px;color:var(--ink-2);max-width:90ch}
+.events{columns:2;column-gap:28px;font-size:13px;margin:0;padding-left:0;list-style:none;max-width:100%}
+@media (max-width:760px){.events{columns:1}}
+.events li{break-inside:avoid;display:flex;gap:8px;padding:3px 0;border-bottom:1px dotted var(--grid)}
+.events .n{font-family:var(--font-mono);color:var(--accent-ink);min-width:2.1em;font-size:12px;padding-top:2px}
+.events .d{font-family:var(--font-mono);color:var(--muted);min-width:4.6em;font-size:12px;padding-top:2px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:14px 0}
+.tile{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 12px}
+.tile .k{font-size:11.5px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;font-family:var(--font-mono)}
+.tile .v{font-size:24px;font-weight:600;line-height:1.2;margin:3px 0 2px;font-variant-numeric:tabular-nums}
+.tile .v small{font-size:13px;font-weight:500;color:var(--ink-2);margin-left:4px}
+.tile .s{font-size:12.5px;color:var(--ink-2)}
+.tbl-wrap{overflow-x:auto;margin:8px 0 6px}
+table{border-collapse:collapse;font-size:13px;min-width:420px}
+th,td{padding:5px 10px;border-bottom:1px solid var(--grid);text-align:left;vertical-align:top}
+th{font-weight:600;color:var(--ink-2);font-size:12px;letter-spacing:.03em}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--font-mono);font-size:12.5px}
+.pos{color:var(--accent-ink)} .neg{color:var(--warn)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:0 32px}
+@media (max-width:860px){.cols{grid-template-columns:1fr}}
+.cols > div{min-width:0}
+ul.plain{padding-left:20px;max-width:80ch} ul.plain li{margin:4px 0}
+.callout{border-left:3px solid var(--accent);padding:6px 14px;background:var(--surface);margin:14px 0;max-width:84ch}
+.src{font-size:12.5px;color:var(--ink-2)}
+footer{margin-top:40px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--border);padding-top:12px}
+a{color:var(--accent-ink)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow" id="updated-line">Öljyn hintaennuste · päivittyy automaattisesti 2×/vrk</div>
+  <h1>Öljymarkkina: hinta, fair value ja ennuste</h1>
+  <p class="lede">Brent ja WTI, fair value fundamenteista, futuurikäyrä, optioiden hinnoittelema jakauma, Hormuzin avautumistodennäköisyys ja kahdeksan mallin yhdistelmä. Data haetaan FRED:stä, EIA:lta, CFTC:ltä, IMF PortWatchista, Yahoo Financesta ja GPR-indeksistä; mallit ajetaan uudelleen joka päivityksessä. Pidempi analyysi (110 muuttujan kaavio, korrelaatiot, kirjallisuus) on alempana.</p>
+</header>
+
+<section id="live">
+  <div class="tiles" id="live-tiles"></div>
+  <div class="tbl-wrap"><table id="t-live"></table></div>
+  <p class="note" id="live-note"></p>
+  <details><summary class="note" style="cursor:pointer">Datan tuoreus ja ajon tila</summary><div class="tbl-wrap"><table id="t-status"></table></div></details>
+</section>
+
+
+
+
+<h2>Malli: yksi viiva ja vaihteluväli</h2>
+<p class="lede">Kaikki merkitsevät muuttujat yhdistettynä yhdeksi "fair value" -tasoksi (log-regressio: OECD-varastojen poikkeama, OPEC-tuotanto, Hormuzin transitit, dollari, rahastojen positio, USA:n kokonaisvarastot, S&amp;P 500; WTI:lle lisäksi Cushing, USA:n raakaöljyvarastot, tuotanto ja SPR). Ennuste lokakuusta 2026 eteenpäin on yhdistelmä: puolet mallista (nykyhinta + puolet palautumisesta fair valueen, ilman otosajan driftiä) ja puolet pörssin futuurikäyrästä. Harmaa kartio = toteutuneiden etukäteisvirheiden keskitetyt kvantiilit 2020–2026 (tummempi 50 %, vaaleampi 90 %).</p>
+<p class="note">Testi "aliarvioivatko futuurit kriisien keston" (NYMEX M1 vs M4, 2008–2024, 169 kk): jyrkässä backwardaatiossa käyrä implikoi −3,2 % kolmessa kuukaudessa, toteuma oli −6,1 %; 2022: −4,5 % vs −7,1 %; kriisikuukausina (hinta &gt; 15 % yli 36 kk keskiarvon) −2,6 % vs −2,0 %. Käyrä ei ole ollut liian pessimistinen, joten ennustetta ei nosteta sen yläpuolelle; epäsymmetria on kartion yläreunassa.</p>
+<div class="controls"><span class="lbl">Laatu</span><button class="btn active" data-target="brent">Brent</button><button class="btn" data-target="wti">WTI</button><span class="note">Vihreä = pörssin futuurikäyrä 21.10.2026 (markkinan oma ennuste).</span></div>
+<div id="chart2" style="width:100%;height:440px;background:var(--surface);border:1px solid var(--border);border-radius:6px"></div>
+<p class="note narrow-only">Kapealla näytöllä selitteet on piilotettu: kosketa viivaa nähdäksesi sarjan nimen ja arvon.</p>
+<p class="note" id="model-note"></p>
+
+<h2>Todennäköisyys: optiomarkkina vs. malli</h2>
+<p class="lede">Sininen viuhka on WTI-optioista johdettu (riskineutraali) jakauma viidelle erääntymiselle 22.10.2026 (CME, Breeden–Litzenberger). Harmaa on oma yhdistelmäennuste kartioineen, vihreä futuurikäyrä. Optiot kertovat, mitä markkina on valmis maksamaan hännistä; malli kertoo, mitä varastot ja tuotanto sanovat.</p>
+<div id="chart3" style="width:100%;height:420px;background:var(--surface);border:1px solid var(--border);border-radius:6px"></div>
+<p class="note" id="opt-note"></p>
+
+<h2>Mallit 1–7: mitä kukin sanoo nyt</h2>
+<div class="tbl-wrap"><table id="t-m17"></table></div>
+<p class="note" id="m17-note"></p>
+<div class="cols">
+<div><h3>Hormuz-skenaariopuu</h3><p class="note">Kaksi tilaa (kiinni / auki), kuukausittainen avautumishasardi kalibroitu futuurikäyrään; avautumisen jälkeen hinta palautuu "auki"-tasoon (Brent 76 $, WTI 73 $) neljän kuukauden puoliintumisajalla.</p><div class="tbl-wrap"><table id="t-scen"></table></div></div>
+<div><h3>Regiimit (Markov-switching 2006→)</h3><p class="note" id="reg-note"></p><div class="tbl-wrap"><table id="t-reg"></table></div></div>
+</div>
+<div class="cols">
+<div><h3>Viikoittainen nowcast (fair value viikkodatasta)</h3><div class="tbl-wrap"><table id="t-week"></table></div></div>
+<div><h3>SVAR: vuoden 2026 hinnannousun hajotus</h3><p class="note" id="svar-note"></p></div>
+</div>
+
+<h2>Hormuz: avautumistodennäköisyys päivittäin</h2>
+<p class="lede">Kaksitilainen puu (kiinni / auki) kalibroidaan joka päivä WTI- ja Brent-futuurikäyrään: etukuukausi jätetään pois (sen preemio on fyysistä tiukkuutta), auki-taso on käyrän takapää. Tulos on markkinan hinnoittelema kuukausittainen avautumishasardi. Rinnalla transitit (IMF PortWatch), GPR-päiväindeksi ja OVX: testataan, ennakoivatko ne hasardin muutoksia.</p>
+<div id="chart4" style="width:100%;height:400px;background:var(--surface);border:1px solid var(--border);border-radius:6px"></div>
+<div class="cols">
+<div><h3>Nyt</h3><div class="tbl-wrap"><table id="t-hz"></table></div></div>
+<div><h3>Ennakoivatko signaalit hasardia?</h3><p class="note" id="hz-note"></p></div>
+</div>
+
+<h2>Päivä- ja viikkosignaalit</h2>
+<p class="lede">Yhdeksän päivätason signaalia (transitit, häiriöaste, etukuukausien ero, rahastojen positio, OVX, GPR, momentum, EIA-varastomuutos) ja niiden ennustekyky 1, 5 ja 21 kaupankäyntipäivän tuotolle 2018→, etukäteen laskettuna (walk-forward 2022→, 50 % kutistus nollaan).</p>
+<div class="cols">
+<div><h3>Signaalit nyt</h3><div class="tbl-wrap"><table id="t-sig"></table></div></div>
+<div><h3>Ennustekyky etukäteen</h3><div class="tbl-wrap"><table id="t-sigm"></table></div><p class="note" id="sig-note"></p></div>
+</div>
+
+<h2>Pinon painot: estimoitu vs. kiinteä</h2>
+<p class="lede">Painot estimoidaan rullaavasti (ei-negatiiviset, summa 1) jäsenille, joilla on reaaliaikainen historia 2019→: ei-muutosta, futuurikäyrä (1–3 kk), fair value -palautuma ja VAR. Vertailussa tasapainot, dossierin painot ja kutistettu versio (puolet estimoitu, puolet dossieri).</p>
+<div class="cols">
+<div><h3>WTI</h3><div class="tbl-wrap"><table id="t-w-wti"></table></div></div>
+<div><h3>Brent</h3><div class="tbl-wrap"><table id="t-w-brent"></table></div></div>
+</div>
+<p class="note" id="w-note"></p>
+
+<h2>Dossieri 23.10.2026: kirjallisuus vs. omat tulokset</h2>
+<p class="lede">Perplexityn syvähaku (oma prompti, 23.10.2026) kävi läpi ennustekirjallisuuden, markkinatilan ja datalähteet. Sen pääväite: 1–12 kuukauden ennusteen tärkein muuttuja on Hormuzin siirtymätodennäköisyys, ja puolustettavin rakenne on ei-muutosta + futuurikäyrä + fyysinen tase + yhdistelmät + optiojakauma. Alla dossierin väitteet rinnakkain tämän aineiston tulosten kanssa, ja neljä asiaa jotka toteutettiin sen perusteella.</p>
+<div class="tbl-wrap"><table id="t-doss"></table></div>
+
+<h3>Toteutettu 1: lähtöpiste on päivähinta, ei kuukausikeskiarvo</h3>
+<p class="note">Dossieri: kuukauden lopun hinta ennustaa seuraavan kuukauden keskiarvoa jopa 40 % pienemmällä MSPE:llä kuin kuluvan kuukauden keskiarvo. Testi tällä aineistolla (FRED-päivädata, kohde = kuukausikeskiarvo h kuukauden päässä):</p>
+<div class="tbl-wrap"><table id="t-eom"></table></div>
+
+<h3>Toteutettu 2: Diebold–Mariano- ja Clark–West-testit, kartion peitto</h3>
+<p class="note" id="dm-note"></p>
+<div class="tbl-wrap"><table id="t-dm"></table></div>
+
+<h3>Toteutettu 3: painotettu pino (malli 8)</h3>
+<p class="note" id="stack-note"></p>
+<div class="cols">
+<div><h3>WTI</h3><div class="tbl-wrap"><table id="t-stack-wti"></table></div></div>
+<div><h3>Brent</h3><div class="tbl-wrap"><table id="t-stack-brent"></table></div></div>
+</div>
+
+<h3>Toteutettu 4: optiojakauma fysikaaliseksi (log-tiltti)</h3>
+<p class="note">Riskineutraali tiheys q(K) muunnetaan fysikaaliseksi muodossa p(K) ∝ q(K)·K<sup>λ</sup>, jossa λ ratkaistaan niin että jakauman keskiarvo on painotettu pino. Lognormaalille tämä siirtää sijaintia hännät säilyttäen (eksponentiaalinen tiltti tasoissa räjäyttäisi ylähännän). Tulos on kaaviossa 3 katkoviivana.</p>
+<div class="tbl-wrap"><table id="t-tilt"></table></div>
+
+<h3>Brent-sarjan määritelmä selittää osan "mallin ja käyrän erosta"</h3>
+<p>Tämän sivun Brent on FRED/EIA:n Europe Brent Spot FOB eli käytännössä Dated Brent: fyysisen lastin hinta. Dossierin mukaan Dated Brent oli lokakuun puolivälissä noin 134 $ eli 27–31 $ futuureja korkeammalla, ja 19.10. erääntyvä sopimus asettui 109,55 $ vs joulukuu 98,54 $. Lokakuun keskiarvo 125 $ vs joulukuun futuuri 109 $ ei siis ole pelkkä ennuste laskusta vaan osin fyysinen preemio, joka sulaa kun lastit liikkuvat (20.10. spot 115 $). WTI-sarja (Cushing spot) kulkee lähes yhdessä etukuukauden futuurin kanssa, joten WTI-malli ja -yhdistelmä ovat puhtaampia. Dossierin suositus: ennustaa Dated–futuuri-basis ja Brent–WTI-ero erikseen; tämä puuttuu vielä.</p>
+
+<h3>Mitä dossieri lisää, mitä ei saatu ja mitä jää tehtäväksi</h3>
+<ul class="plain">
+<li><b>Vahvistaa:</b> ei-muutosta on vaikea voittaa 1–3 kk; futuurit ≈ satunnaiskulku; yhdistelmät 5–20 % parempia kuukausikeskiarvoille (ei kuukauden lopun hinnoille); regiimimallien hyöty katoaa kun regiimi estimoidaan; TVP-mallit on kutistettava; ML-tulokset verrataan usein OLS:ään eikä ei-muutokseen; GPR ja uutisdata luokittelevat tapahtumia ja ennustavat volatiliteettia, eivät tasoa.</li>
+<li><b>Uutta mallille:</b> fyysisen viennin yhtälö (tuotanto × (1 − interdiktio) × (1 − logistiikkahävikki)) eikä tuotantokiintiöt; landed-hinta = FOB + rahti (Kpler 19.10.: Persianlahti–Kiina VLCC 24 $/bbl, ennen sotaa ~5 % hinnasta, nyt 25 %) + vakuutus + viive; SPR:n nettoimpulssi = vapautus − täydennys (USA ostaa ~200 mb takaisin 2027); neljän tilan Hormuz-malli (suljettu / saatettu käytävä / osittain auki / normaali) nykyisen kahden sijaan.</li>
+<li><b>Datan rajat:</b> ICE Brent -optiot, CME CVOL -vinous, pankkien mallit, Kpler/Vortexa-historia ja sopimuskohtainen open interest ovat maksullisia. AIS-tarjoajat erosivat Yanbussa elokuussa yli 1 mb/d (Vortexa 2,4 / Kpler 1,8 / AXSMarine &lt;1): se on havaintomallin muutos, ei kohinaa, eikä sitä pidä keskiarvoistaa pois.</li>
+<li><b>Julkaistut ennusteet:</b> EIA STEO maaliskuu 2026 Brent 79 $ (2026) / 64 $ (2027) → syyskuu 90 / 74 → lokakuu 105 (Q4) / 84. Ennuste on kehittyvä oletus katkoksen kestosta, ei tilastollista tarkkuutta; siksi yksi 2027-piste on korvattava avautumisehdollisilla poluilla (skenaariopuu).</li>
+<li><b>Tapahtumat:</b> dossierin aikajana (28.2. hyökkäys, 2.3. IRGC-rajoitukset, 7.–8.4. tulitauko, 13.4. saarto, 17.–18.6. Islamabad, 24.6. transiittihuippu 51, 14.–18.7. saarto palaa, 20.7. huthit vs Saudi-satamat, elokuu Yanbu pimeänä, syyskuu itä–länsi-putki) lisättiin kaavion tapahtumiin (30–31). Lähteet dossierin mukaan CRS 6.8.2026 ja IEA 10.9.2026; en ole tarkistanut niitä itse.</li>
+</ul>
+
+<h2>Koko aineisto: 110 muuttujaa yhdessä kaaviossa</h2>
+<p class="lede">Kaikki sarjat on skaalattu samalle akselille (z-pisteet: kuinka monta keskihajontaa sarja on omasta 2015–2026-keskiarvostaan). Valitse näkyvät sarjat ryhmittäin, vaihda skaalaus ja näytä numeroidut tapahtumat. Alempana olevan analyysin korrelaatiot on laskettu samasta aineistosta.</p>
+<section id="chart-section">
+  <div class="controls">
+    <span class="lbl">Esivalinnat</span>
+    <button class="btn" data-preset="findings">Löydökset</button>
+    <button class="btn" data-preset="stocks">Varastokäyrä</button>
+    <button class="btn" data-preset="supply">Tarjontashokit</button>
+    <button class="btn" data-preset="regime">Regiimi</button>
+    <button class="btn" data-preset="default">Oletus</button>
+    <button class="btn" data-preset="oil">Vain öljylaadut</button>
+    <button class="btn" data-preset="core">Öljy + varastot + makro</button>
+    <button class="btn" data-preset="all">Kaikki 110</button>
+    <button class="btn" data-preset="none">Tyhjennä</button>
+    <span class="lbl">Skaalaus</span>
+    <select id="mode"><option value="z">z-pisteet (2015–2026)</option><option value="idx">indeksi, 2015 = 100</option></select>
+    <button class="btn active" id="evt-toggle">Tapahtumat 1–31</button>
+  </div>
+  <div id="chart"></div>
+  <p class="note">Viiva = kuukausiarvo. Pisteviiva ◦ = vuosidata (sijoitettu heinäkuulle ja interpoloitu). Brent ja WTI ovat spot-hintoja (Dated Brent / Cushing), eivät futuureja; lokakuu 2026 on kuun alun keskiarvo 20.10. asti. Viemällä hiiren viivan päälle näet alkuperäisen arvon yksiköineen.</p>
+  <div class="legend" id="legend"></div>
+</section>
+
+<h2>Tapahtumat kaaviossa</h2>
+<ol class="events" id="events"></ol>
+
+<h2>Avainluvut</h2>
+<div class="tiles" id="tiles"></div>
+
+<h2>Analyysi</h2>
+
+<h3>1. Mitä kaavio näyttää: neljä regiimiä</h3>
+<p><b>2015–2019, liuskeöljy ja OPEC+.</b> Jakso alkaa OPEC:n markkinaosuussodasta: Brent painui tammikuussa 2016 noin 30 dollariin, OECD-varastot nousivat yli 3 000 miljoonaan tynnyriin ja Baltic Dry Index teki kaikkien aikojen pohjan (307 pistettä helmikuussa 2016). OPEC+ syntyi marraskuussa 2016, ja varastojen purkautuminen nosti hinnan 86 dollariin lokakuuhun 2018 mennessä. Samaan aikaan Yhdysvaltain tuotanto kasvoi 9,3:sta 12,3 miljoonaan tynnyriin päivässä (2015→2019) ja vienti 0,5:stä 3 mb/d:hen: Yhdysvalloista tuli marginaalituottaja, jonka porauslautat reagoivat hintaan parin kuukauden viiveellä.</p>
+<p><b>2020–2021, COVID.</b> Kysyntäshokki vei kaiken samaan suuntaan: maailman kulutus putosi vuoden 2019 noin 101 mb/d:stä 80,5 mb/d:hen huhtikuussa 2020, lentoliikenne 96 %, WTI kävi negatiivisena ja OECD-varastot nousivat 3 211 miljoonaan tynnyriin. Elpyminen 2021 oli yhtä yhdensuuntainen: öljy, kupari, osakkeet, konttirahti (FBX 10 866 $/FEU syyskuussa 2021) ja Baltic Dry (4 820 pistettä lokakuussa 2021) nousivat yhdessä. Tämä jakso selittää suuren osan kaikista "kaikki korreloi öljyn kanssa" -tuloksista.</p>
+<p><b>2022–2025, Ukraina, inflaatio ja OPEC+:n leikkaukset.</b> Venäjän hyökkäys nosti Brentin 128 dollariin, mutta hintapiikki jäi lyhyeksi: Yhdysvallat vapautti 180 mb strategisesta varastosta (SPR 640 → 350 mb), EU-embargo ja hintakatto ohjasivat Venäjän öljyn Aasiaan, ja Fed nosti koron yli 5 prosenttiin. OPEC+ leikkasi 2022–2023 yhteensä noin 5 mb/d, mutta Kiinan kysynnän hidastuminen ja Yhdysvaltain ennätystuotanto painoivat Brentin 60–65 dollariin loppuvuonna 2025. Rahastojen nettopositio WTI:ssä kääntyi lokakuussa 2025 ensimmäistä kertaa negatiiviseksi koko jaksolla.</p>
+<p><b>2026, Hormuz.</b> Yhdysvaltain ja Israelin iskut Iraniin 28.2.2026 sulkivat Hormuzinsalmen. OPEC-tuotanto putosi 30,8:sta 19,4 mb/d:hen (helmi→toukokuu), maailman tuotanto 108,7:stä 94,6 mb/d:hen, ja varastoja purettiin 4–5 mb/d. Dubai nousi ennätykselliseen 166 dollariin, ja Brent–WTI-ero levisi 25 dollariin, koska Yhdysvaltain varastot ja SPR-vapautukset pitivät WTI:n kurissa. Kesäkuun Islamabadin sopimus painoi Brentin 70 dollariin, sopimuksen romahdus nosti sen takaisin yli sadan, ja syyskuun keskihinta oli 114 dollaria. Lokakuussa SPR on alimmillaan sitten vuoden 1982 (283 mb), dieselin hinta Yhdysvalloissa on ennätyksellinen ja VLCC-tankkerien päivävuokrat ylittivät 700 000 dollaria. Osakemarkkina teki silti uuden huipun: S&P 500 oli lokakuussa 7 750 pisteessä.</p>
+
+<h3>2. Korrelaatiot: tasot vs. kuukausimuutokset</h3>
+<p>Korrelaatio tasoissa (kaksi sarjaa, jotka molemmat nousevat trendinomaisesti) ja korrelaatio kuukausimuutoksissa (liikkuvatko ne samaan suuntaan samaan aikaan) kertovat eri asioita. Tasokorrelaatio on altis näennäiskorrelaatiolle, muutoskorrelaatio on luotettavampi mittari yhteisliikkeestä. Alla molemmat Brentiä vastaan (Pearson, n = kuukausia).</p>
+<div class="cols">
+<div><h3>Tasokorrelaatio Brentin kanssa</h3><div class="tbl-wrap"><table id="t-level"></table></div></div>
+<div><h3>Kuukausimuutosten korrelaatio</h3><div class="tbl-wrap"><table id="t-change"></table></div></div>
+</div>
+<p>Vahvin ja kestävin löydös on <b>varastojen ja hinnan käänteinen suhde</b>: OECD:n kaupallisten varastojen tasokorrelaatio Brentin kanssa on −0,83 ja Yhdysvaltain kokonaisvarastojen −0,77. Varastot ovat markkinan tase konkreettisessa muodossa. Toinen vankka ryhmä ovat <b>öljystä johdetut hinnat</b>: bensiini (+0,94 tasoissa, +0,67 muutoksissa), diesel, energian kuluttajahinnat ja tuottajahinnat seuraavat raakaöljyä 0–2 kuukauden viiveellä. Kolmas ryhmä on <b>reaalitalouden aktiviteetti</b>: teollisuustuotanto, autoteollisuus, lentoliikenne ja autojen myynti korreloivat muutoksissa +0,5…+0,6, mutta kun vuodet 2020–2021 jätetään pois, korrelaatiot katoavat: teollisuustuotanto +0,01, lentoliikenne +0,02, autojen myynti +0,04, BKT USA −0,11, S&amp;P 500 0,00. Ne mittaavat COVID-shokkia. Samalla rajauksella bensiini (+0,69), energia-CPI (+0,68) ja rahastojen positio (+0,51) säilyttävät korrelaationsa, eli ne ovat aitoja kytköksiä.</p>
+
+<h3>3. Mikä ei korreloi</h3>
+<div class="tbl-wrap"><table id="t-zero"></table></div>
+<p>Lämpötilapoikkeamat, tuulisähkön määrä ja osuus, Baltic Dry Index, konttirahti, Henry Hub -kaasu ja Yhdysvaltain raakaöljyvarastojen kuukausimuutokset eivät liiku öljyn hinnan kanssa (|r| &lt; 0,06). Lämpötila vaikuttaa lämmitysöljyn ja kaasun kysyntään alueellisesti, mutta globaali kuukausianomalia on liian karkea mittari ja öljyn hinta määräytyy tarjontashokeista. Baltic Dry mittaa kuivarahtia (rautamalmi, vilja, hiili), jonka kysyntä on Kiinan rakentamisen ja satovuosien funktio. Vuositason sarjoista syntyvyys, korkeakoulutettujen määrä ja HDI korreloivat Brentin kanssa jopa |r| 0,7–0,9, mutta kyse on puhtaasta näennäiskorrelaatiosta: molemmissa on monotoninen trendi ja havaintoja on 8–12. Esimerkiksi Kiinan syntyvyyden korrelaatio Brentin kanssa on −0,73 ja Yhdysvaltain korkeakouluopiskelijoiden osuuden −0,86, eikä kummallakaan ole kausaalista sisältöä.</p>
+<div class="tbl-wrap"><table id="t-annual"></table></div>
+
+<h3>4. Korrelaatiot vaihtavat merkkiä: tarjonta- vs. kysyntäshokit</h3>
+<div class="tbl-wrap"><table id="t-sub"></table></div>
+<p>Taulukko on analyysin tärkein. <b>Dollarin</b> ja öljyn perinteinen käänteinen suhde (−0,34 vuosina 2015–2019, −0,70 COVID-aikana) katosi vuoden 2022 jälkeen (+0,15 ja +0,13): Yhdysvallat on nettoviejä, ja tarjontashokki nostaa sekä öljyä että dollaria. <b>S&amp;P 500</b> korreloi öljyn kanssa positiivisesti kysyntävetoisina vuosina (+0,50 ja +0,60) ja negatiivisesti tarjontashokkien aikana (−0,14 ja −0,50 vuonna 2026). <b>VIX</b> kääntyy samalla tavalla. <b>OPEC-tuotannon</b> korrelaatio on −0,76 vuonna 2026, koska tuotanto romahti pakosta samalla kun hinta nousi. <b>Yhdysvaltain raakaöljyvarastot</b> korreloivat 2026 poikkeuksellisesti positiivisesti (+0,81): varastot kasvoivat SPR-vapautusten ja viennin pullonkaulojen takia samaan aikaan kun maailmanhinta nousi, mikä selittää 25 dollarin Brent–WTI-eron. Tämä on Lutz Kilianin (AER 2009) rakenteellisen VAR-mallin keskeinen tulos käytännössä: tarjontashokin, globaalin kysyntäshokin ja varmuusvarastokysynnän korrelaatiot muiden muuttujien kanssa ovat erimerkkisiä, joten yksi kiinteä korrelaatiokerroin johtaa harhaan.</p>
+
+<h3>5. Viiveet ja syy–seuraus (lead–lag ja Granger)</h3>
+<div class="cols">
+<div><h3>Paras ristikorrelaatio ja viive</h3><div class="tbl-wrap"><table id="t-ll"></table></div><p class="note">Viive &lt; 0: muuttuja seuraa Brentiä |k| kuukauden jäljessä. Viive &gt; 0: muuttuja edeltää Brentiä.</p></div>
+<div><h3>Granger-testi, p-arvot (viive 1–3 kk)</h3><div class="tbl-wrap"><table id="t-gr"></table></div><p class="note">p &lt; 0,05: muuttujan menneet muutokset parantavat toisen muuttujan ennustetta. Testi kertoo ajallisesta edeltämisestä, ei mekanismista.</p></div>
+</div>
+<p>Öljyn hinta <b>edeltää</b> selvästi: porauslautat ja poraustoiminta reagoivat 2 kuukauden viiveellä (r = +0,47), Yhdysvaltain tuotanto noin 10 kuukauden viiveellä, bensiini ja energia-CPI samassa ja seuraavassa kuussa, kokonais-CPI p = 0,002, lentoliikenne p &lt; 0,001. Brentiä <b>edeltävät</b> vain markkinamuuttujat: VIX (p = 0,001), rahastojen nettopositio (p = 0,009), kupari (p = 0,02) ja S&amp;P 500 (p = 0,02). Varastot, OPEC-tuotanto, dollari, lämpötila, tuuli ja Baltic Dry eivät Granger-ennusta Brentiä kuukausitasolla. Positioinnin ja hinnan välillä on kaksisuuntainen kytkentä (p = 0,009 ja 0,006): trendiä seuraavat rahastot vahvistavat liikkeitä, ja kääntyvät niiden jälkeen.</p>
+
+<h3>6. Varastokäyrä: ainoa rakenteellinen "ennustaja"</h3>
+<p id="inv-text"></p>
+
+<h3>7. Ennustettavuus: testi, joka toistaa Hamiltonin tuloksen</h3>
+<p id="pred-text"></p>
+<div class="callout"><b>Johtopäätös ennustamisesta.</b> Julkinen kuukausidata (varastot, positiot, dollari, osakkeet, rahti, kupari, porauslautat, tase, VIX) ei paranna seuraavan kuukauden Brent-ennustetta verrattuna oletukseen "hinta pysyy ennallaan". Suuntaosumatarkkuus on kolikonheiton tasoa. Sama tulos on dokumentoitu akateemisessa kirjallisuudessa 2000-luvulta lähtien (Hamilton 2009; Alquist, Kilian &amp; Vigfusson 2013). Pidemmällä horisontilla kuva muuttuu: fair valuen ja hinnan välisen gapin palautuma voittaa ei-muutosta 6–12 kuukauden päässä (Brent RMSE −17…−19 %, WTI −6…−7 %, Clark–West t 2,0–3,8; ks. dossieriosio), mikä vastaa kirjallisuuden yhdistelmätuloksia. Ennustettavissa ovat myös <i>muiden muuttujien reaktiot öljyyn</i>: polttoaineiden hinnat, inflaatio, porausaktiviteetti ja tuotanto.</div>
+
+<h3>8. Miten huippukvantit ja tutkijat ennustavat öljyn hintaa</h3>
+<ul class="plain">
+<li><b>Satunnaiskulku ja futuurikäyrä vertailukohtana</b> (Hamilton 2009; Alquist, Kilian &amp; Vigfusson 2013, Handbook of Economic Forecasting). Futuurihinta ja "ei muutosta" ovat 1–12 kuukauden horisontilla lähes yhtä hyviä; useimmat mallit häviävät niille reaaliajassa. Tämä on mittapuu, jota vastaan kaikki muu arvioidaan.</li>
+<li><b>Rakenteellinen VAR ja shokkien hajotus</b> (Kilian 2009; Baumeister &amp; Hamilton 2019). Hinta hajotetaan tarjonta-, kysyntä- ja varmuusvarastoshokkeihin. Ei ennusta hintaa itsessään, mutta kertoo mitä korrelaatioita on lupa käyttää: kysyntäshokin aikana osakkeet ja öljy nousevat yhdessä, tarjontashokin aikana eivät.</li>
+<li><b>Varastopohjaiset mallit</b> (Ye, Zyren &amp; Shore 2002–2006; EIA:n STEO). Hinta selitetään OECD-varastojen poikkeamalla normaalitasosta. Tämän aineiston replikaatio: r = −0,64, ja 10 miljoonan tynnyrin ylijäämä vastaa noin −1,6 % Brentissä. Toimii tasoilla ja kvartaaleilla, ei kuukausikäänteissä.</li>
+<li><b>Reaaliaikaiset VAR-ennusteet ja tuotehinta-erot</b> (Baumeister &amp; Kilian 2012, 2015; Baumeister, Kilian &amp; Zhou 2018). Bensiinin ja lämmitysöljyn jalostusmarginaalit sisältävät tietoa tulevasta raakaöljyn hinnasta 3–12 kuukauden horisontilla; yhdistelmäennusteet voittavat satunnaiskulun 5–15 % MSPE:ssä.</li>
+<li><b>Termiinirakenne ja carry</b> (Koijen, Moskowitz, Pedersen &amp; Vrugt 2018; Boons &amp; Prado 2019; Goldman Sachsin aikaerot). Backwardaatio kertoo fyysisestä tiukkuudesta ja antaa positiivisen rullatuoton. Trendiä seuraavat CTA:t (Man AHL, Winton, AQR) yhdistävät momentumin ja carryn; nämä strategiat eivät ennusta tasoa, vaan keräävät riskipreemion.</li>
+<li><b>Positiointi ja riskipreemio</b> (Hamilton &amp; Wu 2014; CFTC COT). Rahastojen nettopositio Granger-ennustaa Brentiä (p = 0,009) ja korreloi muutoksissa +0,38, mutta sen ennustevoima on symmetristä: äärimmäinen positio ennakoi kääntymistä. Lokakuun 2025 nettolyhyt positio edelsi vuoden 2026 kaksinkertaistumista.</li>
+<li><b>Vaihtoehtodata: satelliitit ja AIS</b> (Orbital Insight, Ursa Space, Kpler, Vortexa). Säiliöiden kelluvien kattojen varjot ja tankkerien transponderit antavat varastot ja virrat päivittäin, viikkoja ennen virallisia tilastoja. Vuoden 2026 kriisissä Kpler raportoi Iranin varjolaivaston öljyn loppuneen lokakuun puolivälissä, ja tankkerien määrät Hormuzissa olivat markkinan tärkein reaaliaikainen muuttuja.</li>
+<li><b>Sää- ja kysyntämallit</b> (Citadelin ja Millenniumin hyödykeyksiköt, Vitol, Trafigura). Lämpötila ennustaa lämmitysöljyn, kaasun ja sähkön kysyntää viikkotasolla; globaali kuukausianomalia ei näy raakaöljyssä, kuten tämäkin aineisto osoittaa. Kauppahuoneiden etu on oma fyysinen virta- ja jalostamodata.</li>
+<li><b>Geopoliittisen riskin indeksit ja optiot</b> (Caldara &amp; Iacoviello 2022, GPR-indeksi; OVX ja riskireversaalit). GPR-shokit nostavat öljyä ja laskevat osakkeita, mikä vastaa vuoden 2026 regiimiä. Optiomarkkinan vinous hinnoittelee Hormuz-riskin ennen uutisia.</li>
+<li><b>Koneoppiminen ja tekstidata</b> (LSTM-/transformer-mallit; Loughran, McDonald &amp; Pragidis 2019 uutissentimentistä; Google Trends). Tulokset ovat hauraita: parannukset satunnaiskulkuun ovat pieniä, keskittyvät suuntaan eivätkä tasoon, ja katoavat usein, kun mallit arvioidaan aidosti reaaliajassa.</li>
+</ul>
+<p>Yhteinen nimittäjä parhaissa lähestymistavoissa on, että ne eivät yritä ennustaa hintaa makrosarjoista vaan mittaavat fyysistä tasetta (varastot, virrat, aikaerot) nopeammin ja tarkemmin kuin muut, tai keräävät riskipreemioita (carry, momentum), tai hajottavat shokit oikeaan luokkaan ennen korrelaatioiden käyttöä.</p>
+
+<h3>9. Johtopäätökset</h3>
+<ul class="plain">
+<li>Luotettavia korrelaatioita on kolme: varastot vs. hinta (käänteinen, −0,6…−0,8 tasoissa), johdetut hinnat (bensiini, diesel, energia-CPI, PPI; +0,6…+0,9) ja öljylaatujen keskinäinen liike (WTI, Dubai, APSP; 0,9–0,97 muutoksissa).</li>
+<li>Osakkeiden, dollarin, VIX:n, kuparin ja OPEC-tuotannon korrelaatiot vaihtavat merkkiä regiimin mukaan. Vuoden 2026 Hormuz-shokki on puhdas tarjontashokki: öljy ja dollari nousivat yhdessä, osakkeet irtaantuivat ja tekivät uuden huipun.</li>
+<li>Öljy edeltää reaalitaloutta: porauslautat 2 kk, tuotanto noin 10 kk, kuluttajahinnat 0–1 kk, lentoliikenne ja autoteollisuus samassa kuussa. Vain markkinamuuttujat (VIX, positiot, kupari, osakkeet) edeltävät öljyä, ja nekin heikosti.</li>
+<li>Lämpötila, tuuli, syntyvyys, koulutus, elintasoindeksit ja kuivarahti eivät liity öljyn hintaan kuukausitasolla; vuositason korrelaatiot niiden kanssa ovat trendin tuottamia näennäisyyksiä.</li>
+<li>Öljylaadut hajaantuvat juuri silloin, kun se on kalleinta: Hormuzin sulkeutuessa Dubai nousi 24 dollaria Brentin yläpuolelle ja Brent 25 dollaria WTI:n yläpuolelle. Maantiede, ei laatu, hinnoitteli vuoden 2026.</li>
+<li>Kuukauden päähän öljyä ei voi ennustaa julkisella makrodatalla paremmin kuin arvaamalla nykyhinnan (viimeisin päivähinta, ei kuukausikeskiarvo: se yksin pienentää virhettä 17–25 %); 6–12 kuukauden päähän fair value -gapin palautuma ja futuurikäyrä antavat 7–19 % edun. Etu syntyy fyysisen taseen mittaamisesta (satelliitit, AIS, aikaerot) ja shokkien luokittelusta.</li>
+</ul>
+
+<h3>10. Aineisto, lähteet ja varaukset</h3>
+<div class="tbl-wrap"><table id="t-src"></table></div>
+<ul class="plain src">
+<li>Brent ja WTI ovat EIA:n spot-hintoja (Dated Brent FOB, WTI Cushing). Spot ylitti futuurit syys–lokakuussa 2026 fyysisen tiukkuuden takia; kuukausikeskiarvo lokakuulle 2026 kattaa 1.–20.10.</li>
+<li>Dubai, APSP, kupari, alumiini, rautamalmi, nikkeli ja IMF:n indeksit päättyvät heinäkuuhun 2026 (IMF:n julkaisuviive). OPEC-koria ei saatu ladattua (OPEC:n palvelin esti haun); se on korvattu Dubai- ja APSP-sarjoilla.</li>
+<li>Maailman tuotanto, kulutus, OPEC-tuotanto ja OECD-varastot on koottu EIA:n STEO-arkistoista (tammikuu 2016, 2018, 2020, 2022, 2024) ja lokakuun 2026 STEO:sta; syyskuu 2026 on EIA:n arvio.</li>
+<li>Vuosisarjat (BKT, syntyvyys, koulutus, HDI, sähköautot, tuuli- ja aurinkosähkö, autojen myynti) on sijoitettu heinäkuulle ja interpoloitu lineaarisesti vain kaaviota varten; korrelaatiot niille on laskettu vuositasolla (n = 8–12), eikä niitä pidä tulkita tilastollisesti merkitsevinä.</li>
+<li>Henkilöautojen myynti (IEA/OWID) kattaa kotimaiset henkilöautot; CAAM:n koko ajoneuvomyynti Kiinassa oli 34,4 miljoonaa vuonna 2025 ja KBA:n rekisteröinnit Saksassa noin 2,9 miljoonaa.</li>
+<li>Tankkerirahdeista ei ole vapaata aikasarjaa; VLCC-luvut ovat Baltic Exchangen julkaistuista päivävuokrista (heinäkuu 2026 n. 198 000 $/pv, elokuu 272 000 $/pv, syyskuun alkupuoli 449 000 $/pv, 18.9. n. 723 000 $/pv; syyskuu 2025 79 700 $/pv). Kuivarahti (BDI) ja konttirahti (FBX, WCI, SCFI, CCFI) ovat täydet sarjat.</li>
+<li>S&amp;P 500 on FRED:n sarjasta, joka kattaa vain 10 vuotta (lokakuusta 2016). Kuukausimuutosten korrelaatioissa hinnat ja indeksit on muunnettu log-muutoksiksi, korot, poikkeamat, erot ja positiot differensseiksi.</li>
+</ul>
+<p class="src">Tapahtumatiedot 2026: Wikipedia (2026 Strait of Hormuz crisis; 2026 Iran war fuel crisis; 2026–2028 world oil market chronology), EIA Today in Energy 4/2026 ja STEO-tiedote 6.10.2026, IMF WEO lokakuu 2026, OilPrice.com 16.10.2026, CBS News 22.10.2026, Al Jazeera 3.5.2026, Cyprus Mail 29.9.2026, Euronews 10.4.2026, Hudson Labs (energia-M&amp;A 2026), Gasgoo/CAAM, Forvis Mazars/KBA.</p>
+
+<h2>Lisähaku: päivä- ja viikkotason signaalit</h2>
+<p class="note">Haettu 22.10.2026 illalla: NYMEX-termiinikäyrä (EIA, CL1–CL4, päättyy 4/2024, koska EIA lopetti futuurisarjat), IMF PortWatchin AIS-pohjaiset salmitransitit (2019→), EIA:n viikkoraportit raporttipäiville kohdistettuna, NHC HURDAT2 -myrskyradat ja NOAA CPC:n 7 päivän HDD-ennustearkisto (4 248 päivittäistä ennustetta 2015→).</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Signaali</th><th>Mitä aineisto sanoo</th><th>Käyttö</th></tr></thead>
+<tbody>
+<tr><td>Termiinikäyrä (M1–M4 % hinnasta)</td><td>Backwardaatio ennustaa laskua: r = −0,42 seuraavan 3 kk hintamuutoksen kanssa (ilman 2020 −0,23); kvartiileittain syvä contango → +2,2 %, jyrkkä backwardaatio → −5,1 % / 3 kk. Etukäteistesti 2018→: 7 % parempi kuin "ei muutosta". Cushing-varastojen muutosta käyrä ei ennusta (r ≈ 0).</td><td>Markkinan oma ennuste; toimii 3–6 kk horisontilla hinnalle, rullatuotto erikseen.</td></tr>
+<tr><td>EIA-raporttipäivä</td><td>Raporttipäivien liikkeet ovat 15 % muita päiviä suurempia (2,15 % vs 1,88 %), mutta kausinormiin perustuva yllätysproxy ei selitä niitä (r = −0,02). Ilman konsensuskyselyä ja API-lukua yllätystä ei voi mitata.</td><td>Vaatii maksullisen konsensusdatan; julkisella datalla ei rakennettavissa.</td></tr>
+<tr><td>Hormuzin tankkeritransitit (PortWatch)</td><td>2019–25 keskimäärin 50 tankkeria/pv; 2026: maaliskuu 0,9, kesäkuu 5,4, lokakuu 0,4/pv. Transitien 7 pv muutos korreloi Brentin 7 pv tuoton kanssa −0,40 ja edeltää sitä 3 pv (−0,42 vs −0,24 toisinpäin); viikkotasolla transitien kasvu ennustaa seuraavan viikon laskua (r = −0,33, n = 34). Punaisenmeren reititys pysyi: Bab el-Mandeb 26 → 12 tankkeria/pv, Hyväntoivonniemi 9 → 19.</td><td>Toimiva reaaliaikainen signaali kriisiregiimissä; nolla normaalioloissa.</td></tr>
+<tr><td>Meksikonlahden myrskyt (HURDAT2, 41 tapausta 2015–24)</td><td>Tuotanto putoaa keskimäärin 0,31 mb/d (jopa 1,4); CL1 +1,2 % viisi päivää myrskyn jälkeen keskimäärin, mutta hajonta on suuri ja merkki riippuu kohteesta: Harvey (jalostamot) CL1 −0,4 %, RBOB +25 %; Laura (tuotanto) CL1 −1,4 %, RBOB −13 %.</td><td>Tuotantovaikutus luotettava, hintavaikutus tapauskohtainen; kauppa tuotteisiin ja crackeihin.</td></tr>
+<tr><td>CPC:n 7 pv HDD-ennusteen revisiot</td><td>Talvella +10 astepäivän revisio 7 pv summaan → Henry Hub -futuuri +1,2 % samana päivänä (p = 0,015), 3 pv kumulatiivinen r = +0,20. Lämmitysöljyyn ja raakaöljyyn ei vaikutusta (r ≈ 0). Texasin ennustettu pakkaspiikki (max ≥ 35 HDD/pv) → tuotanto −0,15 mb/d sinä viikkona (n = 19).</td><td>Videon kvantin ilmiö on olemassa kaasussa; öljyssä vain Texasin pakkasten tuotantoriski.</td></tr>
+<tr><td>COT-ääriarvot (jo aineistossa)</td><td>z &gt; 1,5 → WTI +2,3 % / 4 vko ja −4,2 % / 13 vko; z &lt; −1,5 → −0,9 % ja +4,5 %.</td><td>Lyhyt trendi, 3 kk kontra.</td></tr>
+</tbody></table></div>
+
+<h2>Lisähaku 2: konsensus, futuurikäyrä ja satamien AIS-virrat</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Aineisto</th><th>Mitä saatiin</th><th>Tulos</th></tr></thead>
+<tbody>
+<tr><td>EIA-konsensus (investing.com-kalenteri, 821 raporttia 2011–2026)</td><td>Analyytikkokonsensus, toteuma ja yllätys jokaiselle viikkoraportille.</td><td>Yllätys selittää raporttipäivän liikettä heikosti: 2015–2019 r = −0,28 (−0,18 %/mb, p &lt; 0,001), 2020–2025 ≈ 0, 2026 r = −0,20 (n = 41). Suuri purku-yllätys → +0,8 %, suuri kertymä-yllätys → −0,4 % samana päivänä; seuraavana päivänä ei mitään (r = +0,04). Konsensus osuu toteumaan r = 0,46; sen virhe (4,8 mb) on melkein yhtä suuri kuin toteuman hajonta (5,4 mb). API:n tiistairaportti syö suurimman osan yllätyksestä.</td></tr>
+<tr><td>Futuurikäyrä (CME, 21.10.2026; Yahoo-sopimushistoriat 2021→)</td><td>Koko WTI- ja Brent-käyrä 2026–2037 sekä Dec26–Dec27-spreadin historia.</td><td>WTI: Dec-26 97 $, Jun-27 88 $, Dec-27 81 $, Dec-28 74 $ (12 kk backwardaatio 16 $, 20 %). Brent: 109 → 94 → 87 → 79 $ (22 $, 25 %). Spot 115–125 $ on 10–15 $ etukontraktin yläpuolella: fyysinen preemio. Dec26–Dec27-spread kääntyi contangosta (−1 $ 12/2025) backwardaatioon helmikuussa 2026 ja oli syyskuussa 16,7 $. Historiallisesti näin jyrkkä käyrä on ennakoinut laskua 3–12 kk:ssa.</td></tr>
+<tr><td>IMF PortWatch, satamataso (AIS, 18 satamaa, päivittäin 2019→)</td><td>Tankkerivienti ja -tuonti tonneina: Persianlahti, Yanbu, USA:n Gulf, Venäjä, Kiina.</td><td>Persianlahden tankkerivienti 28 → 13 Mt/kk (huhtikuu), 22 Mt kesäkuun tulitauossa, elo–lokakuussa 2–4 Mt/kk. Yanbu (Punainenmeri, putki) nousi 4 → 20 Mt/kk kesäkuussa ja romahti nollaan syyskuussa huthien iskujen jälkeen. USA:n Gulf-vienti 19 → 27 Mt/kk. Venäjä 16 Mt/kk toukokuussa pakotehuojennuksilla. Kiinan tuonti (Qingdao + Ningbo) 11 → 4 Mt/kk. Viikkotason vienti ei korreloi Brentin kanssa (r ≈ 0): tila on binäärinen (auki/kiinni), ja osa liikenteestä kulkee AIS pimeänä.</td></tr>
+</tbody></table></div>
+<p class="note">Vielä puuttuu: historiallinen päivätason termiinikäyrä 4/2024–10/2026 (CME jakaa vain viimeiset viisi päivää, EIA lopetti sarjansa, Yahoo poistaa erääntyneet sopimukset) sekä laivakohtainen AIS (Kpler/Vortexa) ja API:n tiistairaportti, jotka ovat maksullisia.</p>
+
+<footer>Koottu 22.10.2026; päivädata-osiot lisätty samana iltana. Laskenta: Python (pandas, statsmodels, scipy); kaavio: Plotly.js. Korrelaatiot ovat Pearsonin kertoimia; Granger-testit ovat F-testejä log-muutoksista.</footer>
+</div>
+
+<script>
+const DATA = __DATA__;
+const GC = {"Öljyn hinnat":"blue","Polttoaineet":"orange","Varastot":"aqua","Tarjonta & kysyntä":"yellow","Toimialat":"magenta","Rahti":"magenta","Makrotalous":"green","Positiot":"green","Raaka-aineet":"violet","Ilmasto & energia":"red","Väestö & elintaso":"red","Teknologia":"red"};
+const DASHES = ["solid","dash","dot","dashdot","longdash","longdashdot"];
+const css = (v)=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const isDark = ()=>{const t=document.documentElement.getAttribute("data-theme"); if(t==="dark") return true; if(t==="light") return false; return window.matchMedia("(prefers-color-scheme: dark)").matches;};
+const S = DATA.series; const dates = DATA.dates;
+const visible = new Set(S.filter(s=>s.on).map(s=>s.key));
+let mode = "z", showEvents = true;
+const fmt = (v,u)=>{ if(v==null) return "–"; const a=Math.abs(v); const d = a>=1000?0:(a>=100?1:(a>=10?2:(a>=1?2:3))); return v.toLocaleString("fi-FI",{maximumFractionDigits:d,minimumFractionDigits:0})+" "+u; };
+function transform(vals){
+  const ok = vals.filter(v=>v!=null);
+  if(mode==="idx"){ const base = vals.slice(0,12).filter(v=>v!=null); const allPos = ok.every(v=>v>0);
+    if(base.length>=6 && allPos){ const m = base.reduce((a,b)=>a+b,0)/base.length; return vals.map(v=>v==null?null:v/m*100); } }
+  const m = ok.reduce((a,b)=>a+b,0)/ok.length; const sd = Math.sqrt(ok.reduce((a,b)=>a+(b-m)*(b-m),0)/Math.max(1,ok.length-1))||1;
+  return vals.map(v=>v==null?null:(v-m)/sd);
+}
+function seriesColor(s){
+  const hue = GC[s.group]||"blue"; const base = css("--c-"+hue);
+  const grp = S.filter(x=>GC[x.group]===hue); const i = grp.findIndex(x=>x.key===s.key); const n = grp.length;
+  // vary lightness slightly within hue so neighbours separate; identity carried by hover + legend
+  const t = n>1? (i/(n-1))*0.5-0.25 : 0; return shade(base, t);
+}
+function shade(hex, t){ const c=hex.replace("#",""); const r=parseInt(c.slice(0,2),16),g=parseInt(c.slice(2,4),16),b=parseInt(c.slice(4,6),16);
+  const mix=(x)=> t<0 ? Math.round(x*(1+t)) : Math.round(x+(255-x)*t); return `rgb(${mix(r)},${mix(g)},${mix(b)})`; }
+function traces(){
+  return S.map((s,i)=>{ const y = transform(s.values); const grpIdx = S.filter(x=>x.group===s.group).findIndex(x=>x.key===s.key);
+    const text = s.values.map((v,j)=> s.freq==="annual" ? fmt(v,s.unit)+" (interpoloitu vuosidata)" : fmt(v,s.unit));
+    return { type:"scatter", mode:"lines", name:s.label, x:dates, y, text, connectgaps:false, visible: visible.has(s.key),
+      line:{ width: s.key==="brent"?2.8:(s.key==="wti"||s.key==="dubai"?2:1.4), color: seriesColor(s), dash: s.freq==="annual"?"dot":DASHES[grpIdx%DASHES.length] },
+      hovertemplate:"<b>"+s.label+"</b><br>%{x|%Y-%m}<br>%{text}<br>"+(mode==="z"?"z = %{y:.2f}":"indeksi %{y:.0f}")+"<extra></extra>", hoverlabel:{namelength:0} }; });
+}
+function eventShapes(){
+  const dark=isDark(); const col = dark?"rgba(240,239,236,.35)":"rgba(11,11,11,.30)";
+  const shapes = DATA.events.map(e=>({type:"line", xref:"x", yref:"paper", x0:e.date, x1:e.date, y0:0, y1:1, line:{color:col,width:1,dash:"dot"}}));
+  const narrow = document.getElementById("chart").clientWidth < 700;
+  const ann = narrow ? [] : DATA.events.map((e,i)=>({x:e.date, y:1.0 - (i%4)*0.034, xref:"x", yref:"paper", text:String(e.n), showarrow:false, font:{size:9.5, color:css("--ink-2"), family:css("--font-mono")}, bgcolor:css("--surface"), bordercolor:col, borderwidth:1, borderpad:1.5, hovertext:e.text, hoverlabel:{bgcolor:css("--surface"), font:{color:css("--ink"), size:12}, bordercolor:col}}));
+  return {shapes, annotations:ann};
+}
+function layout(){
+  const dark=isDark(); const ev = showEvents?eventShapes():{shapes:[],annotations:[]};
+  return { paper_bgcolor:css("--surface"), plot_bgcolor:css("--surface"), font:{family:css("--font-ui"), color:css("--ink-2"), size:12}, showlegend:false, hovermode:"closest",
+    margin:{l:48,r:16,t:36,b:56}, xaxis:{ gridcolor:css("--grid"), zeroline:false, linecolor:css("--line"), tickformat:"%Y", dtick:"M12", hoverformat:"%Y-%m", range:["2015-01-01","2026-11-15"],
+      rangeselector:{buttons:[{count:2,label:"2 v",step:"year",stepmode:"backward"},{count:5,label:"5 v",step:"year",stepmode:"backward"},{step:"all",label:"kaikki"}], bgcolor:css("--surface-2"), activecolor:css("--grid"), font:{color:css("--ink")}, x:0, y:1.09},
+      rangeslider:{visible:true, thickness:0.07, bgcolor:css("--surface-2"), bordercolor:css("--line")} },
+    yaxis:{ title:{text: mode==="z"?"z-pisteet (keskihajontaa omasta keskiarvosta)":"indeksi, 2015 = 100", font:{size:12}}, gridcolor:css("--grid"), zerolinecolor:css("--line"), zeroline:true, linecolor:css("--line"), fixedrange:false },
+    shapes:ev.shapes, annotations:ev.annotations, hoverlabel:{bgcolor:css("--surface"), bordercolor:css("--line"), font:{color:css("--ink"), family:css("--font-ui")}} };
+}
+function draw(){ Plotly.react("chart", traces(), layout(), {responsive:true, displaylogo:false, modeBarButtonsToRemove:["lasso2d","select2d","autoScale2d"], locale:"fi"}); }
+function applyVisibility(){ Plotly.restyle("chart", {visible: S.map(s=>visible.has(s.key))}); document.querySelectorAll("#legend input").forEach(i=>{ i.checked = visible.has(i.dataset.key); }); }
+// legend
+function buildLegend(){
+  const root=document.getElementById("legend"); root.innerHTML="";
+  DATA.groups.forEach(g=>{ const items=S.filter(s=>s.group===g); if(!items.length) return;
+    const box=document.createElement("div"); box.className="lg";
+    const h=document.createElement("div"); h.className="lg-h";
+    h.innerHTML=`<b><span class="sw" style="background:${css("--c-"+(GC[g]||"blue"))}"></span>${g} <small style="color:var(--muted);font-weight:400">(${items.length})</small></b><span><button class="mini" data-g="${g}" data-act="on">kaikki</button><button class="mini" data-g="${g}" data-act="off">ei mitään</button></span>`;
+    box.appendChild(h);
+    items.forEach(s=>{ const l=document.createElement("label"); l.className="chk"; l.title=s.label+" — "+s.source+" ("+s.first+" → "+s.last+")";
+      l.innerHTML=`<input type="checkbox" id="chk-${s.key}" data-key="${s.key}" ${visible.has(s.key)?"checked":""}><span style="border-left:3px solid ${seriesColor(s)};padding-left:6px">${s.label}</span><small>${s.freq==="annual"?"v":"kk"}</small>`;
+      box.appendChild(l); });
+    root.appendChild(box); });
+  root.addEventListener("change", e=>{ const k=e.target.dataset.key; if(!k) return; if(e.target.checked) visible.add(k); else visible.delete(k); applyVisibility(); });
+  root.addEventListener("click", e=>{ const b=e.target.closest("button.mini"); if(!b) return; S.filter(s=>s.group===b.dataset.g).forEach(s=>{ if(b.dataset.act==="on") visible.add(s.key); else visible.delete(s.key); }); applyVisibility(); });
+}
+const PRESETS = { default:S.filter(s=>s.on).map(s=>s.key), oil:["brent","wti","dubai","apsp","brent_wti_spread","dubai_brent_spread"],
+  findings:["brent","oecd_stocks","gasoline_us","opec_prod","mm_net_wti","term_m1m4","hormuz_tankers","brent_wti_spread"],
+  stocks:["brent","oecd_stocks","us_total_stocks","us_spr","world_stock_draw"],
+  supply:["brent","wti","opec_prod","world_balance","brent_wti_spread","dubai_brent_spread","hormuz_tankers"],
+  regime:["brent","sp500","usd_broad","vix","copper"],
+  core:["brent","wti","dubai","gasoline_us","diesel_us","us_crude_stocks","us_spr","oecd_stocks","world_balance","opec_prod","us_prod","usd_broad","sp500","vix","fedfunds","cpi_energy_us","mm_net_wti"], all:S.map(s=>s.key), none:[] };
+document.querySelectorAll("[data-preset]").forEach(b=>b.addEventListener("click",()=>{ visible.clear(); PRESETS[b.dataset.preset].forEach(k=>visible.add(k)); applyVisibility(); document.querySelectorAll("[data-preset]").forEach(x=>x.classList.toggle("active",x===b)); }));
+document.getElementById("mode").addEventListener("change", e=>{ mode=e.target.value; draw(); });
+document.getElementById("evt-toggle").addEventListener("click", e=>{ showEvents=!showEvents; e.target.classList.toggle("active",showEvents); Plotly.relayout("chart", showEvents?eventShapes():{shapes:[],annotations:[]}); });
+// events list
+document.getElementById("events").innerHTML = DATA.events.map(e=>`<li><span class="n">${e.n}</span><span class="d">${e.date.slice(0,7)}</span><span>${e.text}</span></li>`).join("");
+// tiles
+const st=DATA.analysis.stats;
+const tv=(v,u)=>`${fmt(v,"").trim()}<small>${u}</small>`;
+const tiles=[["Brent spot, lokakuu 2026 (1.–20.10.)", tv(st.brent.last,"$/bbl"), "kk-keskiarvon huippu koko jaksolla; pohja "+fmt(st.brent.min,"$")+" (4/2020)"],
+ ["Brent–WTI-ero", tv(st.brent_wti_spread.last,"$/bbl"), "keskiarvo 2015–2026 "+fmt(st.brent_wti_spread.mean,"$")+"; 2026 Hormuz-preemio"],
+ ["USA:n strateginen varasto", tv(st.us_spr.last,"milj. bbl"), "huippu "+fmt(st.us_spr.max,"")+" (8/2015); alin sitten 1982"],
+ ["OECD kaupalliset varastot", tv(st.oecd_stocks.last,"milj. bbl"), "9/2026; vaihteluväli "+fmt(st.oecd_stocks.min,"")+"–"+fmt(st.oecd_stocks.max,"")],
+ ["USA:n diesel", tv(st.diesel_us.last,"$/gal"), "9/2026, ennätys; bensiini "+fmt(st.gasoline_us.last,"$/gal")],
+ ["Rahastojen nettopositio WTI", tv(st.mm_net_wti.last,"tuh. sop."), "huippu "+fmt(st.mm_net_wti.max,"")+" (2/2018); pohja "+fmt(st.mm_net_wti.min,"")+" (10/2025)"]];
+document.getElementById("tiles").innerHTML = tiles.map(t=>`<div class="tile"><div class="k">${t[0]}</div><div class="v">${t[1]}</div><div class="s">${t[2]}</div></div>`).join("");
+// tables
+const r2=(v)=> v==null?"–":`<span class="${v>0?"pos":"neg"}">${v>0?"+":""}${v.toFixed(2)}</span>`;
+const tbl=(id,head,rows)=>{ document.getElementById(id).innerHTML = "<thead><tr>"+head.map(h=>`<th class="${h[1]||""}">${h[0]}</th>`).join("")+"</tr></thead><tbody>"+rows.map(r=>"<tr>"+r.map((c,i)=>`<td class="${head[i][1]||""}">${c}</td>`).join("")+"</tr>").join("")+"</tbody>"; };
+const an=DATA.analysis;
+tbl("t-level",[["Muuttuja"],["r","num"],["n","num"]], an.level_top.map(d=>[d.label, r2(d.r), d.n]));
+tbl("t-change",[["Muuttuja"],["r","num"],["n","num"]], an.change_top.map(d=>[d.label, r2(d.r), d.n]));
+tbl("t-zero",[["Muuttuja (kuukausimuutokset)"],["r","num"],["p","num"]], an.change_zero.map(d=>[d.label, r2(d.r), d.p.toFixed(2)]));
+tbl("t-annual",[["Vuosisarja"],["r tasot","num"],["p","num"],["r muutokset","num"],["n","num"]], an.annual.map(d=>[d.label, r2(d.r), d.p.toFixed(2), r2(d.rc), d.n]));
+tbl("t-sub",[["Kuukausimuutosten korrelaatio Brentin kanssa"]].concat(an.sub.periods.map(p=>[p,"num"])), an.sub.rows.map(d=>[d.label].concat(d.vals.map(v=>r2(v)))));
+tbl("t-ll",[["Muuttuja"],["viive kk","num"],["r viiveellä","num"],["r samanaik.","num"]], an.leadlag.map(d=>[d.label, (d.lag>0?"+":"")+d.lag, r2(d.r), r2(d.r0)]));
+tbl("t-gr",[["Syy → seuraus"],["p (1 kk)","num"],["p (2 kk)","num"],["p (3 kk)","num"]], an.granger.map(d=>[`${d.cause} → ${d.effect}`, ...[d.p1,d.p2,d.p3].map(p=>p==null?"–":(p<0.001?"<0,001":p.toFixed(3).replace(".",",")))]));
+const srcRows=[]; const seen=new Set(); DATA.series.forEach(s=>{ const k=s.source.split(" (")[0]; if(seen.has(k)) return; seen.add(k); srcRows.push([k, s.group, s.freq==="annual"?"vuosi":"kuukausi"]); });
+tbl("t-src",[["Lähde"],["Ryhmä (ensimmäinen)"],["Frekvenssi"]], srcRows);
+const inv=an.inv, invus=an.inv_us, pr=an.predictive;
+document.getElementById("inv-text").innerHTML = `OECD:n kaupallisten varastojen poikkeama 36 kuukauden liukuvasta keskiarvosta selittää Brentin log-tason: r = ${inv.r.toFixed(2)} (ilman vuotta 2026 ${inv.r_excl_2026.toFixed(2)}), R² = ${inv.r2_log.toFixed(2)}, n = ${inv.n}. Kymmenen miljoonan tynnyrin ylijäämä vastaa noin ${inv.slope_pct_per_10mb.toFixed(1).replace(".",",")} % Brentissä. Yhdysvaltain raakaöljyvarastoilla suhde on heikompi (r = ${invus.r.toFixed(2)}, ilman vuotta 2026 ${invus.r_excl_2026.toFixed(2)}), koska SPR-vapautukset ja vienti sekoittavat sen. Tämä on sama mekanismi, jolla EIA:n STEO ja useimmat pankkien tasemallit ennustavat: tiukka tase purkaa varastoja ja nostaa hintaa kvartaalien, ei kuukausien, aikajänteellä.`;
+document.getElementById("pred-text").innerHTML = `Testi: Brentin seuraavan kuukauden log-tuottoa ennustettiin regressiolla, jonka selittäjinä olivat edellisen kuukauden muutokset ${pr.predictors.length} muuttujassa (Yhdysvaltain varastot, rahastojen positio, dollari, S&amp;P 500, Baltic Dry, kupari, porauslautat, maailman tase, VIX ja Brentin oma viive). Malli estimoitiin laajenevalla ikkunalla ja ennusteet tehtiin aidosti etukäteen tammikuusta 2020 alkaen (${pr.n_oos} kuukautta). Tulos: mallin RMSE ${pr.rmse_monthly_logret.model.toFixed(3).replace(".",",")} vs. satunnaiskulun (ei muutosta) ${pr.rmse_monthly_logret.rw.toFixed(3).replace(".",",")} ja AR(1)-mallin ${pr.rmse_monthly_logret.ar1.toFixed(3).replace(".",",")}. Malli on ${((pr.rmse_monthly_logret.model/pr.rmse_monthly_logret.rw-1)*100).toFixed(0)} % huonompi kuin arvaus "sama kuin viime kuussa". Suuntaosumatarkkuus ${(pr.directional_accuracy_model*100).toFixed(0)} %. Koko aineistolla sovitetun mallin R² on ${pr.insample_r2.toFixed(2).replace(".",",")} (korjattu ${pr.insample_adj_r2.toFixed(2).replace(".",",")}), ja ainoa tilastollisesti merkitsevä selittäjä on VIX:n muutos (kerroin ${pr.coef.vix.coef.toFixed(2).replace(".",",")}, p = ${pr.coef.vix.p.toFixed(3).replace(".",",")}): volatiliteetin nousu edeltää öljyn laskua.`;
+// theme reactivity
+const mq=window.matchMedia("(prefers-color-scheme: dark)"); mq.addEventListener && mq.addEventListener("change",()=>{draw(); buildLegend();});
+new MutationObserver(()=>{draw(); buildLegend();}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+buildLegend(); draw();
+// ---- Model chart: actual, fair value, forecast cone ----
+let modelTarget="brent";
+document.querySelectorAll("[data-target]").forEach(b=>b.addEventListener("click",()=>{ modelTarget=b.dataset.target; document.querySelectorAll("[data-target]").forEach(x=>x.classList.toggle("active",x===b)); drawModel(); }));
+const isNarrow=()=>window.innerWidth<640;
+function drawModel(){
+  const md=DATA.model && DATA.model[modelTarget]; if(!md) return; const dark=isDark(); const NAME = modelTarget==="brent"?"Brent":"WTI";
+  const blue=css("--c-blue"), ink2=css("--ink-2"), grid=css("--grid");
+  const wfd=Object.keys(md.fv_walkforward), wfv=Object.values(md.fv_walkforward);
+  const X0=md.P0_day||(md.P0_date+"-01"); const fcd=[X0].concat(md.forecast.map(f=>f.date));
+  const med=[md.P0].concat(md.forecast.map(f=>f.median)), comb=[md.P0].concat(md.forecast.map(f=>f.comb)), p25=[md.P0].concat(md.forecast.map(f=>f.p25)), p75=[md.P0].concat(md.forecast.map(f=>f.p75)), p05=[md.P0].concat(md.forecast.map(f=>f.p05)), p95=[md.P0].concat(md.forecast.map(f=>f.p95));
+  const band=(x,lo,hi,fill,name)=>[{x, y:hi, mode:"lines", line:{width:0}, hoverinfo:"skip", showlegend:false},{x, y:lo, mode:"lines", line:{width:0}, fill:"tonexty", fillcolor:fill, name, hovertemplate:name+"<br>%{x|%Y-%m}: %{y:.0f} $<extra></extra>"}];
+  const tr=[
+    ...band(fcd,p05,p95, dark?"rgba(240,239,236,0.10)":"rgba(11,11,11,0.07)", "90 % väli"),
+    ...band(fcd,p25,p75, dark?"rgba(240,239,236,0.20)":"rgba(11,11,11,0.14)", "50 % väli"),
+    {x:md.dates, y:md.fv_insample, mode:"lines", name:"Fair value (koko aineistolla sovitettu)", line:{color:css("--c-orange"), width:1.6, dash:"dash"}, hovertemplate:"Fair value %{y:.0f} $<br>%{x|%Y-%m}<extra></extra>"},
+    {x:wfd, y:wfv, mode:"lines", name:"Fair value etukäteen (walk-forward 2020→)", line:{color:css("--c-orange"), width:1.2, dash:"dot"}, hovertemplate:"Walk-forward %{y:.0f} $<br>%{x|%Y-%m}<extra></extra>"},
+    {x:md.dates, y:md.actual, mode:"lines", name:NAME+" toteutunut (kuukausikeskiarvo)", line:{color:blue, width:2.6}, hovertemplate:NAME+" %{y:.1f} $<br>%{x|%Y-%m}<extra></extra>"},
+    {x:[X0], y:[md.P0], mode:"markers", name:"Viimeisin päivähinta ("+X0.slice(8,10)+"."+X0.slice(5,7)+".) = ennusteen lähtöpiste", marker:{color:blue, size:9, symbol:"diamond"}, hovertemplate:NAME+" %{y:.1f} $<br>%{x|%d.%m.%Y}<extra></extra>"},
+    {x:fcd, y:med, mode:"lines", name:"Fair value -malli ilman driftiä", line:{color:css("--c-orange"), width:1.4, dash:"dashdot"}, hovertemplate:"Malli %{y:.0f} $<br>%{x|%Y-%m}<extra></extra>"},
+    {x:fcd, y:comb, mode:"lines+markers", name:"Yhdistelmäennuste 50 % malli + 50 % futuurikäyrä", line:{color:blue, width:2.2, dash:"dashdot"}, marker:{size:5}, hovertemplate:"Yhdistelmä %{y:.0f} $<br>%{x|%Y-%m}<extra></extra>"}];
+  if(md.curve){ tr.push({x:md.curve.map(c=>c.date), y:md.curve.map(c=>c.price), text:md.curve.map(c=>c.contract), mode:"lines+markers", name:md.curve_label, line:{color:css("--c-green"), width:2}, marker:{size:4}, hovertemplate:"%{text}: %{y:.1f} $<extra>futuuri</extra>"}); }
+  if(DATA.d8&&DATA.d8.steo&&DATA.d8.steo[modelTarget]){ const st=DATA.d8.steo[modelTarget]; tr.push({x:st.map(e=>e.date), y:st.map(e=>e.price), mode:"lines", name:"EIA STEO 10/2026", line:{color:css("--c-violet"), width:1.6, dash:"dash"}, hovertemplate:"EIA STEO %{y:.0f} $<br>%{x|%Y-%m}<extra></extra>"}); }
+  const lay={paper_bgcolor:css("--surface"), plot_bgcolor:css("--surface"), font:{family:css("--font-ui"), color:ink2, size:12}, margin:{l:48,r:16,t:16,b:40}, hovermode:"x unified",
+    showlegend:!isNarrow(), legend:{orientation:"h", y:1.1, x:0, font:{size:11}}, xaxis:{gridcolor:grid, linecolor:css("--line"), tickformat:"%Y", dtick:"M12", range:[isNarrow()?"2022-01-01":"2016-10-01","2029-01-15"]},
+    yaxis:{title:{text:NAME+", USD/bbl", font:{size:12}}, gridcolor:grid, zeroline:false, linecolor:css("--line")},
+    shapes:[{type:"line", xref:"x", yref:"paper", x0:X0, x1:X0, y0:0, y1:1, line:{color:ink2, width:1, dash:"dot"}}],
+    annotations:[{x:X0, y:1, xref:"x", yref:"paper", text:"ennuste →", showarrow:false, xanchor:"left", font:{size:11, color:ink2}}],
+    hoverlabel:{bgcolor:css("--surface"), bordercolor:css("--line"), font:{color:css("--ink")}}};
+  Plotly.react("chart2", tr, lay, {responsive:true, displaylogo:false, modeBarButtonsToRemove:["lasso2d","select2d"]});
+  const q1=md.quantiles["1"], q3=md.quantiles["3"]; const f1=md.forecast[0], f3=md.forecast[2], f6=md.forecast[5];
+  const cur = md.curve ? ` Futuurikäyrä 21.10.2026: ${md.curve.slice(0,1).map(c=>c.contract+" "+c.price.toFixed(0)+" $").join("")}, ${md.curve.filter(c=>/JUN 27|DEC 27|DEC 28/.test(c.contract)).map(c=>c.contract+" "+c.price.toFixed(0)+" $").join(", ")}.` : "";
+  document.getElementById("model-note").innerHTML=`${NAME}: sovitus R² ${md.r2.toFixed(2).replace(".",",")}, virheen mediaani ±${md.insample_med.toFixed(1).replace(".",",")} $ koko aineistolla; etukäteen laskettuna (walk-forward 2020→) mediaani ±${md.wf_med.toFixed(1).replace(".",",")} $ ja 90 % virheistä alle ±${md.wf_90.toFixed(0)} $. Fair value 9/2026: ${md.fv_now.toFixed(0)} $; ${NAME} ${X0.slice(8,10)}.${X0.slice(5,7)}.2026 ${md.P0.toFixed(0)} $ (gap ${md.gap_pct>0?"+":""}${md.gap_pct.toFixed(0)} %; lokakuun keskiarvo ${md.P0_month?md.P0_month.toFixed(0):"–"} $). Ennusteen lähtöpiste on viimeisin päivähinta: testissä 2015–2026 se pienentää seuraavan kuukauden keskiarvon ennustevirhettä ${DATA.d8&&DATA.d8.eom?Math.round((1-DATA.d8.eom[modelTarget].h1_2015.ratio_last)*100):"–"} % kuukausikeskiarvoon verrattuna. Yhdistelmäennuste (puolet driftittömästä mallista, puolet futuurikäyrästä; kartio = keskitetyt etukäteisvirheet): 1 kk ${f1.comb.toFixed(0)} $ (50 % väli ${f1.p25.toFixed(0)}–${f1.p75.toFixed(0)}, 90 % ${f1.p05.toFixed(0)}–${f1.p95.toFixed(0)}), 3 kk ${f3.comb.toFixed(0)} $ (${f3.p25.toFixed(0)}–${f3.p75.toFixed(0)} / ${f3.p05.toFixed(0)}–${f3.p95.toFixed(0)}), 6 kk ${f6.comb.toFixed(0)} $ (${f6.p25.toFixed(0)}–${f6.p75.toFixed(0)} / ${f6.p05.toFixed(0)}–${f6.p95.toFixed(0)}). Pelkkä malli: 3 kk ${f3.median.toFixed(0)} $, 6 kk ${f6.median.toFixed(0)} $; pelkkä käyrä: 3 kk ${f3.curve?f3.curve.toFixed(0):"–"} $, 6 kk ${f6.curve?f6.curve.toFixed(0):"–"} $.${cur} Standardoidut kertoimet (log-tasot): ${Object.entries(md.coef).map(([k,v])=>k+" "+v).join(", ")}.`;
+}
+drawModel();
+// ---- Chart 3: options-implied distribution vs model (WTI) ----
+function drawOptions(){
+  const m=DATA.m17; if(!m||!m.options) return; const md=DATA.model.wti; const dark=isDark();
+  const X0=md.P0_day||(md.P0_date+"-01"); const ex=Object.entries(m.options).sort((a,b)=>a[1].days-b[1].days); const xd=[X0].concat(ex.map(e=>e[1].expiry));
+  const qq=(p)=>[md.P0].concat(ex.map(e=>e[1].q[p]));
+  const band=(x,lo,hi,fill,name)=>[{x, y:hi, mode:"lines", line:{width:0}, hoverinfo:"skip", showlegend:false},{x, y:lo, mode:"lines", line:{width:0}, fill:"tonexty", fillcolor:fill, name, hovertemplate:name+"<br>%{x|%Y-%m}: %{y:.0f} $<extra></extra>"}];
+  const fcd=[X0].concat(md.forecast.map(f=>f.date)); const d8=DATA.d8||{};
+  const tr=[...band(xd,qq("0.05"),qq("0.95"), dark?"rgba(57,135,229,0.12)":"rgba(42,120,214,0.10)", "Optiot 90 % väli"), ...band(xd,qq("0.25"),qq("0.75"), dark?"rgba(57,135,229,0.25)":"rgba(42,120,214,0.20)", "Optiot 50 % väli"),
+    {x:xd, y:qq("0.5"), mode:"lines+markers", name:"Optioiden mediaani (riskineutraali)", line:{color:css("--c-blue"), width:2}, marker:{size:5}, hovertemplate:"Optiomediaani %{y:.0f} $<br>%{x|%Y-%m-%d}<extra></extra>"},
+    {x:fcd, y:[md.P0].concat(md.forecast.map(f=>f.p25)), mode:"lines", name:"Malli 50 % väli (ala)", line:{color:css("--muted"), width:1, dash:"dot"}, hovertemplate:"Malli p25 %{y:.0f} $<extra></extra>"},
+    {x:fcd, y:[md.P0].concat(md.forecast.map(f=>f.p75)), mode:"lines", name:"Malli 50 % väli (ylä)", line:{color:css("--muted"), width:1, dash:"dot"}, hovertemplate:"Malli p75 %{y:.0f} $<extra></extra>"},
+    {x:fcd, y:[md.P0].concat(md.forecast.map(f=>f.comb)), mode:"lines+markers", name:"Yhdistelmäennuste (malli + käyrä)", line:{color:css("--ink-2"), width:2, dash:"dashdot"}, marker:{size:4}, hovertemplate:"Yhdistelmä %{y:.0f} $<extra></extra>"},
+    {x:md.curve.map(c=>c.date), y:md.curve.map(c=>c.price), mode:"lines", name:"NYMEX WTI -futuurikäyrä", line:{color:css("--c-green"), width:1.6}, hovertemplate:"Futuuri %{y:.1f} $<br>%{x|%Y-%m}<extra></extra>"}];
+  if(d8.tilt){ const tl=Object.values(d8.tilt).sort((a,b)=>a.days-b.days); tr.push({x:[X0].concat(tl.map(e=>e.expiry)), y:[md.P0].concat(tl.map(e=>e.q["0.5"])), mode:"lines", name:"Optiot, fysikaaliseksi tiltattu mediaani (keskiarvo = pino)", line:{color:css("--c-blue"), width:1.4, dash:"dash"}, hovertemplate:"Tiltattu mediaani %{y:.0f} $<extra></extra>"}); }
+  if(d8.steo&&d8.steo.wti){ tr.push({x:d8.steo.wti.map(e=>e.date), y:d8.steo.wti.map(e=>e.price), mode:"lines", name:"EIA STEO 10/2026", line:{color:css("--c-violet"), width:1.6, dash:"dash"}, hovertemplate:"EIA STEO %{y:.0f} $<extra></extra>"}); }
+  if(d8.stack&&d8.stack.wti){ const hs=Object.values(d8.stack.wti.horizons); tr.push({x:hs.map(h=>h.date), y:hs.map(h=>h.stack), mode:"markers", name:"8. Painotettu pino (7 jäsentä)", marker:{color:css("--c-red"), size:9, symbol:"diamond"}, hovertemplate:"Pino %{y:.0f} $<br>%{x|%Y-%m}<extra></extra>"}); }
+  Plotly.react("chart3", tr, {paper_bgcolor:css("--surface"), plot_bgcolor:css("--surface"), font:{family:css("--font-ui"), color:css("--ink-2"), size:12}, margin:{l:48,r:16,t:16,b:40}, hovermode:"x unified",
+    showlegend:!isNarrow(), legend:{orientation:"h", y:1.1, x:0, font:{size:11}}, xaxis:{gridcolor:css("--grid"), linecolor:css("--line"), tickformat:"%m/%Y", range:[X0,"2027-12-15"]}, yaxis:{title:{text:"WTI, USD/bbl", font:{size:12}}, gridcolor:css("--grid"), zeroline:false, linecolor:css("--line")},
+    hoverlabel:{bgcolor:css("--surface"), bordercolor:css("--line"), font:{color:css("--ink")}}}, {responsive:true, displaylogo:false, modeBarButtonsToRemove:["lasso2d","select2d"]});
+  const g=m.options.LOG27, j=m.options.LOJ27, z=m.options.LOZ27, d=m.options.LOZ26;
+  document.getElementById("opt-note").innerHTML=`WTI-optiot 22.10.2026: 26 pv ATM-volatiliteetti ${(d.atm_iv*100).toFixed(0)} % (OVX 50, normaali 30–35), 84 pv ${(g.atm_iv*100).toFixed(0)} %, 390 pv ${(z.atm_iv*100).toFixed(0)} %. Markkinan todennäköisyydet: WTI alle 80 $ tammikuussa 2027 ${(g.p_below_80*100).toFixed(0)} %, maaliskuussa ${(j.p_below_80*100).toFixed(0)} %, marraskuussa 2027 ${(z.p_below_80*100).toFixed(0)} %; yli 120 $ ${(g.p_above_120*100).toFixed(0)} / ${(j.p_above_120*100).toFixed(0)} / ${(z.p_above_120*100).toFixed(0)} %; yli 150 $ ${(g.p_above_150*100).toFixed(0)} / ${(j.p_above_150*100).toFixed(0)} / ${(z.p_above_150*100).toFixed(0)} %. Vinous (90 % putti − 110 % calli) on lähellä nollaa lyhyissä ja kääntyy positiiviseksi vuoden päässä: markkina maksaa lyhyellä aikavälillä nousuhännästä, pitkällä laskuhännästä. Riskineutraali jakauma sisältää riskipreemion, joten todelliset todennäköisyydet painottuvat hieman tätä korkeammalle.`+(d8.tilt?` Tiltattu (fysikaalinen) jakauma siirtää log-tiheyttä niin, että sen keskiarvo osuu painotettuun pinoon: tammikuussa 2027 mediaani ${d8.tilt.LOG27.q["0.5"].toFixed(0)} $ (50 % väli ${d8.tilt.LOG27.q["0.25"].toFixed(0)}–${d8.tilt.LOG27.q["0.75"].toFixed(0)}), P(&lt;80 $) ${(d8.tilt.LOG27.p_below_80*100).toFixed(0)} %, P(&gt;120 $) ${(d8.tilt.LOG27.p_above_120*100).toFixed(0)} %; marraskuussa 2027 mediaani ${d8.tilt.LOZ27.q["0.5"].toFixed(0)} $, P(&lt;80 $) ${(d8.tilt.LOZ27.p_below_80*100).toFixed(0)} %.`:"");
+}
+drawOptions();
+// ---- Models 1–7 tables ----
+(function(){
+  const m=DATA.m17; if(!m) return; const mw=DATA.model.wti, mb=DATA.model.brent; const f=(x,d=0)=> (x==null||isNaN(x))?"–":Number(x).toFixed(d).replace(".",",");
+  const g=m.options.LOG27, mj=m.options.LOM27; const sc=m.scenario, kw=m.kalman.wti, kb=m.kalman.brent, qw=m.quantile.wti, qb=m.quantile.brent, ww=m.weekly.wti, wb=m.weekly.brent;
+  const rows=[
+    ["1. Optiojakauma (riskineutraali)", `${f(g.q["0.5"])} $ (${f(g.q["0.25"])}–${f(g.q["0.75"])})`, `${f(mj.q["0.5"])} $ (${f(mj.q["0.25"])}–${f(mj.q["0.75"])})`, "markkinan hinnoittelema; ei testattavissa", "Koko jakauma ja hännät suoraan markkinasta; sisältää riskipreemion."],
+    ["2. Hormuz-skenaariopuu", `${f(sc.wti.path["3"])} $`, `${f(sc.wti.path["6"])} $`, "kalibroitu käyrään", `Avautumishasardi ${f(sc.wti.hazard*100)} %/kk (Brent ${f(sc.brent.hazard*100)} %); P(auki) 3 kk ${f(sc.wti.cum_open["3"]*100)} %, 6 kk ${f(sc.wti.cum_open["6"]*100)} %, 12 kk ${f(sc.wti.cum_open["12"]*100)} %.`],
+    ["3. Regiimimalli (Markov)", "–", "–", `regiimikohtainen fair value: WTI ±${f(m.regime_fv.wti.regime_med,1)} $ vs yhteinen ±${f(m.regime_fv.wti.pooled_med,1)} $`, `Kriisiregiimi tunnistettu 3/2026 alkaen (P(rauhallinen) ${f((m.regime.p_demand["2026-09"]||0)*100)} % syyskuussa); kriisiregiimin kesto keskimäärin ${f(m.regime.expected_durations[1],1)} kk.`],
+    ["4. Kalman (ajassa muuttuvat kertoimet)", `fair value nyt ${f(kw.fv_now)} $`, "–", `nowcast-virhe med ±${f(kw.med_2020,1)} $ (staattinen ±6–8 $)`, `Seuraa hintaa tiiviisti (q=${kw.q}); Brent ${f(kb.fv_now)} $. Hyvä nowcastiin, heikko ankkuri.`],
+    ["5. Kvantiiliregressio (OVX, GPR, positiot, gap)", `${f(qw.horizons["3"].cond["0.5"])} $ (${f(qw.horizons["3"].cond["0.25"])}–${f(qw.horizons["3"].cond["0.75"])})`, `${f(qw.horizons["6"].cond["0.5"])} $ (${f(qw.horizons["6"].cond["0.25"])}–${f(qw.horizons["6"].cond["0.75"])})`, "tilariippuva kartio", `Nykytila OVX ${f(Math.exp(qw.state_now.ovx))}, GPR ${f(Math.exp(qw.state_now.gpr))}: yläpuolen häntä leveämpi (95 % ${f(qw.horizons["3"].cond["0.95"])} $ 3 kk).`],
+    ["6. Viikoittainen nowcast", `fair value ${f(ww.fv_last)} $ (vk ${ww.last_week})`, "–", `walk-forward 2024→ med ±${f(ww.wf_med_2024,1)} $`, `Fundamentit laskussa syyskuusta (Brent ${f(wb.fv_last)} $ vs spot ${f(wb.actual_last)} $): gap kasvaa.`],
+    ["7. SVAR (Kilian)", "–", "–", `RMSE vs ei-muutosta 3 kk ${f(m.svar.rmse_ratio_h3,2)}, 12 kk ${f(m.svar.rmse_ratio_h12,2)}`, `2026: reaalihinta +${f(m.svar.actual_change_2026_logpct)} % = tarjonta +${f(m.svar.decomp_2026_logpct.supply)}, öljyspesifi kysyntä +${f(m.svar.decomp_2026_logpct.rprice)}, aktiviteetti ${f(m.svar.decomp_2026_logpct.activity)}, varastot ${f(m.svar.decomp_2026_logpct.dstock)} %-yks.`],
+    ["Yhdistelmä (malli + käyrä)", `${f(mw.forecast[2].comb)} $ (${f(mw.forecast[2].p25)}–${f(mw.forecast[2].p75)})`, `${f(mw.forecast[5].comb)} $ (${f(mw.forecast[5].p25)}–${f(mw.forecast[5].p75)})`, "RMSE 0,93–0,96 vs ei-muutosta (3–6 kk)", `Brent ${f(mb.forecast[2].comb)} $ / ${f(mb.forecast[5].comb)} $.`],
+    ["Futuurikäyrä", `${f(mw.forecast[2].curve)} $`, `${f(mw.forecast[5].curve)} $`, "r = −0,42 (3 kk), 7 % parempi kuin ei-muutosta", "Markkinan oma ennuste; ei kriisipreemiota historiassa."]];
+  const d8=DATA.d8; if(d8&&d8.stack){ const sw=d8.stack.wti.horizons, sb=d8.stack.brent.horizons;
+    rows.push(["8. Painotettu pino (dossierin painot)", `${f(sw["3"].stack)} $ (jäsenet ${f(sw["3"].lo)}–${f(sw["3"].hi)})`, `${f(sw["6"].stack)} $ (${f(sw["6"].lo)}–${f(sw["6"].hi)})`, "jäsenten erimielisyys (hajonta) 3 kk ±"+f(sw["3"].disagreement)+" $, 12 kk ±"+f(sw["12"].disagreement)+" $", `20 % ei-muutosta, 15 % käyrä, 20 % fair value, 15 % VAR, 10 % viikkonowcast, 10 % kvantiili, 10 % optiot. Brent ${f(sb["3"].stack)} $ / ${f(sb["6"].stack)} $; 12 kk WTI ${f(sw["12"].stack)} $, Brent ${f(sb["12"].stack)} $.`]);
+    rows.push(["EIA STEO 10/2026 (viiden mallin pooli)", `${f(sw["3"].steo)} $`, `${f(sw["6"].steo)} $`, "EIA:n reaaliaikainen pooli: MSPE −3…−29 % vs ei-muutosta (Baumeister–Kilian)", `Brent ${f(sb["3"].steo)} $ / ${f(sb["6"].steo)} $; 2027 keskiarvo Brent 84 $, WTI 81 $. Olettaa Lähi-idän virtojen elpyvän.`]); }
+  tbl("t-m17",[["Menetelmä"],["WTI 3 kk (1/2027)"],["WTI 6 kk (4/2027)"],["Tarkkuus / testi"],["Huomio"]], rows);
+  if(d8&&d8.stack){ document.getElementById("m17-note").innerHTML=`Ankkurit: yhdistelmä ja pino lähtevät viimeisimmästä päivähinnasta (WTI ${f(d8.stack.wti.anchor)} $, Brent ${f(d8.stack.brent.anchor)} $, ${d8.stack.wti.anchor_date}); kvantiilimalli (5) lokakuun keskiarvosta (WTI ${f(d8.stack.wti.month_avg)} $). WTI:n päivähinta 20.10. osuu marraskuun sopimuksen erääntymiseen (prompt-tiukkuus), joten lyhyen pään ankkuri voi olla hetkellisesti korkea.`; }
+  tbl("t-scen",[["Horisontti"],["P(auki), Brent-kalibrointi","num"],["P(auki), WTI-kalibrointi","num"],["Odotuspolku WTI","num"],["Käyrä WTI","num"]], ["1","3","6","12","24"].map(h=>[h+" kk", f(sc.brent.cum_open[h]*100)+" %", f(sc.wti.cum_open[h]*100)+" %", (sc.wti.path[h]?f(sc.wti.path[h])+" $":"–"), (sc.wti.curve[h]?f(sc.wti.curve[h])+" $":"–")]));
+  const rp=m.regime.params; document.getElementById("reg-note").innerHTML=`Kaksi regiimiä Brentin kuukausituotoille (selittäjinä S&amp;P 500 ja dollari): rauhallinen (keskikesto ${f(m.regime.expected_durations[0])} kk, volatiliteetti ${f(Math.sqrt(rp["sigma2[0]"]),1)} %/kk, S&amp;P-beta ${f(rp["x1[0]"],2)}) ja kriisi (kesto ${f(m.regime.expected_durations[1],1)} kk, volatiliteetti ${f(Math.sqrt(rp["sigma2[1]"]),1)} %/kk, S&amp;P-beta ${f(rp["x1[1]"],2)}). Kriisiregiimi tunnistaa 2008, 2014–16, 2020, 2022 ja maaliskuun 2026.`;
+  const pdm=m.regime.p_demand; tbl("t-reg",[["Kuukausi"],["P(rauhallinen regiimi)","num"]], Object.keys(pdm).filter(k=>k>="2025-10").map(k=>[k, f(pdm[k]*100)+" %"]));
+  const wk=Object.keys(ww.fv_recent); tbl("t-week",[["Viikko"],["WTI fair value","num"],["WTI spot","num"],["Brent fair value","num"],["Brent spot","num"]], wk.map(k=>[k, f(ww.fv_recent[k]), f(ww.act_recent[k]), f(wb.fv_recent[k]), f(wb.act_recent[k])]));
+  document.getElementById("svar-note").innerHTML=`VAR(6) muuttujilla OPEC-tuotanto, Baltic Dry (aktiviteetti), reaalinen Brent ja OECD-varastojen muutos, 2006→, Cholesky-järjestys tarjonta → aktiviteetti → hinta → varastot. Rakenteellinen hajotus tammi–syyskuulle 2026: reaalihinnan nousu ${f(m.svar.actual_change_2026_logpct)} log-% josta tarjontashokit +${f(m.svar.decomp_2026_logpct.supply)}, öljyspesifi (varmuusvarasto-) kysyntä +${f(m.svar.decomp_2026_logpct.rprice)}, globaali aktiviteetti ${f(m.svar.decomp_2026_logpct.activity)}, varastoshokit ${f(m.svar.decomp_2026_logpct.dstock)}; loput alkuehdoista. Ennusteena VAR häviää satunnaiskululle (RMSE-suhde ${f(m.svar.rmse_ratio_h1,2)}–${f(m.svar.rmse_ratio_h12,2)}), kuten Baumeister–Kilian ilman reaaliaikaisia priorirajoitteita.`;
+})();
+// ---- Dossier section tables ----
+(function(){
+  const d8=DATA.d8; if(!d8) return; const f=(x,d=0)=> (x==null||isNaN(x))?"–":Number(x).toFixed(d).replace(".",",");
+  tbl("t-doss",[["Dossierin väite (kirjallisuus)"],["Tämän aineiston tulos"],["Yhteensopivuus"]],[
+    ["Ei-muutosta on vaikea voittaa; futuurit ≈ satunnaiskulku 3–12 kk (Alquist–Kilian–Vigfusson 2013; Chinn–Coibion)", "Kuukausimalli 1 kk: RMSE-suhde 1,01–1,04; käyrä 3 kk 7 % parempi (r −0,42)", "sama"],
+    ["Reaaliaikaiset yhdistelmät −3…−29 % MSPE, suuntaosuma 73–77 % (Baumeister–Kilian; EIA-pooli)", "Driftitön gap-malli 6–12 kk: Brent −17…−19 %, WTI −6…−7 % RMSE; suunta 63–70 %", "sama suunta, pienempi otos (2020→)"],
+    ["Varasto-MIDAS −8 % (12 kk), −16 % (24 kk); kuukausiaggregointi lähes yhtä hyvä", "Viikkonowcast: walk-forward ±7,7–9,3 $, kuukausimalli ±6–8 $", "sama: viikkodata ei lisää tasoennusteeseen"],
+    ["Kuukauden lopun hinta → seuraavan kk keskiarvo: MSPE jopa −40 % (1 kk)", "WTI RMSE −25 %, Brent −17 % (1 kk); 3–12 kk ±0–5 %", "sama, otettu käyttöön"],
+    ["Riskipreemiokorjatut futuurit: etu katoaa reaaliajassa (Hamilton–Wu)", "Backwardaatiossa toteuma −6,1 % vs käyrä −3,2 % / 3 kk: ei vakaata preemiota", "sama"],
+    ["Regiimimallien tilastollinen hyöty katoaa kun regiimi estimoidaan", "Markov: WTI fair value ±6,4 vs ±8,7 $; Brent ei parane", "osin: WTI hyötyy"],
+    ["TVP-mallit kutistettava voimakkaasti; haavoittuvia parametriepävarmuudelle", "Kalman q=0,001: nowcast ±3,9–4,8 $, mutta fair value seuraa hintaa (heikko ankkuri)", "sama"],
+    ["Optiojakauma: ainoa yksittäinen ennustaja jolla käyttökelpoinen tiheysennuste (2022)", "CME WTI -optiot: mediaani 92/87/84/79 $, P(<80) 24–51 %; nyt tiltattu fysikaaliseksi", "käytössä"],
+    ["Kilian-SVAR: eri shokit eivät ekstrapoloidu samoin; rakenteelliset hajotukset ovat skenaariomoottoreita, eivät ennusteita", "VAR(6) häviää satunnaiskululle (1,09–1,15); 2026 = tarjonta +38, varmuuskysyntä +9, aktiviteetti −2, varastot −6 log-%", "sama"],
+    ["GPR/uutisdata: tapahtumien luokittelu ja volatiliteetti, ei tason ennuste", "GPR kvantiiliregressiossa leventää kartiota ylöspäin; ei paranna mediaania", "sama"],
+    ["ML (random forest −50 % vs OLS) ei ole osoitettu ei-muutosta vastaan; World Bank 2024: mikään menetelmä ei dominoi", "Ei ML-mallia tässä; OLS-pohjaiset tulokset häviävät 1–3 kk", "ei testattu"],
+    ["Konformaaliset välit eivät päde kriisissä (ei vaihdettavuutta); käytä rullaavia/regiimipainotettuja residuaaleja", "Kartion peitto rullaavasti: 90 % väli 86–96 % (≤6 kk), 71–73 % (12 kk); 50 % väli liian leveä 6–12 kk", "sama: kartio pätee 6 kk asti"]]);
+  const eo=d8.eom; const rowsE=[]; for(const h of ["1","3","6","12"]) for(const t of ["wti","brent"]){ const a=eo[t][`h${h}_2015`], b=eo[t][`h${h}_2020`]; rowsE.push([`${h} kk`, t.toUpperCase(), f(a.rmse_avg,1), f(a.rmse_last,1), f((1-a.ratio_last)*100)+" %", f(b.rmse_avg,1), f(b.rmse_last,1), f((1-b.ratio_last)*100)+" %", String(a.n)]); }
+  tbl("t-eom",[["Horisontti"],["Laatu"],["RMSE kk-keskiarvosta 2015→","num"],["RMSE päivähinnasta","num"],["Parannus","num"],["RMSE kk-ka 2020→","num"],["päivähinnasta","num"],["Parannus","num"],["n","num"]], rowsE);
+  const ts=d8.tests; const rowsT=[]; for(const t of ["brent","wti"]) for(const h of ["1","3","6","12"]){ const v=ts[t][h]; rowsT.push([t.toUpperCase(), h+" kk", f(v.rmse_ratio,3), f(v.dm_t,2), f(v.cw_t,2), f(v.dir_acc*100)+" %", (v["50_c"]==null?"–":f(v["50_c"]*100)+" %"), (v["90_c"]==null?"–":f(v["90_c"]*100)+" %"), String(v.n)]); }
+  tbl("t-dm",[["Laatu"],["Horisontti"],["RMSE-suhde vs ei-muutosta","num"],["DM t (HAC)","num"],["CW t","num"],["Suuntaosuma","num"],["50 % kartion peitto","num"],["90 % kartion peitto","num"],["n","num"]], rowsT);
+  document.getElementById("dm-note").innerHTML=`Driftitön gap-palautumamalli (fair value → hinta, lähtöpiste kuukauden lopun päivähinta), walk-forward 2020→, kohde kuukausikeskiarvo. DM t &lt; −1,65 tarkoittaa, että malli voittaa ei-muutosta 5 % riskitasolla (HAC/Newey–West, viive = horisontti); Clark–West korjaa sisäkkäisyyden (ei-muutosta on mallin erikoistapaus) ja on oikea testi tässä, CW t &gt; 1,65 merkitsevä. Peitto on laskettu rullaavasti: kunkin ennustehetken kartio käyttää vain siihen mennessä toteutuneita virheitä (arviointi 2022→). Tulkinta: 1 kk malli ei voita ei-muutosta; Brent 3–12 kk ja WTI 6–12 kk voittavat merkitsevästi (CW 2,0–3,8), mutta otos sisältää COVID-romahduksen ja -palautumisen, joka suosii palautumamallia.`;
+  const S=d8.stack; const W=d8.weights; const names={nochange:"Ei muutosta (päivähinta)",futures:"Futuurikäyrä",physical:"Fair value + gap-palautuma",var:"VAR(6) reaalihinta",midas:"Viikkonowcast + gap-palautuma",nonlinear:"Kvantiiliregressio (mediaani)",options:"Optiomediaani"};
+  for(const t of ["wti","brent"]){ const hs=S[t].horizons; const keys=Object.keys(names); const rows=keys.map(k=>[names[k]+" ("+f(W[k]*100)+" %)"].concat(["1","3","6","12"].map(h=>hs[h].members[k]==null?"–":f(hs[h].members[k]))));
+    rows.push(["<b>Pino</b>"].concat(["1","3","6","12"].map(h=>"<b>"+f(hs[h].stack)+"</b>"))); rows.push(["Jäsenten hajonta ±"].concat(["1","3","6","12"].map(h=>f(hs[h].disagreement)))); rows.push(["EIA STEO 10/2026"].concat(["1","3","6","12"].map(h=>f(hs[h].steo))));
+    tbl("t-stack-"+t,[["Jäsen (paino)"],["1 kk","num"],["3 kk","num"],["6 kk","num"],["12 kk","num"]], rows); }
+  document.getElementById("stack-note").innerHTML=`Dossierin suosittelema pino: 20 % ei-muutosta, 15 % käyrä, 20 % fyysinen tase (tässä fair value -mallin gap-palautuma), 15 % VAR, 10 % MIDAS (viikkonowcast), 10 % epälineaarinen (kvantiiliregressio; puuttuu 12 kk, painot normalisoitu), 10 % optiot (Brentille WTI-optiomediaani skaalattuna käyräsuhteella). Ankkuri ${S.wti.anchor_date}: WTI ${f(S.wti.anchor)} $ (fair value ${f(S.wti.fv_now)} $, gap ${S.wti.gap_daily_pct>0?"+":""}${f(S.wti.gap_daily_pct)} %, viikkogap ${S.wti.gap_weekly_pct>0?"+":""}${f(S.wti.gap_weekly_pct)} %), Brent ${f(S.brent.anchor)} $ (fair value ${f(S.brent.fv_now)} $, gap +${f(S.brent.gap_daily_pct)} %). Painoja ei ole estimoitu tällä aineistolla; dossierin mukaan ne tulisi sovittaa rullaavaan OOS-tulokseen ja rajoittaa.`;
+  const tl=Object.values(d8.tilt).sort((a,b)=>a.days-b.days); const o=DATA.m17.options;
+  tbl("t-tilt",[["Erääntyminen"],["Päiviä","num"],["RN-keskiarvo","num"],["Tavoite (pino)","num"],["λ","num"],["Tiltattu mediaani","num"],["50 % väli"],["90 % väli"],["P(<80 $) RN → tiltattu","num"],["P(>120 $) RN → tiltattu","num"]], tl.map(e=>{ const k=Object.keys(o).find(x=>o[x].expiry===e.expiry); const r=o[k]; return [k+" ("+e.expiry+")", String(e.days), f(e.rn_mean), f(e.target_mean), f(e.lam,2), f(e.q["0.5"]), f(e.q["0.25"])+"–"+f(e.q["0.75"]), f(e.q["0.05"])+"–"+f(e.q["0.95"]), f(r.p_below_80*100)+" → "+f(e.p_below_80*100)+" %", f(r.p_above_120*100)+" → "+f(e.p_above_120*100)+" %"]; }));
+})();
+// ---- Live card, hazard chart, daily signals, weights, status ----
+const fmtNum=(x,d=0)=> (x==null||isNaN(x))?"–":Number(x).toFixed(d).replace(".",",");
+const fmtTs=(iso)=>{ if(!iso) return "–"; const d=new Date(iso.endsWith("Z")?iso:iso+"Z"); return isNaN(d)?iso:d.toLocaleString("fi-FI",{day:"numeric",month:"numeric",year:"numeric",hour:"2-digit",minute:"2-digit"}); };
+(function(){
+  const st=DATA.status||{}; const mw=DATA.model&&DATA.model.wti, mb=DATA.model&&DATA.model.brent; if(!mw) return;
+  const d8=DATA.d8||{}, hz=DATA.hz||{}, ch=(DATA.change||{}).changes||{};
+  document.getElementById("updated-line").textContent=`Päivitetty ${fmtTs(st.finished)} · päivittyy automaattisesti 2×/vrk (n. 05:30 ja 17:30 UTC)`;
+  const sw=(d8.stack||{}).wti||{}, sb=(d8.stack||{}).brent||{}; const hzw=(hz.now||{}).CL||{}, hzb=(hz.now||{}).BZ||{};
+  const dlt=(k)=> ch[k]&&ch[k].comb!=null ? `<small>${ch[k].comb>0?"+":""}${fmtNum(ch[k].comb,1)} $ ed. ajosta</small>` : "";
+  const tiles=[
+    {k:"WTI spot "+(mw.P0_day||""), v:fmtNum(mw.P0,1)+" $", s:`kk-keskiarvo ${fmtNum(mw.P0_month)} $ · fair value ${fmtNum(mw.fv_now)} $ (gap ${mw.gap_pct>0?"+":""}${fmtNum(mw.gap_pct)} %)`},
+    {k:"Brent spot "+(mb.P0_day||""), v:fmtNum(mb.P0,1)+" $", s:`kk-keskiarvo ${fmtNum(mb.P0_month)} $ · fair value ${fmtNum(mb.fv_now)} $ (gap ${mb.gap_pct>0?"+":""}${fmtNum(mb.gap_pct)} %)`},
+    {k:"WTI 3 kk, yhdistelmä", v:fmtNum(mw.forecast[2].comb)+" $"+dlt("wti_3"), s:`50 % väli ${fmtNum(mw.forecast[2].p25)}–${fmtNum(mw.forecast[2].p75)} $ · pino ${fmtNum((sw.horizons||{})["3"]&&sw.horizons["3"].stack)} $ · käyrä ${fmtNum(mw.forecast[2].curve)} $`},
+    {k:"Brent 3 kk, yhdistelmä", v:fmtNum(mb.forecast[2].comb)+" $"+dlt("brent_3"), s:`50 % väli ${fmtNum(mb.forecast[2].p25)}–${fmtNum(mb.forecast[2].p75)} $ · pino ${fmtNum((sb.horizons||{})["3"]&&sb.horizons["3"].stack)} $ · käyrä ${fmtNum(mb.forecast[2].curve)} $`},
+    {k:"Hormuz: P(auki 6 kk)", v:(hzw.p_open?fmtNum(hzw.p_open["6"]*100)+" %":"–"), s:`hasardi ${fmtNum(hzw.hazard*100,1)} %/kk (WTI-käyrä), Brent ${fmtNum(hzb.hazard*100,1)} %/kk · transitit ${fmtNum((hz.signals||{}).transits7,1)}/pv (normaali ${fmtNum((hz.signals||{}).transits_normal)})`},
+    {k:"Optiot: P(WTI < 80 $)", v:(DATA.m17&&DATA.m17.options&&Object.values(DATA.m17.options).length>1? fmtNum(Object.values(DATA.m17.options).sort((a,b)=>a.days-b.days)[1].p_below_80*100)+" %":"–"), s:(DATA.m17&&DATA.m17.options? `erääntyy ${Object.values(DATA.m17.options).sort((a,b)=>a.days-b.days)[1].expiry} · ${(DATA.m17.options_meta||{}).source||""}`:"")}];
+  document.getElementById("live-tiles").innerHTML=tiles.map(t=>`<div class="tile"><div class="k">${t.k}</div><div class="v">${t.v}</div><div class="s">${t.s}</div></div>`).join("");
+  const row=(t,md,sh)=>["1","3","6","12"].map(h=>{ const f=md.forecast.find(x=>String(x.h)===h); const s=(sh.horizons||{})[h]||{}; const w=((DATA.wts||{})[t]||{})[h]||{};
+    return [t.toUpperCase()+" "+h+" kk", f?f.date.slice(0,7):"–", f?fmtNum(f.comb):"–", f?`${fmtNum(f.p25)}–${fmtNum(f.p75)}`:"–", f?`${fmtNum(f.p05)}–${fmtNum(f.p95)}`:"–", fmtNum(s.stack), fmtNum(w.stack_shrunk_now), (f&&f.curve!=null)?fmtNum(f.curve):fmtNum((s.members||{}).futures), fmtNum(s.steo)]; });
+  tbl("t-live",[["Ennuste"],["Kohde-kk"],["Yhdistelmä $","num"],["50 % väli","num"],["90 % väli","num"],["Pino (dossieri) $","num"],["Pino (kutistettu) $","num"],["Käyrä $","num"],["EIA STEO $","num"]], row("wti",mw,sw).concat(row("brent",mb,sb)));
+  document.getElementById("live-note").innerHTML=`Yhdistelmä = puolet driftittömästä fair value -mallista (lähtöpiste viimeisin päivähinta), puolet futuurikäyrästä; kartio = toteutuneiden etukäteisvirheiden kvantiilit 2020→. Pino = seitsemän jäsenen painotettu keskiarvo (dossierin painot) tai kutistetuilla estimoiduilla painoilla. Kohde on kuukauden keskihinta. Tarkkuus etukäteen (2020→): 1 kk mediaanivirhe ±3–4 $, 3 kk ±7 $, 12 kk ±15 $.`+(DATA.change&&DATA.change.prev_run?` Edellinen ajo ${fmtTs(DATA.change.prev_run)}.`:"");
+  const fr=st.fresh||{}; const steps=st.steps||{}; const fs=(DATA.fetch||{}).status||{};
+  const rows=Object.entries(fr).map(([k,v])=>[k, v, ""]).concat(Object.entries(steps).map(([k,v])=>["ajo: "+k, v.ok?"ok":"VIRHE", v.ok?(v.secs+" s"):(v.err||"")])).concat(Object.entries(fs).map(([k,v])=>["haku: "+k, v.ok?"ok":"VIRHE (vanha data käytössä)", v.ok?(v.info||""):(v.error||"")]));
+  tbl("t-status",[["Lähde / vaihe"],["Tila / viimeisin havainto"],["Huomio"]], rows);
+})();
+function drawHazard(){
+  const hz=DATA.hz; if(!hz||!hz.series) return; const s=hz.series; const dark=isDark();
+  const tr=[{x:s.date, y:s.hazard_wti.map(v=>v==null?null:v*100), mode:"lines", name:"Hasardi %/kk (WTI-käyrä)", line:{color:css("--c-blue"), width:2}, connectgaps:false, hovertemplate:"WTI-hasardi %{y:.1f} %/kk<extra></extra>"},
+    {x:s.date, y:s.hazard_brent.map(v=>v==null?null:v*100), mode:"lines", name:"Hasardi %/kk (Brent-käyrä)", line:{color:css("--c-green"), width:1.6}, connectgaps:false, hovertemplate:"Brent-hasardi %{y:.1f} %/kk<extra></extra>"},
+    {x:s.date, y:s.p6_wti.map(v=>v==null?null:v*100), mode:"lines", name:"P(auki 6 kk:ssa) %", line:{color:css("--c-violet"), width:1.4, dash:"dash"}, connectgaps:false, hovertemplate:"P(auki 6 kk) %{y:.0f} %<extra></extra>"},
+    {x:s.date, y:s.transits7, mode:"lines", name:"Tankkeritransitit, 7 pv ka (oik.)", yaxis:"y2", line:{color:css("--c-orange"), width:1.6}, hovertemplate:"transitit %{y:.1f}/pv<extra></extra>"},
+    {x:s.date, y:s.gpr7.map(v=>v==null?null:v/5), mode:"lines", name:"GPR-indeksi, 7 pv ka ÷5 (oik.)", yaxis:"y2", line:{color:css("--muted"), width:1, dash:"dot"}, hovertemplate:"GPR %{customdata:.0f}<extra></extra>", customdata:s.gpr7}];
+  Plotly.react("chart4", tr, {paper_bgcolor:css("--surface"), plot_bgcolor:css("--surface"), font:{family:css("--font-ui"), color:css("--ink-2"), size:12}, margin:{l:48,r:48,t:16,b:40}, hovermode:"x unified",
+    showlegend:!isNarrow(), legend:{orientation:"h", y:1.12, x:0, font:{size:11}}, xaxis:{gridcolor:css("--grid"), linecolor:css("--line"), tickformat:"%m/%Y"}, yaxis:{title:{text:"%", font:{size:12}}, gridcolor:css("--grid"), zeroline:false, rangemode:"tozero"},
+    yaxis2:{overlaying:"y", side:"right", showgrid:false, rangemode:"tozero", title:{text:"transitit/pv", font:{size:12}}}, hoverlabel:{bgcolor:css("--surface"), bordercolor:css("--line"), font:{color:css("--ink")}}}, {responsive:true, displaylogo:false, modeBarButtonsToRemove:["lasso2d","select2d"]});
+}
+drawHazard();
+(function(){
+  const hz=DATA.hz; if(!hz||!hz.now) return; const f=fmtNum; const n=hz.now, sg=hz.signals||{}, rg=hz.regression||{};
+  tbl("t-hz",[["Mittari"],["WTI-käyrä","num"],["Brent-käyrä","num"]],[
+    ["Hasardi (%/kk), "+(n.CL||{}).hazard_date, f((n.CL||{}).hazard*100,1), f((n.BZ||{}).hazard*100,1)],
+    ["Nowcast 3 pv (signaalisäätö ×0,5)", f((n.CL||{}).nowcast*100,1), f((n.BZ||{}).nowcast*100,1)],
+    ["Odotettu kesto (kk)", f((n.CL||{}).expected_months,1), f((n.BZ||{}).expected_months,1)],
+    ...["1","3","6","12","24"].map(h=>["P(auki) "+h+" kk", f((n.CL||{}).p_open[h]*100)+" %", f((n.BZ||{}).p_open[h]*100)+" %"]),
+    ["Etukuukausi / takapää $", `${f((n.CL||{}).front)} / ${f((n.CL||{}).back)}`, `${f((n.BZ||{}).front)} / ${f((n.BZ||{}).back)}`]]);
+  const r=rg.CL||{}; const c=r.coef||{}, t=r.t||{};
+  document.getElementById("hz-note").innerHTML=`Signaalit ${sg.date}: transitit 7 pv ka ${f(sg.transits7,1)}/pv (muutos 7 pv ${f(sg.dtr7,1)}; normaali ${f(sg.transits_normal)}), GPR 7 pv ka ${f(sg.gpr7)} (viimeisin ${f(sg.gpr_last)} ${sg.gpr_date}; 2025 ka ${f(sg.gpr_mean_2025)}), OVX ${f(sg.ovx,1)}, etukuukausien ero ${f(sg.m1m2,2)} $.<br>Regressio Δhasardi(3 pv) ~ Δtransitit + ΔGPR + ΔOVX + viive (n=${r.n||"–"}, R² ${f(r.r2,2)}): transitit t=${f(t.dtr7,1)}, GPR t=${f(t.dgpr7,1)}, OVX t=${f(t.dovx5,1)}. Tulkinta: julkiset päiväsignaalit eivät ennakoi markkinan hasardin muutoksia kolmen päivän päähän tilastollisesti merkitsevästi; markkina hinnoittelee uutiset vähintään yhtä nopeasti kuin PortWatch julkaisee (1–4 pv viive). Arvo on päivittäisessä uudelleenkalibroinnissa ja historiassa: hasardi oli maalis–huhtikuussa noin 10 %/kk (markkina odotti pitkää kriisiä), nousi syyskuussa lähes 40 %:iin ja on nyt ${f((n.CL||{}).hazard*100)} %/kk.`;
+  const ds=DATA.ds; if(!ds) return; const lab=ds.now.labels, sig=ds.now.signals;
+  tbl("t-sig",[["Signaali"],["Arvo","num"],["z","num"],["Persentiili","num"]], Object.keys(sig).map(k=>[lab[k]||k, f(sig[k].value,2), f(sig[k].z,1), sig[k].pct==null?"–":f(sig[k].pct)+" %"]));
+  const rowsM=[];
+  for(const t of ["brent","wti"]) for(const h of ["1","5","21"]){ const v=ds.targets[t][h]; rowsM.push([t.toUpperCase(), h+" pv", f(v.r2,3), f(v.oos_rmse_ratio,3), v.oos_rmse_ratio_2026==null?"–":f(v.oos_rmse_ratio_2026,3), f(v.dir_acc*100)+" %", v.pred_now_shrunk_pct==null?"–":(v.pred_now_shrunk_pct>0?"+":"")+f(v.pred_now_shrunk_pct,1)+" %"]); }
+  tbl("t-sigm",[["Laatu"],["Horisontti"],["R² (koko otos)","num"],["OOS RMSE-suhde 2022→","num"],["OOS 2026","num"],["Suuntaosuma","num"],["Ennuste nyt (kutistettu)","num"]], rowsM);
+  document.getElementById("sig-note").innerHTML=`RMSE-suhde &gt; 1: signaalimalli häviää "ei muutosta" -arvaukselle. Tulos: päivä- ja viikkohorisontilla julkiset signaalit eivät paranna ennustetta edes vuoden 2026 kriisissä (suhde 1,00–1,08, suuntaosuma 45–52 %). Koko otoksen t-arvot: etukuukausien ero on merkitsevä 21 pv horisontilla (backwardaatio → lasku), transitit heikosti 1–5 pv (lisää transitteja → lasku). Ennustetta ei kannata käyttää tasoennusteena; signaalit kertovat tilasta.`;
+})();
+(function(){
+  const W=DATA.wts; if(!W) return; const f=fmtNum; const names={nochange:"Ei muutosta",futures:"Futuurikäyrä",physical:"Fair value -palautuma",var:"VAR(6)"};
+  for(const t of ["wti","brent"]){ const rows=[];
+    for(const h of ["1","3","6","12"]){ const v=W[t][h]; if(!v) continue; const wn=v.weights_now||{}, ws=v.weights_shrunk||{}; const rm=v.rmse_ratio_members||{};
+      rows.push([h+" kk", (v.members||[]).map(k=>`${names[k]} ${f(wn[k]*100)} %`).join(", "), f(v.rmse_ratio_est,3), f(v.rmse_ratio_shrunk,3), f(v.rmse_ratio_equal,3), f(v.rmse_ratio_dossier,3), Object.entries(rm).map(([k,x])=>`${names[k]} ${f(x,2)}`).join(", "), `${f(v.stack_est_now)} / ${f(v.stack_shrunk_now)} / ${f(v.stack_dossier_now)}`, String(v.n_oos||"–")]); }
+    tbl("t-w-"+t,[["h"],["Estimoidut painot (koko otos)"],["OOS est.","num"],["OOS kutistettu","num"],["OOS tasa","num"],["OOS dossieri","num"],["Jäsenet yksin (OOS)"],["Pino nyt est / kutist. / dossieri $","num"],["n OOS","num"]], rows); }
+  document.getElementById("w-note").innerHTML=`OOS = RMSE-suhde ei-muutosta vastaan 2023→ (kohde kuukausikeskiarvo, lähtöpiste kuukauden lopun päivähinta). Estimoidut painot keskittyvät yhteen jäseneen ja häviävät 12 kk horisontilla selvästi kiinteille painoille (klassinen yhdistelmäparadoksi: tasapainot voittavat estimoidut). Siksi sivun pääennuste käyttää dossierin kiinteitä painoja; kutistettu versio on lähes yhtä hyvä ja näytetään rinnalla. Futuurikäyrän historia yli 4 kuukauden päähän on saatavilla vain vuodesta 2026 (EIA lopetti sopimukset 2–4 huhtikuussa 2024), joten 6–12 kk painot on estimoitu ilman käyräjäsentä ja käyrä saa niissä dossierin 15 %. Paras yksittäinen jäsen 6–12 kk on fair value -palautuma (0,85–0,95); VAR on heikoin (1,1–1,5).`;
+})();
+new MutationObserver(()=>{drawModel(); drawOptions(); drawHazard();}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+mq.addEventListener && mq.addEventListener("change",()=>{drawModel(); drawOptions(); drawHazard();});
+let _rt=null; window.addEventListener("resize",()=>{clearTimeout(_rt); _rt=setTimeout(()=>{drawModel(); drawOptions(); drawHazard();},250);});
+</script>
