@@ -78,11 +78,7 @@ a{color:var(--accent-ink)}
 </style>
 
 <div class="wrap">
-<header>
-  <div class="eyebrow" id="updated-line">Öljyn hintaennuste · päivittyy automaattisesti 2×/vrk</div>
-  <h1>Öljymarkkina: hinta, fair value ja ennuste</h1>
-  <p class="lede">Yksi ennusteviiva ja sen vaihteluväli Brentille ja WTI:lle, päivitetään automaattisesti kahdesti vuorokaudessa. Mallit, testit ja laajempi analyysi avautuvat alempaa.</p>
-</header>
+<div class="eyebrow" id="updated-line" style="padding:22px 0 10px"></div>
 
 <section id="live">
   <div class="tiles" id="live-tiles"></div>
@@ -92,22 +88,17 @@ a{color:var(--accent-ink)}
 
 
 
-<h2>Ennuste: yksi viiva ja vaihteluväli</h2>
-<p class="lede">Sininen = toteutunut kuukausihinta ja ennuste (viiva), harmaa = vaihteluväli (tummempi 50 %, vaaleampi 90 %), vihreä = pörssin futuurikäyrä vertailuksi. Ennuste on puolet fundamenttimallista (OECD-varastot, OPEC-tuotanto, Hormuzin transitit, dollari, positiot, USA:n varastot ja tuotanto) ja puolet futuurikäyrästä. Mallin osat saa näkyviin selitteestä; koko historia hiirellä zoomaamalla.</p>
+
 
 <div class="controls"><span class="lbl">Laatu</span><button class="btn active" data-target="brent">Brent</button><button class="btn" data-target="wti">WTI</button></div>
 <div id="chart2" style="width:100%;height:440px;background:var(--surface);border:1px solid var(--border);border-radius:6px"></div>
-<p class="note narrow-only">Kapealla näytöllä selitteet on piilotettu: kosketa viivaa nähdäksesi sarjan nimen ja arvon.</p>
-<p class="note" id="model-note"></p>
-<p class="note">Testi "aliarvioivatko futuurit kriisien keston" (NYMEX M1 vs M4, 2008–2024, 169 kk): jyrkässä backwardaatiossa käyrä implikoi −3,2 % kolmessa kuukaudessa, toteuma oli −6,1 %; 2022: −4,5 % vs −7,1 %; kriisikuukausina (hinta &gt; 15 % yli 36 kk keskiarvon) −2,6 % vs −2,0 %. Käyrä ei ole ollut liian pessimistinen, joten ennustetta ei nosteta sen yläpuolelle; epäsymmetria on kartion yläreunassa.</p>
-<h3>Ennusteet taulukkona</h3>
+
   <div class="tbl-wrap"><table id="t-live"></table></div>
-  <p class="note" id="live-note"></p>
-  <details><summary class="note" style="cursor:pointer">Datan tuoreus ja ajon tila</summary><div class="tbl-wrap"><table id="t-status"></table></div></details>
 
 
 <details id="more"><summary class="more-sum">Näytä mallit, testit ja koko analyysi (optiot, Hormuz-hasardi, signaalit, painot, dossieri, 110 muuttujan kaavio, korrelaatiot)</summary>
 <div class="more-body">
+<details><summary class="note" style="cursor:pointer">Datan tuoreus ja ajon tila</summary><div class="tbl-wrap"><table id="t-status"></table></div></details>
 <h2>Todennäköisyys: optiomarkkina vs. malli</h2>
 <p class="lede">Sininen viuhka on WTI-optioista johdettu (riskineutraali) jakauma viidelle erääntymiselle 22.10.2026 (CME, Breeden–Litzenberger). Harmaa on oma yhdistelmäennuste kartioineen, vihreä futuurikäyrä. Optiot kertovat, mitä markkina on valmis maksamaan hännistä; malli kertoo, mitä varastot ja tuotanto sanovat.</p>
 <div id="chart3" style="width:100%;height:420px;background:var(--surface);border:1px solid var(--border);border-radius:6px"></div>
@@ -314,7 +305,7 @@ a{color:var(--accent-ink)}
 
 </div></details>
 
-<footer>Koottu 22.10.2026; automaattinen päivitys 2×/vrk 23.10.2026 alkaen (GitHub Actions). Laskenta: Python (pandas, statsmodels, scipy); kaavio: Plotly.js. Korrelaatiot ovat Pearsonin kertoimia; Granger-testit ovat F-testejä log-muutoksista.</footer>
+
 </div>
 
 <script>
@@ -456,7 +447,6 @@ function drawModel(){
   Plotly.react("chart2", tr, lay, {responsive:true, displaylogo:false, modeBarButtonsToRemove:["lasso2d","select2d"]});
   const q1=md.quantiles["1"], q3=md.quantiles["3"]; const f1=md.forecast[0], f3=md.forecast[2], f6=md.forecast[5];
   const cur = md.curve ? ` Futuurikäyrä 21.10.2026: ${md.curve.slice(0,1).map(c=>c.contract+" "+c.price.toFixed(0)+" $").join("")}, ${md.curve.filter(c=>/JUN 27|DEC 27|DEC 28/.test(c.contract)).map(c=>c.contract+" "+c.price.toFixed(0)+" $").join(", ")}.` : "";
-  document.getElementById("model-note").innerHTML=`${NAME}: sovitus R² ${md.r2.toFixed(2).replace(".",",")}, virheen mediaani ±${md.insample_med.toFixed(1).replace(".",",")} $ koko aineistolla; etukäteen laskettuna (walk-forward 2020→) mediaani ±${md.wf_med.toFixed(1).replace(".",",")} $ ja 90 % virheistä alle ±${md.wf_90.toFixed(0)} $. Fair value 9/2026: ${md.fv_now.toFixed(0)} $; ${NAME} ${X0.slice(8,10)}.${X0.slice(5,7)}.2026 ${md.P0.toFixed(0)} $ (gap ${md.gap_pct>0?"+":""}${md.gap_pct.toFixed(0)} %; lokakuun keskiarvo ${md.P0_month?md.P0_month.toFixed(0):"–"} $). Ennusteen lähtöpiste on viimeisin päivähinta: testissä 2015–2026 se pienentää seuraavan kuukauden keskiarvon ennustevirhettä ${DATA.d8&&DATA.d8.eom?Math.round((1-DATA.d8.eom[modelTarget].h1_2015.ratio_last)*100):"–"} % kuukausikeskiarvoon verrattuna. Yhdistelmäennuste (puolet driftittömästä mallista, puolet futuurikäyrästä; kartio = keskitetyt etukäteisvirheet): 1 kk ${f1.comb.toFixed(0)} $ (50 % väli ${f1.p25.toFixed(0)}–${f1.p75.toFixed(0)}, 90 % ${f1.p05.toFixed(0)}–${f1.p95.toFixed(0)}), 3 kk ${f3.comb.toFixed(0)} $ (${f3.p25.toFixed(0)}–${f3.p75.toFixed(0)} / ${f3.p05.toFixed(0)}–${f3.p95.toFixed(0)}), 6 kk ${f6.comb.toFixed(0)} $ (${f6.p25.toFixed(0)}–${f6.p75.toFixed(0)} / ${f6.p05.toFixed(0)}–${f6.p95.toFixed(0)}). Pelkkä malli: 3 kk ${f3.median.toFixed(0)} $, 6 kk ${f6.median.toFixed(0)} $; pelkkä käyrä: 3 kk ${f3.curve?f3.curve.toFixed(0):"–"} $, 6 kk ${f6.curve?f6.curve.toFixed(0):"–"} $.${cur} Standardoidut kertoimet (log-tasot): ${Object.entries(md.coef).map(([k,v])=>k+" "+v).join(", ")}.`;
 }
 drawModel();
 // ---- Chart 3: options-implied distribution vs model (WTI) ----
@@ -542,20 +532,19 @@ const fmtTs=(iso)=>{ if(!iso) return "–"; const d=new Date(iso.endsWith("Z")?i
 (function(){
   const st=DATA.status||{}; const mw=DATA.model&&DATA.model.wti, mb=DATA.model&&DATA.model.brent; if(!mw) return;
   const d8=DATA.d8||{}, hz=DATA.hz||{}, ch=(DATA.change||{}).changes||{};
-  document.getElementById("updated-line").textContent=`Päivitetty ${fmtTs(st.finished)} · päivittyy automaattisesti 2×/vrk (n. 05:30 ja 17:30 UTC)`;
+  document.getElementById("updated-line").textContent=`Päivitetty ${fmtTs(st.finished)}`;
   const sw=(d8.stack||{}).wti||{}, sb=(d8.stack||{}).brent||{}; const hzw=(hz.now||{}).CL||{}, hzb=(hz.now||{}).BZ||{};
   const dlt=(k)=> ch[k]&&ch[k].comb!=null ? `<small>${ch[k].comb>0?"+":""}${fmtNum(ch[k].comb,1)} $ ed. ajosta</small>` : "";
   const tiles=[
-    {k:"WTI "+(mw.P0_day||""), v:fmtNum(mw.P0,1)+" $", s:`fair value ${fmtNum(mw.fv_now)} $ · kk-keskiarvo ${fmtNum(mw.P0_month)} $`},
-    {k:"WTI 3 kk ("+mw.forecast[2].date.slice(0,7)+")", v:fmtNum(mw.forecast[2].comb)+" $"+dlt("wti_3"), s:`50 % väli ${fmtNum(mw.forecast[2].p25)}–${fmtNum(mw.forecast[2].p75)} $ · futuuri ${fmtNum(mw.forecast[2].curve)} $`},
-    {k:"Brent "+(mb.P0_day||""), v:fmtNum(mb.P0,1)+" $", s:`fair value ${fmtNum(mb.fv_now)} $ · kk-keskiarvo ${fmtNum(mb.P0_month)} $`},
-    {k:"Brent 3 kk ("+mb.forecast[2].date.slice(0,7)+")", v:fmtNum(mb.forecast[2].comb)+" $"+dlt("brent_3"), s:`50 % väli ${fmtNum(mb.forecast[2].p25)}–${fmtNum(mb.forecast[2].p75)} $ · futuuri ${fmtNum(mb.forecast[2].curve)} $`},
-    {k:"Hormuz auki 6 kk:ssa", v:(hzw.p_open?fmtNum(hzw.p_open["6"]*100)+" %":"–"), s:`markkinan hinnoittelema; hasardi ${fmtNum(hzw.hazard*100)} %/kk · transitit ${fmtNum((hz.signals||{}).transits7,1)}/pv (normaali ${fmtNum((hz.signals||{}).transits_normal)})`}];
-  document.getElementById("live-tiles").innerHTML=tiles.map(t=>`<div class="tile"><div class="k">${t.k}</div><div class="v">${t.v}</div><div class="s">${t.s}</div></div>`).join("");
+    {k:"WTI "+(mw.P0_day?mw.P0_day.slice(8,10)+"."+mw.P0_day.slice(5,7)+".":""), v:fmtNum(mw.P0,1)+" $"},
+    {k:"WTI 3 kk ("+mw.forecast[2].date.slice(5,7)+"/"+mw.forecast[2].date.slice(0,4)+")", v:fmtNum(mw.forecast[2].comb)+" $"},
+    {k:"Brent "+(mb.P0_day?mb.P0_day.slice(8,10)+"."+mb.P0_day.slice(5,7)+".":""), v:fmtNum(mb.P0,1)+" $"},
+    {k:"Brent 3 kk ("+mb.forecast[2].date.slice(5,7)+"/"+mb.forecast[2].date.slice(0,4)+")", v:fmtNum(mb.forecast[2].comb)+" $"},
+    {k:"Hormuz auki 6 kk:ssa", v:(hzw.p_open?fmtNum(hzw.p_open["6"]*100)+" %":"–")}];
+  document.getElementById("live-tiles").innerHTML=tiles.map(t=>`<div class="tile"><div class="k">${t.k}</div><div class="v">${t.v}</div></div>`).join("");
   const row=(t,md,sh)=>["1","3","6","12"].map(h=>{ const f=md.forecast.find(x=>String(x.h)===h); const s=(sh.horizons||{})[h]||{};
     return [t.toUpperCase()+" "+h+" kk", f?f.date.slice(0,7):(s.date||"–").slice(0,7), f?fmtNum(f.comb):fmtNum(s.stack), f?`${fmtNum(f.p25)}–${fmtNum(f.p75)}`:"–", f?`${fmtNum(f.p05)}–${fmtNum(f.p95)}`:"–", (f&&f.curve!=null)?fmtNum(f.curve):fmtNum((s.members||{}).futures)]; });
   tbl("t-live",[["Ennuste"],["Kohde-kk"],["Ennuste $","num"],["50 % väli","num"],["90 % väli","num"],["Futuuri $","num"]], row("wti",mw,sw).concat(row("brent",mb,sb)));
-  document.getElementById("live-note").innerHTML=`Ennuste = puolet fundamenttimallista (fair value -palautuma viimeisimmästä päivähinnasta), puolet futuurikäyrästä; väli = toteutuneiden etukäteisvirheiden kvantiilit 2020→. Kohde on kuukauden keskihinta. Tarkkuus etukäteen: 1 kk mediaanivirhe ±3–4 $, 3 kk ±7 $, 12 kk ±15 $; 12 kk rivi on seitsemän mallin pino. Yksi muuttuja ratkaisee lähikuukaudet: Hormuzin avautuminen (P yllä).`+(DATA.change&&DATA.change.prev_run?` Edellinen ajo ${fmtTs(DATA.change.prev_run)}.`:"");
   const fr=st.fresh||{}; const steps=st.steps||{}; const fs=(DATA.fetch||{}).status||{};
   const rows=Object.entries(fr).map(([k,v])=>[k, v, ""]).concat(Object.entries(steps).map(([k,v])=>["ajo: "+k, v.ok?"ok":"VIRHE", v.ok?(v.secs+" s"):(v.err||"")])).concat(Object.entries(fs).map(([k,v])=>["haku: "+k, v.ok?"ok":"VIRHE (vanha data käytössä)", v.ok?(v.info||""):(v.error||"")]));
   tbl("t-status",[["Lähde / vaihe"],["Tila / viimeisin havainto"],["Huomio"]], rows);
