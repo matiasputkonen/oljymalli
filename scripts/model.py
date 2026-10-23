@@ -100,17 +100,27 @@ def steo_path(target):
                 vals = pd.to_numeric(x.iloc[i, 2:2 + len(dates)].values, errors="coerce"); return pd.Series([v for v, d in zip(vals, dates) if d is not None], index=[d for d in dates if d is not None]).dropna()
     except Exception as e: print("steo fail", e)
     return pd.Series(dtype=float)
+def p_open_at(h):
+    try:
+        po = json.load(open(f"{D}/hazard.json"))["now"]["CL"]["p_open"]; ks = sorted(int(k) for k in po); return float(np.interp(h, ks, [po[str(k)] for k in ks]))
+    except Exception: return 1.0
 def apply_views(out, target):
     ws, uv = float(VIEWS.get("steo_weight", 0)), VIEWS.get("user_view", {}); wu = float(uv.get("weight", 0)); st = steo_path(target)
     if ws <= 0 and wu <= 0: return out
+    vtype = uv.get("type", "p25"); opec_eff = None
+    if vtype == "opec_prod":   # production scenario through the model's own OPEC coefficient: Δlog(prod)/sd × standardised coef, phased in with P(open)
+        cur = float(M.opec_prod.dropna().iloc[-1]); tgt = float(uv.get("opec_target_mbd", cur)); sd_log = float(np.log(M.opec_prod.dropna()).std())
+        opec_eff = float(out["coef"].get("OPEC", 0.0)) * (np.log(tgt) - np.log(cur)) / sd_log
+        out["view_detail"] = dict(opec_now=round(cur, 1), opec_target=tgt, full_effect_pct=round(opec_eff * 100, 1))
     for f in out["forecast"]:
         base = f["comb"]; f["comb_base"] = base; dt = pd.Timestamp(f["date"]); sv = float(st.get(dt, np.nan)) if len(st) else np.nan
-        view = f["p25"] if uv.get("type", "p25") == "p25" else (f["p75"] if uv.get("type") == "p75" else base * (1 + float(uv.get("pct", 0)) / 100))
+        if vtype == "opec_prod": view = base * np.exp(opec_eff * p_open_at(f["h"]))
+        else: view = f["p25"] if vtype == "p25" else (f["p75"] if vtype == "p75" else base * (1 + float(uv.get("pct", 0)) / 100))
         w_s = ws if not np.isnan(sv) else 0.0; final = (1 - w_s - wu) * base + w_s * (sv if not np.isnan(sv) else 0) + wu * view
         ratio = final / base; f["comb"] = round(final, 1); f["steo"] = (round(sv, 1) if not np.isnan(sv) else None); f["view"] = round(view, 1)
         for k in ["p25", "p75", "p05", "p95"]: f[k] = round(f[k] * ratio, 1)   # cone re-centred on the final forecast
     out["views"] = dict(steo_weight=ws, user_weight=wu, user_type=uv.get("type", "p25"), user_label=uv.get("label", ""), base_weights={"malli": round((1 - ws - wu) / 2, 3), "käyrä": round((1 - ws - wu) / 2, 3)})
-    print(f"  views: STEO {ws:.0%}, oma näkemys {wu:.0%} ({uv.get('type')}) → 3 kk {out['forecast'][2]['comb_base']} → {out['forecast'][2]['comb']}")
+    print(f"  views: STEO {ws:.0%}, oma näkemys {wu:.0%} ({vtype}{' ' + str(out.get('view_detail')) if opec_eff is not None else ''}) → 3 kk {out['forecast'][2]['comb_base']} → {out['forecast'][2]['comb']} (näkemys {out['forecast'][2]['view']})")
     return out
 models = {"brent": apply_views(build("brent", BASE), "brent"), "wti": apply_views(build("wti", {**BASE, **WTI_EXTRA}), "wti"), "wti_base": build("wti", BASE)}
 for t in ["brent", "wti"]:
