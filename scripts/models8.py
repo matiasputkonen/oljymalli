@@ -124,7 +124,7 @@ def opt_q(days, p="0.5"): return float(np.interp(days, od, [v["q"][p] for v in e
 def opt_F(days): return float(np.interp(days, od, [v["F"] for v in ex]))
 stack = {}
 for t in ["wti", "brent"]:
-    P_d = eom[t]["last_daily"]; P_m = float(M[t].loc[CUR_MS]); cf = curve_fn(t); cw = curve_fn("wti"); wk = m17["weekly"][t]; qn = m17["quantile"][t]["horizons"]
+    P_d = float(pg["model"][t]["P0"]); P_m = float(M[t].loc[CUR_MS]); cf = curve_fn(t); cw = curve_fn("wti"); wk = m17["weekly"][t]; qn = m17["quantile"][t]["horizons"]   # anchor = same as the page model (WTI: front contract latest close)
     gap_d = float(np.log(P_d) - np.log(fvnow[t])); gap_w = float(np.log(wk["actual_last"] / wk["fv_last"]))
     rows = {}
     for h in H:
@@ -138,7 +138,7 @@ for t in ["wti", "brent"]:
         rows[str(h)] = dict(date=str(dt.date()), members={k: round(float(v), 1) for k, v in mem.items()}, weights={k: round(ws[k] / tot, 3) for k in mem}, stack=round(float(st), 1), disagreement=round(float(vals.std()), 1), lo=round(float(vals.min()), 1), hi=round(float(vals.max()), 1),
                             steo=(round(float(steo[t].get(dt, np.nan)), 1) if dt in steo[t].index else None))
         print(f"{t} h={h} ({dt.date()}): pino {st:.1f} $ | " + " ".join(f"{k}={v:.0f}" for k, v in mem.items()) + f" | hajonta {vals.std():.1f} | STEO {rows[str(h)]['steo']}")
-    stack[t] = dict(anchor=P_d, anchor_date=eom[t]["last_daily_date"], month_avg=P_m, fv_now=round(fvnow[t], 1), gap_daily_pct=round(gap_d * 100, 1), gap_weekly_pct=round(gap_w * 100, 1), gapcoef={str(h): [round(a, 4), round(b, 4)] for h, (a, b) in gapcoef[t].items()}, horizons=rows)
+    stack[t] = dict(anchor=P_d, anchor_date=pg["model"][t].get("P0_day", eom[t]["last_daily_date"]), month_avg=P_m, fv_now=round(fvnow[t], 1), gap_daily_pct=round(gap_d * 100, 1), gap_weekly_pct=round(gap_w * 100, 1), gapcoef={str(h): [round(a, 4), round(b, 4)] for h, (a, b) in gapcoef[t].items()}, horizons=rows)
 OUT["stack"] = stack; OUT["weights"] = W
 
 # ============ 4. Exponential tilting of the WTI options density to a physical measure ============

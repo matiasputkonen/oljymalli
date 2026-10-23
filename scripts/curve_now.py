@@ -18,6 +18,13 @@ for tgt, root, label in [("wti", "CL", "NYMEX WTI -futuurikäyrä"), ("brent", "
     last = max(p[2] for p in pts); nxt = (last.replace(day=1) + pd.DateOffset(months=1))
     cur = sorted([p for p in pts if (last - p[2]).days <= 3 and p[0] > last.replace(day=1) and not (p[2] < last and p[0] <= nxt)], key=lambda p: p[0])   # drop the expired front
     out[tgt] = dict(date=str(last.date()), label=f"{label} {last.strftime('%d.%m.%Y')}", curve=[dict(date=str(p[0].date()), price=round(p[1], 2), contract=p[3]) for p in cur])
+    # front contract's recent daily closes (for the forecast anchor): the nearest unexpired contract
+    if cur:
+        fcode = f"{root}{'FGHJKMNQUVXZ'[cur[0][0].month - 1]}{cur[0][0].year % 100:02d}.NYM"
+        try:
+            j = json.load(open(f"{R3}/yahoo/{fcode}.json"))["chart"]["result"][0]; fs = pd.Series(j["indicators"]["quote"][0]["close"], index=pd.to_datetime(j["timestamp"], unit="s").normalize()).dropna(); fs = fs[~fs.index.duplicated(keep="last")]
+            out[tgt]["front"] = dict(code=fcode.replace(".NYM", ""), contract=cur[0][3], history=[dict(date=str(t.date()), price=round(float(v), 2)) for t, v in fs.iloc[-30:].items()])
+        except Exception as e: print("front history fail", fcode, e)
     print(tgt, out[tgt]["date"], len(cur), "points:", [(c["contract"], c["price"]) for c in out[tgt]["curve"][:4]], "...", out[tgt]["curve"][-1])
 # options: prefer a fresh Yahoo chain, else the CME settlement file
 opt = None

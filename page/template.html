@@ -90,7 +90,7 @@ a{color:var(--accent-ink)}
 
 
 
-<div class="controls"><span class="lbl">Laatu</span><button class="btn active" data-target="brent">Brent</button><button class="btn" data-target="wti">WTI</button></div>
+<div class="controls"><span class="lbl">Laatu</span><button class="btn" data-target="brent">Brent</button><button class="btn active" data-target="wti">WTI</button></div>
 <div id="chart2" style="width:100%;height:440px;background:var(--surface);border:1px solid var(--border);border-radius:6px"></div>
 
   <div class="tbl-wrap"><table id="t-live"></table></div>
@@ -138,6 +138,22 @@ a{color:var(--accent-ink)}
 <div><h3>Brent</h3><div class="tbl-wrap"><table id="t-w-brent"></table></div></div>
 </div>
 <p class="note" id="w-note"></p>
+
+<h2>Todennäköisyyslaskenta: hasardin epävarmuus, entropy pooling, hyppymalli, OU, Kelly, kalibrointi</h2>
+<div class="cols">
+<div><h3>1. Bayesilainen hasardi (Beta-binomi, kilpailevat riskit)</h3><p class="note" id="bayes-note"></p><div class="tbl-wrap"><table id="t-bayes"></table></div></div>
+<div><h3>5. Ornstein–Uhlenbeck: fair value -gapin palautuminen</h3><p class="note" id="ou-note"></p><div class="tbl-wrap"><table id="t-ou"></table></div></div>
+</div>
+<h3>2. Entropy pooling: mallin näkemys markkinan optiojakaumaan</h3>
+<p class="note" id="ep-note"></p>
+<div class="tbl-wrap"><table id="t-ep"></table></div>
+<div class="cols">
+<div><h3>4. Merton-hyppymalli optioista</h3><p class="note" id="jd-note"></p></div>
+<div><h3>7. Kelly-mitoitus jakaumista</h3><p class="note" id="kelly-note"></p><div class="tbl-wrap"><table id="t-kelly"></table></div></div>
+</div>
+<h3>8. Kalibrointi: toteutuneet vs. ennustetut</h3>
+<p class="note" id="eval-note"></p>
+<div class="tbl-wrap"><table id="t-eval"></table></div>
 
 <h2>Dossieri 23.10.2026: kirjallisuus vs. omat tulokset</h2>
 <p class="lede">Perplexityn syvähaku (oma prompti, 23.10.2026) kävi läpi ennustekirjallisuuden, markkinatilan ja datalähteet. Sen pääväite: 1–12 kuukauden ennusteen tärkein muuttuja on Hormuzin siirtymätodennäköisyys, ja puolustettavin rakenne on ei-muutosta + futuurikäyrä + fyysinen tase + yhdistelmät + optiojakauma. Alla dossierin väitteet rinnakkain tämän aineiston tulosten kanssa, ja neljä asiaa jotka toteutettiin sen perusteella.</p>
@@ -415,7 +431,7 @@ const mq=window.matchMedia("(prefers-color-scheme: dark)"); mq.addEventListener 
 new MutationObserver(()=>{draw(); buildLegend();}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
 buildLegend(); draw();
 // ---- Model chart: actual, fair value, forecast cone ----
-let modelTarget="brent";
+let modelTarget="wti";
 document.querySelectorAll("[data-target]").forEach(b=>b.addEventListener("click",()=>{ modelTarget=b.dataset.target; document.querySelectorAll("[data-target]").forEach(x=>x.classList.toggle("active",x===b)); drawModel(); }));
 const isNarrow=()=>window.innerWidth<640;
 function drawModel(){
@@ -433,10 +449,10 @@ function drawModel(){
     {x:md.dates, y:md.actual, mode:"lines", name:NAME+" toteutunut (kuukausikeskiarvo)", line:{color:blue, width:2.6}, hovertemplate:NAME+" %{y:.1f} $<br>%{x|%Y-%m}<extra></extra>"},
     ...(md.daily_recent?[{x:md.daily_recent.map(d=>d.date), y:md.daily_recent.map(d=>d.price), mode:"lines", name:"Päivähinta (viimeiset viikot)", line:{color:blue, width:1}, opacity:0.7, hovertemplate:NAME+" %{y:.1f} $<br>%{x|%d.%m.%Y}<extra>päivä</extra>"}]:[]),
     {x:[X0], y:[md.P0], mode:"markers", name:"Viimeisin päivähinta ("+X0.slice(8,10)+"."+X0.slice(5,7)+".) = ennusteen lähtöpiste", marker:{color:blue, size:9, symbol:"diamond"}, hovertemplate:NAME+" %{y:.1f} $<br>%{x|%d.%m.%Y}<extra></extra>"},
-    {x:fcd, y:med, mode:"lines", name:"Pelkkä fundamenttimalli", visible:"legendonly", line:{color:css("--c-orange"), width:1.4, dash:"dashdot"}, hovertemplate:"Malli %{y:.0f} $<br>%{x|%Y-%m}<extra></extra>"},
+    {x:fcd, y:med, mode:"lines", name:"Pelkkä fundamenttimalli", line:{color:css("--c-orange"), width:1.4, dash:"dashdot"}, hovertemplate:"Malli %{y:.0f} $<br>%{x|%Y-%m}<extra></extra>"},
     {x:fcd, y:comb, mode:"lines+markers", name:"Ennuste", line:{color:blue, width:2.6, dash:"dashdot"}, marker:{size:6}, hovertemplate:"Ennuste %{y:.0f} $<br>%{x|%Y-%m}<extra></extra>"}];
   if(md.curve){ tr.push({x:md.curve.map(c=>c.date), y:md.curve.map(c=>c.price), text:md.curve.map(c=>c.contract), mode:"lines", name:"Futuurikäyrä (markkina)", line:{color:css("--c-green"), width:1.3}, hovertemplate:"%{text}: %{y:.1f} $<extra>futuuri</extra>"}); }
-  if(DATA.d8&&DATA.d8.steo&&DATA.d8.steo[modelTarget]){ const st=DATA.d8.steo[modelTarget]; tr.push({x:st.map(e=>e.date), y:st.map(e=>e.price), mode:"lines", name:"EIA STEO", visible:"legendonly", line:{color:css("--c-violet"), width:1.6, dash:"dash"}, hovertemplate:"EIA STEO %{y:.0f} $<br>%{x|%Y-%m}<extra></extra>"}); }
+  if(DATA.d8&&DATA.d8.steo&&DATA.d8.steo[modelTarget]){ const st=DATA.d8.steo[modelTarget]; tr.push({x:st.map(e=>e.date), y:st.map(e=>e.price), mode:"lines", name:"EIA STEO", line:{color:css("--c-violet"), width:1.6, dash:"dash"}, hovertemplate:"EIA STEO %{y:.0f} $<br>%{x|%Y-%m}<extra></extra>"}); }
   const x0=isNarrow()?"2025-06-01":"2024-01-01"; const visVals=md.dates.map((d,i)=>d>=x0?md.actual[i]:null).filter(v=>v!=null).concat(p05.slice(1), p95.slice(1), md.curve?md.curve.map(c=>c.price):[]);
   const yr=[Math.floor(Math.min(...visVals)*0.92/5)*5, Math.ceil(Math.max(...visVals)*1.03/5)*5];
   const lay={paper_bgcolor:css("--surface"), plot_bgcolor:css("--surface"), font:{family:css("--font-ui"), color:ink2, size:12}, margin:{l:48,r:16,t:16,b:40}, hovermode:"x unified",
@@ -586,6 +602,31 @@ drawHazard();
       rows.push([h+" kk", (v.members||[]).map(k=>`${names[k]} ${f(wn[k]*100)} %`).join(", "), f(v.rmse_ratio_est,3), f(v.rmse_ratio_shrunk,3), f(v.rmse_ratio_equal,3), f(v.rmse_ratio_dossier,3), Object.entries(rm).map(([k,x])=>`${names[k]} ${f(x,2)}`).join(", "), `${f(v.stack_est_now)} / ${f(v.stack_shrunk_now)} / ${f(v.stack_dossier_now)}`, String(v.n_oos||"–")]); }
     tbl("t-w-"+t,[["h"],["Estimoidut painot (koko otos)"],["OOS est.","num"],["OOS kutistettu","num"],["OOS tasa","num"],["OOS dossieri","num"],["Jäsenet yksin (OOS)"],["Pino nyt est / kutist. / dossieri $","num"],["n OOS","num"]], rows); }
   document.getElementById("w-note").innerHTML=`OOS = RMSE-suhde ei-muutosta vastaan 2023→ (kohde kuukausikeskiarvo, lähtöpiste kuukauden lopun päivähinta). Estimoidut painot keskittyvät yhteen jäseneen ja häviävät 12 kk horisontilla selvästi kiinteille painoille (klassinen yhdistelmäparadoksi: tasapainot voittavat estimoidut). Siksi sivun pääennuste käyttää dossierin kiinteitä painoja; kutistettu versio on lähes yhtä hyvä ja näytetään rinnalla. Futuurikäyrän historia yli 4 kuukauden päähän on saatavilla vain vuodesta 2026 (EIA lopetti sopimukset 2–4 huhtikuussa 2024), joten 6–12 kk painot on estimoitu ilman käyräjäsentä ja käyrä saa niissä dossierin 15 %. Paras yksittäinen jäsen 6–12 kk on fair value -palautuma (0,85–0,95); VAR on heikoin (1,1–1,5).`;
+})();
+// ---- Probability toolkit tables ----
+(function(){
+  const P=DATA.prob; const f=fmtNum; if(P){
+    const b=P.bayes, fl=b.flat, inf=b.informed, es=b.escalation; const hzw=((DATA.hz||{}).now||{}).CL||{};
+    document.getElementById("bayes-note").innerHTML=`Havainnot: salmi kiinni ${b.months_closed} kk (${b.crisis_start} →, kuukausi = kiinni kun transitit &lt; 50 % normaalista ${f(b.normal_transits)}/pv), ${b.n_open_events} osittainen avautumisjakso (≥ 20 % normaalista ≥ 7 pv), ${b.n_escalations} eskalaatiota. Posteriori Beta(a,b) tasapriorilla ja markkinapriorilla (keskiarvo = käyrän hasardi ${f(b.market_hazard*100)} %, paino 6 kk). Kilpailevat riskit: P(eskalaatio ennen avautumista) = h_e/(h_o+h_e) = <b>${f(b.p_escalation_before_opening*100)} %</b>.`;
+    const row=(lab,x)=>[lab, `${f(x.mean*100)} % (${f(x.q["0.05"]*100)}–${f(x.q["0.95"]*100)})`, `${f(x.cum_open[3].mean*100)} % (${f(x.cum_open[3].p05*100)}–${f(x.cum_open[3].p95*100)})`, `${f(x.cum_open[6].mean*100)} % (${f(x.cum_open[6].p05*100)}–${f(x.cum_open[6].p95*100)})`, `${f(x.cum_open[12].mean*100)} % (${f(x.cum_open[12].p05*100)}–${f(x.cum_open[12].p95*100)})`];
+    tbl("t-bayes",[["Estimaatti"],["Hasardi %/kk (90 % väli)","num"],["P(auki 3 kk)","num"],["P(auki 6 kk)","num"],["P(auki 12 kk)","num"]],[
+      ["Markkina (käyrä)", f(b.market_hazard*100)+" %", f((hzw.p_open||{})["3"]*100)+" %", f((hzw.p_open||{})["6"]*100)+" %", f((hzw.p_open||{})["12"]*100)+" %"],
+      row("Bayes, tasapriori", fl), row("Bayes, markkinapriori", inf), ["Eskalaatiohasardi", f(es.mean*100)+" % ("+f(es.q["0.05"]*100)+"–"+f(es.q["0.95"]*100)+")", "–", "–", "–"]]);
+    const o=P.ou; tbl("t-ou",[["Laatu"],["φ (kk)","num"],["Puoliintumisaika kk (90 %)","num"],["Palautuma 1/3/6/12 kk","num"],["Gap nyt","num"],["OU-polku 3 kk $","num"],["Malli 3 kk $","num"]], ["wti","brent"].map(t=>[t.toUpperCase(), `${f(o[t].phi,2)} ± ${f(o[t].phi_se,2)}`, `${f(o[t].half_life,1)} (${f(o[t].half_life_90[0],1)}–${f(o[t].half_life_90[1],1)})`, `${f(o[t].reversion[1]*100)}/${f(o[t].reversion[3]*100)}/${f(o[t].reversion[6]*100)}/${f(o[t].reversion[12]*100)} %`, (o[t].gap_now_pct>0?"+":"")+f(o[t].gap_now_pct,1)+" %", f(o[t].implied_path[3]), f(o[t].model_median["3"])]));
+    document.getElementById("ou-note").innerHTML=`AR(1) kuukausittaiselle gapille log(hinta/fair value) 2015→: gap_t = φ·gap_{t−1} + ε. Puoliintumisaika = −ln2/ln φ. Mallin palautumakerroin (½ × gap-regression kulmakerroin) vastaa noin ${f((1-Math.pow(o.wti.phi,3))*100*0.75)}–${f((1-Math.pow(o.wti.phi,3))*100)} %:n palautumaa 3 kk:ssa; OU-estimaatti on hieman nopeampi. Gapin keskihajonta ${f(o.wti.sd_gap_pct,1)} % (WTI).`;
+    const ep=P.entropy_pooling; const keys=Object.keys(ep).sort((a,b)=>ep[a].months-ep[b].months);
+    tbl("t-ep",[["Erääntyminen"],["kk","num"],["Markkina: mediaani (50 % väli)","num"],["Näkemys (malli)","num"],["Pooled: mediaani (50 % väli)","num"],["P(<80 $) markkina → pooled","num"],["P(>120 $)","num"],["Blend 50 %: mediaani","num"],["KL-etäisyys","num"]], keys.map(k=>{const e=ep[k]; return [k+" ("+e.expiry+")", f(e.months,1), `${f(e.market.q["0.5"])} (${f(e.market.q["0.25"])}–${f(e.market.q["0.75"])})`, `${f(e.view.median)} (${f(e.view.p25)}–${f(e.view.p75)})`, `${f(e.pooled.q["0.5"])} (${f(e.pooled.q["0.25"])}–${f(e.pooled.q["0.75"])})`, `${f(e.market.p_below_80*100)} → ${f(e.pooled.p_below_80*100)} %`, `${f(e.market.p_above_120*100)} → ${f(e.pooled.p_above_120*100)} %`, f(e.blended.q["0.5"]), f(e.kl,3)];}));
+    document.getElementById("ep-note").innerHTML=`Meuccin entropy pooling: etsitään jakauma p, joka minimoi suhteellisen entropian KL(p‖q) markkinan riskineutraaliin jakaumaan q nähden ja toteuttaa mallin ehdot (P(hinta ≤ mallin mediaani) = 0,5 ja P(50 % väli) = 0,5). Ratkaisu on q·exp(Σλ·f) Lagrange-kertoimilla. "Blend 50 %" = 0,5·p + 0,5·q eli puolet luottamusta malliin. Korvaa aiemman log-tiltin.`;
+    const jd=P.jump_diffusion||{}; document.getElementById("jd-note").innerHTML= jd.sigma? `Merton-hyppydiffuusio sovitettu optioiden implisiittisiin volatiliteetteihin (${(jd.expiries||[]).join(", ")}): diffuusio σ <b>${f(jd.sigma*100)} %</b>/v, hyppyintensiteetti λ <b>${f(jd.lam_per_year,2)}/v</b> → P(vähintään yksi hyppy 3 kk:ssa) ${f(jd.p_jump_3m*100)} %, 12 kk ${f(jd.p_jump_12m*100)} %; hypyn keskikoko ${jd.jump_mean_pct>0?"+":""}${f(jd.jump_mean_pct,1)} % ± ${f(jd.jump_sd_pct)} %; hyppyjen osuus kokonaisvarianssista ${f(jd.total_var_share_jumps*100)} %; sovitusvirhe ${f(jd.rmse_iv_pts,1)} vol-%. Tulkinta: markkina hinnoittelee harvoja, isoja ja lähes symmetrisiä shokkeja (avautuminen tai eskalaatio), ja tavallinen päivävaihtelu on vain neljäsosa riskistä.` : "Hyppymallia ei voitu sovittaa.";
+    const kl=P.kelly||{}; const kk=Object.keys(kl).sort((a,b)=>new Date(kl[a].expiry)-new Date(kl[b].expiry));
+    tbl("t-kelly",[["Erääntyminen"],["Markkina μ / σ","num"],["Markkina f*","num"],["Pooled μ","num"],["Pooled f*","num"],["Blend f*","num"],["¼-Kelly (blend)","num"]], kk.map(k=>{const x=kl[k]; return [k, `${x.market.mu_pct>0?"+":""}${f(x.market.mu_pct,1)} % / ${f(x.market.sd_pct)} %`, (x.market.kelly>0?"+":"")+f(x.market.kelly,2), (x.pooled.mu_pct>0?"+":"")+f(x.pooled.mu_pct,1)+" %", (x.pooled.kelly>0?"+":"")+f(x.pooled.kelly,2), (x.blended.kelly>0?"+":"")+f(x.blended.kelly,2), (x.blended.quarter_kelly>0?"+":"")+f(x.blended.quarter_kelly,2)];}));
+    document.getElementById("kelly-note").innerHTML=`f* = E[R]/Var[R] pitkälle futuuripositiolle, R = tuotto erääntymiseen (osuus pääomasta; 1,0 = koko pääoma yhdessä sopimuksessa ilman vipua). Markkinan riskineutraalista jakaumasta f* ≈ 0 rakenteellisesti (futuurin odotustuotto on nolla). Positiivinen f* syntyy vain mallin näkemyksestä, ja se on hyvä vasta kun malli on kalibroitu (kohta 8). ¼-Kelly on käytännön yläraja.`;
+  }
+  const E=DATA.eval; if(E){
+    const S=E.summary||{}; const keys=Object.keys(S);
+    document.getElementById("eval-note").innerHTML=`Kirjattu ${E.n_logged} ennustetta ${E.n_runs} ajosta; ensimmäinen kohdekuukausi ${E.first_target||"–"}. Pisteytetty ${(E.scored||[]).length} (kohdekuukausi päättynyt). Mittarit: PIT (toteuma ennustejakaumassa; tasainen = kalibroitu), peitto 50/90 %, CRPS (kvantiiliapproksimaatio), RMSE vs ei-muutosta ja vs käyrä. Hasardin Brier-pisteet lasketaan, kun avautuminen on ratkennut (kuukausi, jona transitit ≥ 50 % normaalista; nyt ${E.reopen_month||"ei vielä"}).`;
+    tbl("t-eval",[["Laatu / h"],["n","num"],["MAE $","num"],["RMSE $","num"],["RMSE ei-muutosta","num"],["RMSE käyrä","num"],["Peitto 50 %","num"],["Peitto 90 %","num"],["PIT ka","num"],["CRPS","num"]], keys.length? keys.map(k=>{const v=S[k]; return [k.toUpperCase().replace("_"," "), String(v.n), f(v.mae,1), f(v.rmse,1), f(v.rmse_nochange,1), v.rmse_curve==null?"–":f(v.rmse_curve,1), f(v.cov50*100)+" %", f(v.cov90*100)+" %", f(v.pit_mean,2), f(v.crps,1)];}) : [["Ei vielä toteutuneita kohdekuukausia – ensimmäiset pisteet 1.12.2026", "", "", "", "", "", "", "", "", ""]]);
+  }
 })();
 new MutationObserver(()=>{drawModel(); drawOptions(); drawHazard();}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
 mq.addEventListener && mq.addEventListener("change",()=>{drawModel(); drawOptions(); drawHazard();});

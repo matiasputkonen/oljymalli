@@ -30,9 +30,11 @@ run("models8", [sys.executable, f"{SC}/models8.py"])
 run("hazard", [sys.executable, f"{SC}/hazard.py"])
 run("daily_signals", [sys.executable, f"{SC}/daily_signals.py"])
 run("weights", [sys.executable, f"{SC}/weights.py"])
+run("models_prob", [sys.executable, f"{SC}/models_prob.py"], timeout=1200)
+run("evaluate_log", [sys.executable, f"{SC}/evaluate_log.py"])
 # ---- assemble page data, forecast log, html ----
 pg = json.load(open(f"{D}/page_data.json"))
-for key, fn in [("hz", "hazard.json"), ("ds", "daily_signals.json"), ("wts", "weights.json"), ("fetch", "status_fetch.json")]:
+for key, fn in [("hz", "hazard.json"), ("ds", "daily_signals.json"), ("wts", "weights.json"), ("prob", "prob.json"), ("eval", "eval.json"), ("fetch", "status_fetch.json")]:
     try: pg[key] = json.load(open(f"{D}/{fn}"))
     except Exception as e: print("missing", fn, e)
 STATUS["finished"] = str(dt.datetime.utcnow())[:19] + "Z"

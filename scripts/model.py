@@ -39,7 +39,13 @@ def build(target, feats, P0_date=None):
         e0[h] = [float(d.y.loc[t + pd.DateOffset(months=h)] - yo.loc[t]) for t in idx]
         gaps = yo - fitted; g2 = pd.concat([(d.y.shift(-h) - yo).rename("dy"), gaps.rename("g")], axis=1).dropna(); mg = sm.OLS(g2.dy, sm.add_constant(g2[["g"]], has_constant="add")).fit(); gapcoef[h] = (float(mg.params["const"]), float(mg.params["g"]))
     qs = {h: {q: float(np.quantile(errs[h], q)) for q in [0.05, 0.25, 0.5, 0.75, 0.95]} for h in H}
-    P0 = float(dd.iloc[-1]); gap_now = float(np.log(P0) - fitted.iloc[-1]); P0_month = float(M[target].loc[P0_date]); fv_now = float(np.exp(fitted.iloc[-1]))   # origin = latest daily price vs latest fair value
+    P0 = float(dd.iloc[-1]); P0_day = str(dd.index[-1].date()); anchor_src = "FRED/EIA spot"
+    if target == "wti" and FRONT.get("wti"):   # WTI spot ≈ front-month futures: use the front contract's latest close when it is newer than the EIA spot series
+        fh = FRONT["wti"]["history"]; fl = fh[-1]
+        if pd.Timestamp(fl["date"]) > dd.index[-1]:
+            P0 = float(fl["price"]); P0_day = fl["date"]; anchor_src = f"NYMEX {FRONT['wti']['contract']} päätös"
+            dd = pd.concat([dd, pd.Series({pd.Timestamp(e["date"]): float(e["price"]) for e in fh if pd.Timestamp(e["date"]) > dd.index[-1]})]).sort_index()
+    gap_now = float(np.log(P0) - fitted.iloc[-1]); P0_month = float(M[target].loc[P0_date]); fv_now = float(np.exp(fitted.iloc[-1]))   # origin = latest price vs latest fair value
     # drift-free: centre the error quantiles on their median; median path = gap reversion only
     curve = CURVES.get(target, []); cdates = [pd.Timestamp(c["date"]) for c in curve]; cprice = [c["price"] for c in curve]
     def curve_at(dt):
@@ -60,15 +66,15 @@ def build(target, feats, P0_date=None):
     out = dict(target=target, dates=[str(t.date()) for t in d.index], actual=[round(float(v), 2) for v in act], fv_insample=[round(float(v), 2) for v in fv_in],
                fv_walkforward={str(k.date()): round(v, 2) for k, v in wf.items()}, coef=coef, r2=round(float(r2), 3),
                insample_rmse=round(float(np.sqrt(((act - fv_in) ** 2).mean())), 1), insample_med=round(float((act - fv_in).abs().median()), 1),
-               wf_med=round(float(ew.abs().median()), 1), wf_90=round(float(ew.abs().quantile(.9)), 1), wf_max=round(float(ew.abs().max()), 1), forecast=fc, P0=round(P0, 2), P0_date=P0_date[:7], P0_day=P0_day, P0_month=round(P0_month, 2), daily_recent=[dict(date=str(t.date()), price=round(float(v), 2)) for t, v in dd.loc[dd.index >= pd.Timestamp(P0_date) - pd.DateOffset(months=2)].items()],
+               wf_med=round(float(ew.abs().median()), 1), wf_90=round(float(ew.abs().quantile(.9)), 1), wf_max=round(float(ew.abs().max()), 1), forecast=fc, P0=round(P0, 2), P0_date=P0_date[:7], P0_day=P0_day, P0_month=round(P0_month, 2), anchor_src=anchor_src, daily_recent=[dict(date=str(t.date()), price=round(float(v), 2)) for t, v in dd.loc[dd.index >= pd.Timestamp(P0_date) - pd.DateOffset(months=2)].items()],
                fv_now=round(fv_now, 1), gap_pct=round(gap_now * 100, 1), quantiles={h: {str(q): round(v * 100, 1) for q, v in qs[h].items()} for h in H}, rmse_vs_rw=rm)
     print(f"{target}: R2 {r2:.2f} in-sample med ±{out['insample_med']} | wf med ±{out['wf_med']} 90% ±{out['wf_90']} max {out['wf_max']} | fv_now {fv_now:.0f} P0 {P0:.0f} gap {gap_now*100:+.0f}% | rmse model/rw {rm}")
     print("  coef:", coef); print("  1kk", fc[0], "\n  3kk", fc[2], "\n  6kk", fc[5])
     return out
 
-CURVES = {}; CLABEL = {}
+CURVES = {}; CLABEL = {}; FRONT = {}
 try:
-    _cn = json.load(open(f"{D}/curves_now.json")); CURVES = {t: _cn[t]["curve"] for t in ["brent", "wti"] if t in _cn}; CLABEL = {t: _cn[t]["label"] for t in CURVES}
+    _cn = json.load(open(f"{D}/curves_now.json")); CURVES = {t: _cn[t]["curve"] for t in ["brent", "wti"] if t in _cn}; CLABEL = {t: _cn[t]["label"] for t in CURVES}; FRONT = {t: _cn[t].get("front") for t in CURVES}
 except Exception as e: print("no curves_now.json", e)
 if not CURVES:
     try:
