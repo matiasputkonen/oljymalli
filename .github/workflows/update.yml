@@ -16,8 +16,6 @@ concurrency:
   cancel-in-progress: false
 permissions:
   contents: write
-  pages: write
-  id-token: write
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -47,24 +45,5 @@ jobs:
           git commit -m "Päivitys $(date -u +'%Y-%m-%d %H:%M') UTC" || echo "nothing to commit"
           git pull --rebase origin main || true
           git push
-      - name: "Configure Pages (vaatii Settings → Pages → Source = GitHub Actions)"
-        uses: actions/configure-pages@v5
-        continue-on-error: true
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs
-  deploy:
-    needs: update
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
 
-# Ajo käynnistyy myös tämän tiedoston muutoksista (workflow_dispatch ei ole käytettävissä tästä sessiosta).
+# Julkaisu: GitHub Pages lukee main-branchin docs/-kansion (Settings → Pages → Deploy from a branch, /docs); jokainen commit julkaistaan automaattisesti.
