@@ -83,7 +83,36 @@ if not CURVES:
     try:
         _pg = json.load(open(f"{D}/page_data.json")); CURVES = {t: _pg["model"][t]["curve"] for t in ["brent", "wti"] if t in _pg.get("model", {}) and "curve" in _pg["model"][t]}; CLABEL = {t: _pg["model"][t].get("curve_label", "") for t in CURVES}
     except Exception as e: print("no curves", e)
-models = {"brent": build("brent", BASE), "wti": build("wti", {**BASE, **WTI_EXTRA}), "wti_base": build("wti", BASE)}
+# ---- views: STEO weight and the user's discretionary view (data/views.json) ----
+VIEWS = {"steo_weight": 0.0, "user_view": {"weight": 0.0, "type": "p25"}}
+try: VIEWS.update(json.load(open(f"{D}/views.json")))
+except Exception as e: print("no views.json", e)
+def steo_path(target):
+    try:
+        x = pd.read_excel(f"{D}/raw/STEO_m.xlsx", sheet_name="2tab", header=None); yrow = x.iloc[2, 2:].tolist(); mrow = x.iloc[3, 2:].tolist(); dates = []; cur = None
+        MONS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        for yy, mm in zip(yrow, mrow):
+            if isinstance(yy, (int, float)) and not pd.isna(yy): cur = int(yy)
+            dates.append(pd.Timestamp(year=cur, month=MONS.index(mm[:3]) + 1, day=1) if (cur and isinstance(mm, str) and mm[:3] in MONS) else None)
+        code = "WTIPUUS" if target == "wti" else "BREPUUS"
+        for i in range(x.shape[0]):
+            if str(x.iloc[i, 0]).strip() == code:
+                vals = pd.to_numeric(x.iloc[i, 2:2 + len(dates)].values, errors="coerce"); return pd.Series([v for v, d in zip(vals, dates) if d is not None], index=[d for d in dates if d is not None]).dropna()
+    except Exception as e: print("steo fail", e)
+    return pd.Series(dtype=float)
+def apply_views(out, target):
+    ws, uv = float(VIEWS.get("steo_weight", 0)), VIEWS.get("user_view", {}); wu = float(uv.get("weight", 0)); st = steo_path(target)
+    if ws <= 0 and wu <= 0: return out
+    for f in out["forecast"]:
+        base = f["comb"]; f["comb_base"] = base; dt = pd.Timestamp(f["date"]); sv = float(st.get(dt, np.nan)) if len(st) else np.nan
+        view = f["p25"] if uv.get("type", "p25") == "p25" else (f["p75"] if uv.get("type") == "p75" else base * (1 + float(uv.get("pct", 0)) / 100))
+        w_s = ws if not np.isnan(sv) else 0.0; final = (1 - w_s - wu) * base + w_s * (sv if not np.isnan(sv) else 0) + wu * view
+        ratio = final / base; f["comb"] = round(final, 1); f["steo"] = (round(sv, 1) if not np.isnan(sv) else None); f["view"] = round(view, 1)
+        for k in ["p25", "p75", "p05", "p95"]: f[k] = round(f[k] * ratio, 1)   # cone re-centred on the final forecast
+    out["views"] = dict(steo_weight=ws, user_weight=wu, user_type=uv.get("type", "p25"), user_label=uv.get("label", ""), base_weights={"malli": round((1 - ws - wu) / 2, 3), "käyrä": round((1 - ws - wu) / 2, 3)})
+    print(f"  views: STEO {ws:.0%}, oma näkemys {wu:.0%} ({uv.get('type')}) → 3 kk {out['forecast'][2]['comb_base']} → {out['forecast'][2]['comb']}")
+    return out
+models = {"brent": apply_views(build("brent", BASE), "brent"), "wti": apply_views(build("wti", {**BASE, **WTI_EXTRA}), "wti"), "wti_base": build("wti", BASE)}
 for t in ["brent", "wti"]:
     models[t]["curve"] = CURVES.get(t, []); models[t]["curve_label"] = CLABEL.get(t, "futuurikäyrä")
 pg["model"] = {"brent": models["brent"], "wti": models["wti"]}

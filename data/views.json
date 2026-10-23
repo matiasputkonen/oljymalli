@@ -1,0 +1,1 @@
+{"steo_weight": 0.05, "user_view": {"weight": 0.10, "type": "p25", "label": "oma näkemys: alalaita (50 % välin alareuna)"}, "note": "Lopullinen ennuste = (1 − w_steo − w_user) × (½ fundamenttimalli + ½ futuurikäyrä) + w_steo × EIA STEO + w_user × näkemys. Muokkaa painoja tästä."}
