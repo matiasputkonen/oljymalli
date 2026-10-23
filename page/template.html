@@ -553,9 +553,9 @@ const fmtTs=(iso)=>{ if(!iso) return "–"; const d=new Date(iso.endsWith("Z")?i
   const sw=(d8.stack||{}).wti||{}, sb=(d8.stack||{}).brent||{}; const hzw=(hz.now||{}).CL||{}, hzb=(hz.now||{}).BZ||{};
   const dlt=(k)=> ch[k]&&ch[k].comb!=null ? `<small>${ch[k].comb>0?"+":""}${fmtNum(ch[k].comb,1)} $ ed. ajosta</small>` : "";
   const tiles=[
-    {k:"WTI "+(mw.P0_day?mw.P0_day.slice(8,10)+"."+mw.P0_day.slice(5,7)+".":""), v:fmtNum(mw.P0,1)+" $"},
+    {k:"WTI "+(mw.P0_day?mw.P0_day.slice(8,10)+"."+mw.P0_day.slice(5,7)+".":"")+(mw.anchor_src&&mw.anchor_src.indexOf("päätös")>0?" ("+mw.anchor_src.replace(" päätös","").replace("NYMEX ","")+")":""), v:fmtNum(mw.P0,1)+" $"},
     {k:"WTI 3 kk ("+mw.forecast[2].date.slice(5,7)+"/"+mw.forecast[2].date.slice(0,4)+")", v:fmtNum(mw.forecast[2].comb)+" $"},
-    {k:"Brent "+(mb.P0_day?mb.P0_day.slice(8,10)+"."+mb.P0_day.slice(5,7)+".":""), v:fmtNum(mb.P0,1)+" $"},
+    {k:"Brent "+(mb.P0_day?mb.P0_day.slice(8,10)+"."+mb.P0_day.slice(5,7)+".":"")+(mb.anchor_src&&mb.anchor_src.indexOf("päätös")>0?" ("+mb.anchor_src.replace(" päätös","").replace("ICE Brent ","")+")":""), v:fmtNum(mb.P0,1)+" $"},
     {k:"Brent 3 kk ("+mb.forecast[2].date.slice(5,7)+"/"+mb.forecast[2].date.slice(0,4)+")", v:fmtNum(mb.forecast[2].comb)+" $"},
     {k:"Hormuz auki 6 kk:ssa", v:(hzw.p_open?fmtNum(hzw.p_open["6"]*100)+" %":"–")}];
   document.getElementById("live-tiles").innerHTML=tiles.map(t=>`<div class="tile"><div class="k">${t.k}</div><div class="v">${t.v}</div></div>`).join("");
@@ -563,7 +563,8 @@ const fmtTs=(iso)=>{ if(!iso) return "–"; const d=new Date(iso.endsWith("Z")?i
     return [t.toUpperCase()+" "+h+" kk", f?f.date.slice(0,7):(s.date||"–").slice(0,7), f?fmtNum(f.comb):fmtNum(s.stack), f?`${fmtNum(f.p25)}–${fmtNum(f.p75)}`:"–", f?`${fmtNum(f.p05)}–${fmtNum(f.p95)}`:"–", (f&&f.curve!=null)?fmtNum(f.curve):fmtNum((s.members||{}).futures)]; });
   tbl("t-live",[["Ennuste"],["Kohde-kk"],["Ennuste $","num"],["50 % väli","num"],["90 % väli","num"],["Futuuri $","num"]], row("wti",mw,sw).concat(row("brent",mb,sb)));
   const fr=st.fresh||{}; const steps=st.steps||{}; const fs=(DATA.fetch||{}).status||{};
-  const rows=Object.entries(fr).map(([k,v])=>[k, v, ""]).concat(Object.entries(steps).map(([k,v])=>["ajo: "+k, v.ok?"ok":"VIRHE", v.ok?(v.secs+" s"):(v.err||"")])).concat(Object.entries(fs).map(([k,v])=>["haku: "+k, v.ok?"ok":"VIRHE (vanha data käytössä)", v.ok?(v.info||""):(v.error||"")]));
+  const bn=(mb.basis_note?[["Brent Dated − futuuri (viimeisin yhteinen päivä)", mb.basis_note.date, `spot ${fmtNum(mb.basis_note.spot,1)} − ${mb.anchor_src.replace(" päätös","").replace("ICE Brent ","")} ${fmtNum(mb.basis_note.front,1)} = ${mb.basis_note.basis>0?"+":""}${fmtNum(mb.basis_note.basis,1)} $; lähtöpiste on futuuri ilman basis-korjausta`]]:[]);
+  const rows=bn.concat(Object.entries(fr).map(([k,v])=>[k, v, ""])).concat(Object.entries(steps).map(([k,v])=>["ajo: "+k, v.ok?"ok":"VIRHE", v.ok?(v.secs+" s"):(v.err||"")])).concat(Object.entries(fs).map(([k,v])=>["haku: "+k, v.ok?"ok":"VIRHE (vanha data käytössä)", v.ok?(v.info||""):(v.error||"")]));
   tbl("t-status",[["Lähde / vaihe"],["Tila / viimeisin havainto"],["Huomio"]], rows);
 })();
 function drawHazard(){
