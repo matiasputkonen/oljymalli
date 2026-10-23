@@ -60,7 +60,7 @@ def build(target, feats, P0_date=None):
     out = dict(target=target, dates=[str(t.date()) for t in d.index], actual=[round(float(v), 2) for v in act], fv_insample=[round(float(v), 2) for v in fv_in],
                fv_walkforward={str(k.date()): round(v, 2) for k, v in wf.items()}, coef=coef, r2=round(float(r2), 3),
                insample_rmse=round(float(np.sqrt(((act - fv_in) ** 2).mean())), 1), insample_med=round(float((act - fv_in).abs().median()), 1),
-               wf_med=round(float(ew.abs().median()), 1), wf_90=round(float(ew.abs().quantile(.9)), 1), wf_max=round(float(ew.abs().max()), 1), forecast=fc, P0=round(P0, 2), P0_date=P0_date[:7], P0_day=P0_day, P0_month=round(P0_month, 2),
+               wf_med=round(float(ew.abs().median()), 1), wf_90=round(float(ew.abs().quantile(.9)), 1), wf_max=round(float(ew.abs().max()), 1), forecast=fc, P0=round(P0, 2), P0_date=P0_date[:7], P0_day=P0_day, P0_month=round(P0_month, 2), daily_recent=[dict(date=str(t.date()), price=round(float(v), 2)) for t, v in dd.loc[dd.index >= pd.Timestamp(P0_date) - pd.DateOffset(months=2)].items()],
                fv_now=round(fv_now, 1), gap_pct=round(gap_now * 100, 1), quantiles={h: {str(q): round(v * 100, 1) for q, v in qs[h].items()} for h in H}, rmse_vs_rw=rm)
     print(f"{target}: R2 {r2:.2f} in-sample med ±{out['insample_med']} | wf med ±{out['wf_med']} 90% ±{out['wf_90']} max {out['wf_max']} | fv_now {fv_now:.0f} P0 {P0:.0f} gap {gap_now*100:+.0f}% | rmse model/rw {rm}")
     print("  coef:", coef); print("  1kk", fc[0], "\n  3kk", fc[2], "\n  6kk", fc[5])
