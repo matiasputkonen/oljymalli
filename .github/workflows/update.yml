@@ -47,7 +47,7 @@ jobs:
           git commit -m "Päivitys $(date -u +'%Y-%m-%d %H:%M') UTC" || echo "nothing to commit"
           git pull --rebase origin main || true
           git push
-      - name: Configure Pages (requires Settings → Pages → Source: GitHub Actions)
+      - name: "Configure Pages (vaatii Settings → Pages → Source = GitHub Actions)"
         uses: actions/configure-pages@v5
         continue-on-error: true
       - name: Upload Pages artifact
