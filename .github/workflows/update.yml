@@ -41,9 +41,17 @@ jobs:
         run: |
           git config user.name "oljymalli-bot"
           git config user.email "actions@users.noreply.github.com"
+          MSG="Päivitys $(date -u +'%Y-%m-%d %H:%M') UTC"
           git add -A data docs page/oljymarkkina.html
-          git commit -m "Päivitys $(date -u +'%Y-%m-%d %H:%M') UTC" || echo "nothing to commit"
-          git pull --rebase origin main || true
-          git push
+          git commit -m "$MSG" || echo "nothing to commit"
+          git fetch origin main
+          # replay on top of upstream; generated files always win (-X theirs = this run's outputs); fallback: re-commit on top of upstream
+          if ! git rebase -X theirs origin/main; then
+            git rebase --abort || true
+            git reset --soft origin/main
+            git add -A data docs page/oljymarkkina.html
+            git commit -m "$MSG" || echo "nothing to commit"
+          fi
+          for i in 1 2 3; do git push origin HEAD:main && break || { git fetch origin main && git rebase -X theirs origin/main; sleep 15; }; done
 
 # Julkaisu: GitHub Pages lukee main-branchin docs/-kansion (Settings → Pages → Deploy from a branch, /docs); jokainen commit julkaistaan automaattisesti.
