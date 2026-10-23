@@ -1,26 +1,26 @@
 {
- "run": "2026-10-23 21:56:47Z",
+ "run": "2026-10-23 22:01:57Z",
  "full": false,
  "status": {
   "fred": {
    "ok": true,
    "info": "48/50 series; {'WTI_d': ['2026-10-20', np.float64(107.89)], 'Brent_d': ['2026-10-20', np.float64(115.22)]}",
-   "secs": 19.7
+   "secs": 29.7
   },
   "eia_weekly_monthly": {
    "ok": true,
    "info": "20/20; WCESTUS1w [Timestamp('2026-10-16 00:00:00'), np.int64(412517)]",
-   "secs": 2.5
+   "secs": 2.3
   },
   "eia_daily_futures_spot": {
    "ok": true,
    "info": "{'cl1': '2024-04-05', 'cl2': '2024-04-05', 'cl3': '2024-04-05', 'cl4': '2024-04-05', 'ho1': '2024-04-05', 'rb1': '2024-04-05', 'brent_spot': '2026-10-20', 'wti_spot': '2026-10-20'}",
-   "secs": 1.2
+   "secs": 1.6
   },
   "eia_totalenergy_steo": {
    "ok": true,
    "info": "STEO vintage Thursday, October 1, 2026",
-   "secs": 6.0
+   "secs": 6.9
   },
   "opec_basket": {
    "ok": false,
@@ -35,7 +35,7 @@
   "portwatch": {
    "ok": true,
    "info": "14240 rows; Hormuz last 2026-10-18 n_tanker 2",
-   "secs": 7.2
+   "secs": 17.3
   },
   "gpr": {
    "ok": true,
@@ -45,7 +45,7 @@
   "yahoo_contracts": {
    "ok": true,
    "info": "43/54 contracts",
-   "secs": 31.5
+   "secs": 29.2
   },
   "yahoo_sp500_monthly": {
    "ok": true,
