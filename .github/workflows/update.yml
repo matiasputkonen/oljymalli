@@ -66,3 +66,5 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+# Ajo käynnistyy myös tämän tiedoston muutoksista (workflow_dispatch ei ole käytettävissä tästä sessiosta).
