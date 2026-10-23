@@ -1,9 +1,9 @@
 {
- "started": "2026-10-23 20:32:07Z",
+ "started": "2026-10-23 20:50:08Z",
  "steps": {
   "fetch": {
    "ok": true,
-   "secs": 66.0,
+   "secs": 77.9,
    "tail": "fetch done: {'fred': True, 'eia_weekly_monthly': True, 'eia_daily_futures_spot': True, 'eia_totalenergy_steo': True, 'opec_basket': False, 'cftc': True, 'portwatch': True, 'gpr': True, 'yahoo_contract",
    "err": ""
   },
@@ -21,7 +21,7 @@
   },
   "long_panel": {
    "ok": true,
-   "secs": 5.3,
+   "secs": 5.6,
    "tail": "2006-03-01   62.1  62.7      100.4           1685.5            323.1     23.5   685.4      5.1    NaN       35.8           -1.4       2593.3         -8.4          0.0",
    "err": ""
   },
@@ -51,19 +51,19 @@
   },
   "model": {
    "ok": true,
-   "secs": 102.3,
+   "secs": 100.8,
    "tail": "  6kk {'h': 6, 'date': '2027-04-01', 'median': np.float64(102.7), 'curve': 93.2, 'comb': np.float64(97.9), 'p25': np.float64(87.1), 'p75': np.float64(117.5), 'p05': np.float64(80.5), 'p95': np.float64",
    "err": ""
   },
   "models17": {
    "ok": true,
-   "secs": 7.5,
+   "secs": 7.4,
    "tail": "DONE",
    "err": ""
   },
   "models8": {
    "ok": true,
-   "secs": 39.7,
+   "secs": 39.3,
    "tail": "saved",
    "err": ""
   },
@@ -75,18 +75,18 @@
   },
   "daily_signals": {
    "ok": true,
-   "secs": 10.3,
+   "secs": 10.4,
    "tail": "saved; now: 2026-10-20 {'dtr7': 0.0, 'disr': 0.991, 'm1m2': 3.97, 'cotz': -0.477, 'dovx5': 3.34, 'dgpr7': 9.527, 'mom5': -0.088, 'mom21': -0.008, 'dstock': -3.06}",
    "err": ""
   },
   "weights": {
    "ok": true,
-   "secs": 18.4,
+   "secs": 18.0,
    "tail": "saved",
    "err": ""
   }
  },
- "finished": "2026-10-23 20:36:29Z",
+ "finished": "2026-10-23 20:54:40Z",
  "fresh": {
   "WTI/Brent p\u00e4iv\u00e4hinta (FRED)": "2026-10-20",
   "EIA viikkovarastot": "2026-10-16",
