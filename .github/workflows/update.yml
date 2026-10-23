@@ -1,5 +1,8 @@
 name: Päivitä öljyennuste
 on:
+  push:
+    branches: [main]
+    paths: ["scripts/**", "pipeline/**", "page/template.html", ".github/workflows/update.yml", "requirements.txt"]
   schedule:
     - cron: "30 5 * * *"    # 05:30 UTC: edellisen päivän päätöshinnat, EIA/CFTC yöllä
     - cron: "30 17 * * *"   # 17:30 UTC: EIA:n viikkoraportti (ke 14:30 UTC) ja US-session puoliväli
