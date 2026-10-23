@@ -1,92 +1,98 @@
 {
- "started": "2026-10-23 19:31:04Z",
+ "started": "2026-10-23 19:42:51Z",
  "steps": {
+  "fetch": {
+   "ok": true,
+   "secs": 98.8,
+   "tail": "fetch done: {'fred': True, 'eia_weekly_monthly': True, 'eia_daily_futures_spot': True, 'eia_totalenergy_steo': True, 'opec_basket': False, 'cftc': True, 'portwatch': True, 'gpr': True, 'yahoo_contract",
+   "err": ""
+  },
   "refresh_daily_files": {
    "ok": true,
-   "secs": 4.2,
-   "tail": "cot: 2026-10-13 mm_net 40574",
+   "secs": 1.7,
+   "tail": "cot: 2026-10-20 mm_net 36187",
    "err": ""
   },
   "build_panel": {
    "ok": true,
-   "secs": 2.1,
+   "secs": 1.1,
    "tail": "vehicle_sales_us_avg     17.857083     17.879583     17.563500     17.711583     17.488583     14.879333     15.408833     14.230500     16.011583     16.333083     16.676083     16.478000",
    "err": ""
   },
   "long_panel": {
    "ok": true,
-   "secs": 7.1,
+   "secs": 4.0,
    "tail": "2006-03-01   62.1  62.7      100.4           1685.5            323.1     23.5   685.4      5.1  1294.9       35.8           -1.4       2593.3         -8.4          0.0",
    "err": ""
   },
   "analyze": {
    "ok": true,
-   "secs": 5.3,
-   "tail": "{'label': 'Rahastojen nettopositio WTI (tuhatta sopimusta)', 'min': np.float64(-20.75), 'min_date': '2025-10', 'max': np.float64(453.61), 'max_date': '2018-02', 'last': np.float64(47.09), 'last_date':",
+   "secs": 2.7,
+   "tail": "{'label': 'Rahastojen nettopositio WTI (tuhatta sopimusta)', 'min': np.float64(-20.75), 'min_date': '2025-10', 'max': np.float64(453.61), 'max_date': '2018-02', 'last': np.float64(43.45), 'last_date':",
    "err": ""
   },
   "build_page": {
    "ok": true,
-   "secs": 0.4,
-   "tail": "series: 108 events: 32 json bytes: 200129",
+   "secs": 0.3,
+   "tail": "series: 108 events: 32 json bytes: 200237",
    "err": ""
   },
   "extra_series": {
    "ok": true,
-   "secs": 0.4,
+   "secs": 0.3,
    "tail": "extra series ok: {}",
    "err": ""
   },
   "curve_now": {
    "ok": true,
-   "secs": 0.5,
+   "secs": 0.3,
    "tail": "options: 2026-10-22 5 expiries",
    "err": ""
   },
   "model": {
    "ok": true,
-   "secs": 93.0,
-   "tail": "  6kk {'h': 6, 'date': '2027-04-01', 'median': np.float64(102.7), 'curve': 90.9, 'comb': np.float64(96.8), 'p25': np.float64(86.1), 'p75': np.float64(116.1), 'p05': np.float64(79.5), 'p95': np.float64",
+   "secs": 45.8,
+   "tail": "  6kk {'h': 6, 'date': '2027-04-01', 'median': np.float64(103.5), 'curve': 90.9, 'comb': np.float64(97.2), 'p25': np.float64(86.6), 'p75': np.float64(116.6), 'p05': np.float64(79.9), 'p95': np.float64",
    "err": ""
   },
   "models17": {
    "ok": true,
-   "secs": 7.0,
+   "secs": 3.4,
    "tail": "DONE",
    "err": ""
   },
   "models8": {
    "ok": true,
-   "secs": 37.5,
+   "secs": 18.2,
    "tail": "saved",
    "err": ""
   },
   "hazard": {
-   "ok": true,
-   "secs": 2.3,
-   "tail": "saved 203 days; hazard non-NaN 130",
-   "err": ""
+   "ok": false,
+   "secs": 1.7,
+   "tail": "BZ nyt: hasardi 29.5 %/kk (2026-10-22), nowcast 29.7 %/kk (3 pv s\u00e4\u00e4t\u00f6 +0.36 %-yks); P(auki) 3/6/12 kk 65/88/98 %",
+   "err": "KeyError: '2025'"
   },
   "daily_signals": {
    "ok": true,
-   "secs": 8.7,
-   "tail": "saved; now: 2026-10-20 {'dtr7': 0.0, 'disr': 0.991, 'm1m2': 3.97, 'cotz': -0.477, 'dovx5': 3.34, 'dgpr7': 9.527, 'mom5': -0.088, 'mom21': -0.008, 'dstock': -3.06}",
+   "secs": 5.5,
+   "tail": "saved; now: 2026-10-20 {'dtr7': 0.286, 'disr': 0.0, 'm1m2': 3.97, 'cotz': -0.477, 'dovx5': 3.34, 'dgpr7': 9.527, 'mom5': -0.088, 'mom21': -0.008, 'dstock': -3.06}",
    "err": ""
   },
   "weights": {
    "ok": true,
-   "secs": 17.6,
+   "secs": 9.6,
    "tail": "saved",
    "err": ""
   }
  },
- "finished": "2026-10-23 19:34:10Z",
+ "finished": "2026-10-23 19:46:05Z",
  "fresh": {
   "WTI/Brent p\u00e4iv\u00e4hinta (FRED)": "2026-10-20",
   "EIA viikkovarastot": "2026-10-16",
-  "Hormuz-transitit (PortWatch)": "2026-10-18",
-  "CFTC COT": "2026-10-13",
-  "OVX": "2026-10-21",
+  "Hormuz-transitit (PortWatch)": "2021-09-26",
+  "CFTC COT": "2026-10-20",
+  "OVX": "2026-10-22",
   "GPR-p\u00e4iv\u00e4indeksi": "2026-10-19",
   "Futuurik\u00e4yr\u00e4 (Yahoo)": "2026-10-22",
   "Optiot": "2026-10-22 (CME, manuaalinen)",

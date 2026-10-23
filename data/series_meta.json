@@ -28,7 +28,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-09-01"
   },
   "apsp": {
    "label": "IMF APSP keskihinta (USD/bbl)",
@@ -38,7 +38,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-09-01"
   },
   "brent_wti_spread": {
    "label": "Brent–WTI-ero (USD/bbl)",
@@ -58,7 +58,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-09-01"
   },
   "henryhub": {
    "label": "Maakaasu Henry Hub (USD/MMBtu)",
@@ -78,7 +78,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-09-01"
   },
   "gasoline_us": {
    "label": "Bensiini USA (USD/gal)",
@@ -548,7 +548,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-09-01"
   },
   "aluminum": {
    "label": "Alumiini (USD/t)",
@@ -558,7 +558,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-09-01"
   },
   "iron_ore": {
    "label": "Rautamalmi (USD/t)",
@@ -568,7 +568,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-09-01"
   },
   "nickel": {
    "label": "Nikkeli (USD/t)",
@@ -578,7 +578,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-09-01"
   },
   "steel_ppi": {
    "label": "Teräs, tuottajahinnat USA (PPI)",
@@ -608,7 +608,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-09-01"
   },
   "metals_idx": {
    "label": "Metalli-indeksi (IMF)",
@@ -618,7 +618,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-09-01"
   },
   "energy_idx": {
    "label": "Energiaindeksi (IMF)",
@@ -628,7 +628,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-09-01"
   },
   "food_idx": {
    "label": "Ruokaindeksi (IMF)",
@@ -638,7 +638,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-09-01"
   },
   "nonfuel_idx": {
    "label": "Ei-energia-raaka-aineet (IMF)",
@@ -648,7 +648,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-09-01"
   },
   "ppi_all": {
    "label": "Tuottajahinnat USA (PPI, kaikki)",

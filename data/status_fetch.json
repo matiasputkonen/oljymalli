@@ -1,0 +1,61 @@
+{
+ "run": "2026-10-23 19:44:30Z",
+ "full": false,
+ "status": {
+  "fred": {
+   "ok": true,
+   "info": "48/50 series; {'WTI_d': ['2026-10-20', np.float64(107.89)], 'Brent_d': ['2026-10-20', np.float64(115.22)]}",
+   "secs": 18.2
+  },
+  "eia_weekly_monthly": {
+   "ok": true,
+   "info": "20/20; WCESTUS1w [Timestamp('2026-10-16 00:00:00'), np.int64(412517)]",
+   "secs": 2.1
+  },
+  "eia_daily_futures_spot": {
+   "ok": true,
+   "info": "{'cl1': '2024-04-05', 'cl2': '2024-04-05', 'cl3': '2024-04-05', 'cl4': '2024-04-05', 'ho1': '2024-04-05', 'rb1': '2024-04-05', 'brent_spot': '2026-10-20', 'wti_spot': '2026-10-20'}",
+   "secs": 1.8
+  },
+  "eia_totalenergy_steo": {
+   "ok": true,
+   "info": "STEO vintage Thursday, October 1, 2026",
+   "secs": 5.6
+  },
+  "opec_basket": {
+   "ok": false,
+   "error": "403 Client Error: Forbidden for url: https://www.opec.org/basket/basketDayArchives.xml",
+   "secs": 0.2
+  },
+  "cftc": {
+   "ok": true,
+   "info": "[2025, 2026, 'deacot2026']",
+   "secs": 0.3
+  },
+  "portwatch": {
+   "ok": true,
+   "info": "5000 rows; Hormuz last 2021-09-26 n_tanker 59",
+   "secs": 2.2
+  },
+  "gpr": {
+   "ok": true,
+   "info": "daily last 2026-10-19 00:00:00 GPRD 249",
+   "secs": 0.8
+  },
+  "yahoo_contracts": {
+   "ok": false,
+   "error": "yahoo 429",
+   "secs": 22.4
+  },
+  "yahoo_sp500_monthly": {
+   "ok": false,
+   "error": "yahoo 429",
+   "secs": 22.5
+  },
+  "yahoo_options": {
+   "ok": false,
+   "error": "yahoo 429",
+   "secs": 22.4
+  }
+ }
+}
