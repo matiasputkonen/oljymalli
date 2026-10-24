@@ -1,0 +1,1142 @@
+{
+ "window": "2016-10",
+ "periods": [
+  [
+   "2016-10",
+   "2019-12"
+  ],
+  [
+   "2020-01",
+   "2022-12"
+  ],
+  [
+   "2023-01",
+   "2026-12"
+  ]
+ ],
+ "members": [
+  "nochange",
+  "funda",
+  "futuuri",
+  "steo"
+ ],
+ "note": "RMSE suhteessa ei-muutokseen (log-virhe); kaikki j\u00e4senet reaaliaikaisia kuukauden lopun l\u00e4ht\u00f6pisteest\u00e4",
+ "targets": {
+  "wti": {
+   "1": {
+    "n": 83,
+    "members": [
+     "nochange",
+     "funda",
+     "futuuri",
+     "steo"
+    ],
+    "sample": [
+     "2019-11",
+     "2026-09"
+    ],
+    "ratio_members": {
+     "nochange": 1.0,
+     "funda": 1.008,
+     "futuuri": 1.017,
+     "steo": 1.661
+    },
+    "ratio_periods": {
+     "2020-01\u20132022": {
+      "n": 36,
+      "nochange": 1.0,
+      "funda": 1.02,
+      "futuuri": 1.009,
+      "steo": 1.658
+     },
+     "2023-01\u20132026": {
+      "n": 45,
+      "nochange": 1.0,
+      "funda": 0.981,
+      "futuuri": 1.024,
+      "steo": 1.667
+     }
+    },
+    "optimum_insample": {
+     "w": {
+      "nochange": 0.958,
+      "funda": 0.042,
+      "futuuri": 0.0,
+      "steo": 0.0
+     },
+     "ratio": 1.0
+    },
+    "grid": {
+     "n": 1771,
+     "best": [
+      {
+       "w": {
+        "nochange": 0.95,
+        "funda": 0.05,
+        "futuuri": 0.0,
+        "steo": 0.0
+       },
+       "ratio": 1.0
+      },
+      {
+       "w": {
+        "nochange": 1.0,
+        "funda": 0.0,
+        "futuuri": 0.0,
+        "steo": -0.0
+       },
+       "ratio": 1.0
+      },
+      {
+       "w": {
+        "nochange": 0.9,
+        "funda": 0.1,
+        "futuuri": 0.0,
+        "steo": 0.0
+       },
+       "ratio": 1.0
+      },
+      {
+       "w": {
+        "nochange": 0.85,
+        "funda": 0.15,
+        "futuuri": 0.0,
+        "steo": -0.0
+       },
+       "ratio": 1.0
+      },
+      {
+       "w": {
+        "nochange": 0.8,
+        "funda": 0.2,
+        "futuuri": 0.0,
+        "steo": 0.0
+       },
+       "ratio": 1.0
+      }
+     ],
+     "median": 1.066,
+     "worst": 1.661
+    },
+    "ratio_equal": 1.089,
+    "ratio_current": 1.019,
+    "w_current": {
+     "nochange": 0.0,
+     "funda": 0.475,
+     "futuuri": 0.475,
+     "steo": 0.05
+    },
+    "oos": {
+     "n": 47,
+     "sample": [
+      "2022-11",
+      "2026-09"
+     ],
+     "est": 1.0,
+     "equal": 1.065,
+     "current": 1.005,
+     "shrunk": 1.019,
+     "members": {
+      "nochange": 1.0,
+      "funda": 0.981,
+      "futuuri": 1.024,
+      "steo": 1.677
+     }
+    },
+    "weights_hist": {
+     "2022-11": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "2023-11": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "2024-11": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "2025-11": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "weights_latest": {
+     "nochange": 0.958,
+     "funda": 0.042,
+     "futuuri": 0.0,
+     "steo": 0.0
+    }
+   },
+   "3": {
+    "n": 54,
+    "members": [
+     "nochange",
+     "funda",
+     "futuuri",
+     "steo"
+    ],
+    "sample": [
+     "2019-11",
+     "2026-07"
+    ],
+    "ratio_members": {
+     "nochange": 1.0,
+     "funda": 1.002,
+     "futuuri": 0.922,
+     "steo": 1.047
+    },
+    "ratio_periods": {
+     "2020-01\u20132022": {
+      "n": 36,
+      "nochange": 1.0,
+      "funda": 1.003,
+      "futuuri": 0.905,
+      "steo": 1.067
+     },
+     "2023-01\u20132026": {
+      "n": 16,
+      "nochange": 1.0,
+      "funda": 1.0,
+      "futuuri": 1.031,
+      "steo": 1.27
+     }
+    },
+    "optimum_insample": {
+     "w": {
+      "nochange": 0.0,
+      "funda": 0.0,
+      "futuuri": 1.0,
+      "steo": 0.0
+     },
+     "ratio": 0.922
+    },
+    "grid": {
+     "n": 1771,
+     "best": [
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.0,
+        "futuuri": 1.0,
+        "steo": -0.0
+       },
+       "ratio": 0.922
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.0,
+        "futuuri": 0.95,
+        "steo": 0.05
+       },
+       "ratio": 0.925
+      },
+      {
+       "w": {
+        "nochange": 0.05,
+        "funda": 0.0,
+        "futuuri": 0.95,
+        "steo": -0.0
+       },
+       "ratio": 0.925
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.05,
+        "futuuri": 0.95,
+        "steo": -0.0
+       },
+       "ratio": 0.925
+      },
+      {
+       "w": {
+        "nochange": 0.05,
+        "funda": 0.0,
+        "futuuri": 0.9,
+        "steo": 0.05
+       },
+       "ratio": 0.927
+      }
+     ],
+     "median": 0.979,
+     "worst": 1.047
+    },
+    "ratio_equal": 0.971,
+    "ratio_current": 0.958,
+    "w_current": {
+     "nochange": 0.0,
+     "funda": 0.475,
+     "futuuri": 0.475,
+     "steo": 0.05
+    },
+    "oos": {
+     "n": 16,
+     "sample": [
+      "2023-01",
+      "2026-07"
+     ],
+     "est": 1.031,
+     "equal": 1.003,
+     "current": 0.991,
+     "shrunk": 1.015,
+     "members": {
+      "nochange": 1.0,
+      "funda": 1.0,
+      "futuuri": 1.031,
+      "steo": 1.27
+     }
+    },
+    "weights_hist": {
+     "2023-01": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ],
+     "2024-01": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "weights_latest": {
+     "nochange": 0.0,
+     "funda": 0.0,
+     "futuuri": 1.0,
+     "steo": 0.0
+    }
+   },
+   "6": {
+    "n": 78,
+    "members": [
+     "nochange",
+     "funda",
+     "steo"
+    ],
+    "sample": [
+     "2019-11",
+     "2026-04"
+    ],
+    "ratio_members": {
+     "nochange": 1.0,
+     "funda": 0.951,
+     "steo": 1.124
+    },
+    "ratio_periods": {
+     "2020-01\u20132022": {
+      "n": 36,
+      "nochange": 1.0,
+      "funda": 0.942,
+      "steo": 1.019
+     },
+     "2023-01\u20132026": {
+      "n": 40,
+      "nochange": 1.0,
+      "funda": 0.946,
+      "steo": 1.509
+     }
+    },
+    "optimum_insample": {
+     "w": {
+      "nochange": 0.0,
+      "funda": 1.0,
+      "steo": 0.0
+     },
+     "ratio": 0.951
+    },
+    "grid": {
+     "n": 231,
+     "best": [
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 1.0,
+        "steo": -0.0
+       },
+       "ratio": 0.951
+      },
+      {
+       "w": {
+        "nochange": 0.05,
+        "funda": 0.95,
+        "steo": -0.0
+       },
+       "ratio": 0.951
+      },
+      {
+       "w": {
+        "nochange": 0.1,
+        "funda": 0.9,
+        "steo": -0.0
+       },
+       "ratio": 0.952
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.95,
+        "steo": 0.05
+       },
+       "ratio": 0.953
+      },
+      {
+       "w": {
+        "nochange": 0.05,
+        "funda": 0.9,
+        "steo": 0.05
+       },
+       "ratio": 0.953
+      }
+     ],
+     "median": 0.99,
+     "worst": 1.124
+    },
+    "ratio_equal": 0.987,
+    "ratio_current": 0.955,
+    "w_current": {
+     "nochange": 0.0,
+     "funda": 0.905,
+     "steo": 0.095
+    },
+    "oos": {
+     "n": 37,
+     "sample": [
+      "2023-04",
+      "2026-04"
+     ],
+     "est": 1.089,
+     "equal": 1.104,
+     "current": 0.986,
+     "shrunk": 1.095,
+     "members": {
+      "nochange": 1.0,
+      "funda": 0.953,
+      "steo": 1.521
+     }
+    },
+    "weights_hist": {
+     "2023-04": [
+      0.0,
+      0.64,
+      0.36
+     ],
+     "2024-04": [
+      0.0,
+      0.64,
+      0.36
+     ],
+     "2025-04": [
+      0.0,
+      0.67,
+      0.33
+     ],
+     "2026-04": [
+      0.0,
+      0.92,
+      0.08
+     ]
+    },
+    "weights_latest": {
+     "nochange": 0.0,
+     "funda": 1.0,
+     "steo": 0.0
+    }
+   },
+   "12": {
+    "n": 71,
+    "members": [
+     "nochange",
+     "funda",
+     "steo"
+    ],
+    "sample": [
+     "2019-12",
+     "2025-10"
+    ],
+    "ratio_members": {
+     "nochange": 1.0,
+     "funda": 0.931,
+     "steo": 0.942
+    },
+    "ratio_periods": {
+     "2020-01\u20132022": {
+      "n": 36,
+      "nochange": 1.0,
+      "funda": 0.942,
+      "steo": 0.839
+     },
+     "2023-01\u20132026": {
+      "n": 34,
+      "nochange": 1.0,
+      "funda": 0.878,
+      "steo": 1.32
+     }
+    },
+    "optimum_insample": {
+     "w": {
+      "nochange": 0.0,
+      "funda": 0.538,
+      "steo": 0.462
+     },
+     "ratio": 0.901
+    },
+    "grid": {
+     "n": 231,
+     "best": [
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.55,
+        "steo": 0.45
+       },
+       "ratio": 0.901
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.5,
+        "steo": 0.5
+       },
+       "ratio": 0.901
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.6,
+        "steo": 0.4
+       },
+       "ratio": 0.902
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.45,
+        "steo": 0.55
+       },
+       "ratio": 0.902
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.65,
+        "steo": 0.35
+       },
+       "ratio": 0.903
+      }
+     ],
+     "median": 0.929,
+     "worst": 1.0
+    },
+    "ratio_equal": 0.923,
+    "ratio_current": 0.92,
+    "w_current": {
+     "nochange": 0.0,
+     "funda": 0.905,
+     "steo": 0.095
+    },
+    "oos": {
+     "n": 24,
+     "sample": [
+      "2023-11",
+      "2025-10"
+     ],
+     "est": 1.251,
+     "equal": 1.059,
+     "current": 0.922,
+     "shrunk": 1.152,
+     "members": {
+      "nochange": 1.0,
+      "funda": 0.887,
+      "steo": 1.353
+     }
+    },
+    "weights_hist": {
+     "2023-11": [
+      0.0,
+      0.08,
+      0.92
+     ],
+     "2024-11": [
+      0.0,
+      0.14,
+      0.86
+     ]
+    },
+    "weights_latest": {
+     "nochange": 0.0,
+     "funda": 0.538,
+     "steo": 0.462
+    }
+   }
+  },
+  "brent": {
+   "1": {
+    "n": 83,
+    "members": [
+     "nochange",
+     "funda",
+     "futuuri",
+     "steo"
+    ],
+    "sample": [
+     "2019-11",
+     "2026-09"
+    ],
+    "ratio_members": {
+     "nochange": 1.0,
+     "funda": 1.04,
+     "futuuri": 1.026,
+     "steo": 1.482
+    },
+    "ratio_periods": {
+     "2020-01\u20132022": {
+      "n": 36,
+      "nochange": 1.0,
+      "funda": 1.089,
+      "futuuri": 1.011,
+      "steo": 1.464
+     },
+     "2023-01\u20132026": {
+      "n": 45,
+      "nochange": 1.0,
+      "funda": 0.947,
+      "futuuri": 1.043,
+      "steo": 1.512
+     }
+    },
+    "optimum_insample": {
+     "w": {
+      "nochange": 0.842,
+      "funda": 0.018,
+      "futuuri": 0.0,
+      "steo": 0.14
+     },
+     "ratio": 0.984
+    },
+    "grid": {
+     "n": 1771,
+     "best": [
+      {
+       "w": {
+        "nochange": 0.8,
+        "funda": 0.05,
+        "futuuri": 0.0,
+        "steo": 0.15
+       },
+       "ratio": 0.984
+      },
+      {
+       "w": {
+        "nochange": 0.85,
+        "funda": 0.0,
+        "futuuri": 0.0,
+        "steo": 0.15
+       },
+       "ratio": 0.984
+      },
+      {
+       "w": {
+        "nochange": 0.75,
+        "funda": 0.1,
+        "futuuri": 0.0,
+        "steo": 0.15
+       },
+       "ratio": 0.984
+      },
+      {
+       "w": {
+        "nochange": 0.7,
+        "funda": 0.15,
+        "futuuri": 0.0,
+        "steo": 0.15
+       },
+       "ratio": 0.984
+      },
+      {
+       "w": {
+        "nochange": 0.65,
+        "funda": 0.2,
+        "futuuri": 0.0,
+        "steo": 0.15
+       },
+       "ratio": 0.985
+      }
+     ],
+     "median": 1.01,
+     "worst": 1.482
+    },
+    "ratio_equal": 1.001,
+    "ratio_current": 1.013,
+    "w_current": {
+     "nochange": 0.0,
+     "funda": 0.475,
+     "futuuri": 0.475,
+     "steo": 0.05
+    },
+    "oos": {
+     "n": 47,
+     "sample": [
+      "2022-11",
+      "2026-09"
+     ],
+     "est": 1.01,
+     "equal": 1.026,
+     "current": 0.99,
+     "shrunk": 1.014,
+     "members": {
+      "nochange": 1.0,
+      "funda": 0.948,
+      "futuuri": 1.043,
+      "steo": 1.526
+     }
+    },
+    "weights_hist": {
+     "2022-11": [
+      0.83,
+      0.0,
+      0.0,
+      0.17
+     ],
+     "2023-11": [
+      0.83,
+      0.0,
+      0.0,
+      0.17
+     ],
+     "2024-11": [
+      0.84,
+      0.0,
+      0.0,
+      0.16
+     ],
+     "2025-11": [
+      0.83,
+      0.0,
+      0.0,
+      0.17
+     ]
+    },
+    "weights_latest": {
+     "nochange": 0.842,
+     "funda": 0.018,
+     "futuuri": 0.0,
+     "steo": 0.14
+    }
+   },
+   "3": {
+    "n": 55,
+    "members": [
+     "nochange",
+     "funda",
+     "futuuri",
+     "steo"
+    ],
+    "sample": [
+     "2019-11",
+     "2026-07"
+    ],
+    "ratio_members": {
+     "nochange": 1.0,
+     "funda": 0.934,
+     "futuuri": 0.911,
+     "steo": 0.924
+    },
+    "ratio_periods": {
+     "2020-01\u20132022": {
+      "n": 36,
+      "nochange": 1.0,
+      "funda": 0.921,
+      "futuuri": 0.892,
+      "steo": 0.905
+     },
+     "2023-01\u20132026": {
+      "n": 17,
+      "nochange": 1.0,
+      "funda": 0.983,
+      "futuuri": 1.087,
+      "steo": 1.403
+     }
+    },
+    "optimum_insample": {
+     "w": {
+      "nochange": 0.0,
+      "funda": 0.019,
+      "futuuri": 0.547,
+      "steo": 0.433
+     },
+     "ratio": 0.893
+    },
+    "grid": {
+     "n": 1771,
+     "best": [
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.0,
+        "futuuri": 0.55,
+        "steo": 0.45
+       },
+       "ratio": 0.893
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.05,
+        "futuuri": 0.5,
+        "steo": 0.45
+       },
+       "ratio": 0.893
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.0,
+        "futuuri": 0.6,
+        "steo": 0.4
+       },
+       "ratio": 0.893
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.05,
+        "futuuri": 0.55,
+        "steo": 0.4
+       },
+       "ratio": 0.893
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.1,
+        "futuuri": 0.45,
+        "steo": 0.45
+       },
+       "ratio": 0.893
+      }
+     ],
+     "median": 0.916,
+     "worst": 1.0
+    },
+    "ratio_equal": 0.914,
+    "ratio_current": 0.912,
+    "w_current": {
+     "nochange": 0.0,
+     "funda": 0.475,
+     "futuuri": 0.475,
+     "steo": 0.05
+    },
+    "oos": {
+     "n": 17,
+     "sample": [
+      "2023-01",
+      "2026-07"
+     ],
+     "est": 1.221,
+     "equal": 1.052,
+     "current": 1.012,
+     "shrunk": 1.13,
+     "members": {
+      "nochange": 1.0,
+      "funda": 0.983,
+      "futuuri": 1.087,
+      "steo": 1.403
+     }
+    },
+    "weights_hist": {
+     "2023-01": [
+      0.0,
+      0.0,
+      0.43,
+      0.57
+     ],
+     "2024-01": [
+      0.0,
+      0.0,
+      0.46,
+      0.54
+     ]
+    },
+    "weights_latest": {
+     "nochange": 0.0,
+     "funda": 0.019,
+     "futuuri": 0.547,
+     "steo": 0.433
+    }
+   },
+   "6": {
+    "n": 78,
+    "members": [
+     "nochange",
+     "funda",
+     "steo"
+    ],
+    "sample": [
+     "2019-11",
+     "2026-04"
+    ],
+    "ratio_members": {
+     "nochange": 1.0,
+     "funda": 0.858,
+     "steo": 1.038
+    },
+    "ratio_periods": {
+     "2020-01\u20132022": {
+      "n": 36,
+      "nochange": 1.0,
+      "funda": 0.774,
+      "steo": 0.87
+     },
+     "2023-01\u20132026": {
+      "n": 40,
+      "nochange": 1.0,
+      "funda": 1.001,
+      "steo": 1.593
+     }
+    },
+    "optimum_insample": {
+     "w": {
+      "nochange": 0.0,
+      "funda": 1.0,
+      "steo": 0.0
+     },
+     "ratio": 0.858
+    },
+    "grid": {
+     "n": 231,
+     "best": [
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 1.0,
+        "steo": -0.0
+       },
+       "ratio": 0.858
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.95,
+        "steo": 0.05
+       },
+       "ratio": 0.86
+      },
+      {
+       "w": {
+        "nochange": 0.05,
+        "funda": 0.95,
+        "steo": -0.0
+       },
+       "ratio": 0.862
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.9,
+        "steo": 0.1
+       },
+       "ratio": 0.862
+      },
+      {
+       "w": {
+        "nochange": 0.05,
+        "funda": 0.9,
+        "steo": 0.05
+       },
+       "ratio": 0.864
+      }
+     ],
+     "median": 0.933,
+     "worst": 1.038
+    },
+    "ratio_equal": 0.918,
+    "ratio_current": 0.862,
+    "w_current": {
+     "nochange": 0.0,
+     "funda": 0.905,
+     "steo": 0.095
+    },
+    "oos": {
+     "n": 37,
+     "sample": [
+      "2023-04",
+      "2026-04"
+     ],
+     "est": 1.15,
+     "equal": 1.152,
+     "current": 1.044,
+     "shrunk": 1.15,
+     "members": {
+      "nochange": 1.0,
+      "funda": 1.004,
+      "steo": 1.608
+     }
+    },
+    "weights_hist": {
+     "2023-04": [
+      0.0,
+      0.63,
+      0.37
+     ],
+     "2024-04": [
+      0.0,
+      0.64,
+      0.36
+     ],
+     "2025-04": [
+      0.0,
+      0.69,
+      0.31
+     ],
+     "2026-04": [
+      0.0,
+      0.91,
+      0.09
+     ]
+    },
+    "weights_latest": {
+     "nochange": 0.0,
+     "funda": 1.0,
+     "steo": 0.0
+    }
+   },
+   "12": {
+    "n": 71,
+    "members": [
+     "nochange",
+     "funda",
+     "steo"
+    ],
+    "sample": [
+     "2019-12",
+     "2025-10"
+    ],
+    "ratio_members": {
+     "nochange": 1.0,
+     "funda": 0.814,
+     "steo": 0.872
+    },
+    "ratio_periods": {
+     "2020-01\u20132022": {
+      "n": 36,
+      "nochange": 1.0,
+      "funda": 0.799,
+      "steo": 0.748
+     },
+     "2023-01\u20132026": {
+      "n": 34,
+      "nochange": 1.0,
+      "funda": 0.869,
+      "steo": 1.289
+     }
+    },
+    "optimum_insample": {
+     "w": {
+      "nochange": 0.0,
+      "funda": 0.693,
+      "steo": 0.307
+     },
+     "ratio": 0.799
+    },
+    "grid": {
+     "n": 231,
+     "best": [
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.7,
+        "steo": 0.3
+       },
+       "ratio": 0.8
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.65,
+        "steo": 0.35
+       },
+       "ratio": 0.8
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.75,
+        "steo": 0.25
+       },
+       "ratio": 0.8
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.6,
+        "steo": 0.4
+       },
+       "ratio": 0.801
+      },
+      {
+       "w": {
+        "nochange": 0.0,
+        "funda": 0.8,
+        "steo": 0.2
+       },
+       "ratio": 0.801
+      }
+     ],
+     "median": 0.86,
+     "worst": 1.0
+    },
+    "ratio_equal": 0.855,
+    "ratio_current": 0.807,
+    "w_current": {
+     "nochange": 0.0,
+     "funda": 0.905,
+     "steo": 0.095
+    },
+    "oos": {
+     "n": 24,
+     "sample": [
+      "2023-11",
+      "2025-10"
+     ],
+     "est": 1.132,
+     "equal": 1.052,
+     "current": 0.917,
+     "shrunk": 1.091,
+     "members": {
+      "nochange": 1.0,
+      "funda": 0.881,
+      "steo": 1.315
+     }
+    },
+    "weights_hist": {
+     "2023-11": [
+      0.0,
+      0.32,
+      0.68
+     ],
+     "2024-11": [
+      0.0,
+      0.36,
+      0.64
+     ]
+    },
+    "weights_latest": {
+     "nochange": 0.0,
+     "funda": 0.693,
+     "steo": 0.307
+    }
+   }
+  }
+ }
+}
