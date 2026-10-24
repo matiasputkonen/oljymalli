@@ -8,9 +8,9 @@ def balance_signals(X, h):
     for t in X.index:
         g = V.get(str(t.date())[:7]); gp = V.get(str((t - pd.DateOffset(months=1)).date())[:7]); tt = [t + pd.DateOffset(months=k) for k in range(1, h + 1)]
         if g is None or any(m not in g.index for m in tt) or t not in g.index: rows.append([np.nan] * 5); continue
-        bal = (g.prod - g.cons); bal_fc = float(bal.loc[tt].mean()); rev = np.nan
-        if gp is not None and all(m in gp.index for m in tt): rev = bal_fc - float((gp.prod - gp.cons).loc[tt].mean())
-        rows.append([float(np.log(g.opec.loc[tt[-1]] / g.opec.loc[t])), bal_fc, float(bal.loc[t]), rev, float(g.stchg.loc[tt].mean()) if "stchg" in g and g.stchg.loc[tt].notna().all() else np.nan])
+        bal = (g["prod"] - g["cons"]); bal_fc = float(bal.loc[tt].mean()); rev = np.nan
+        if gp is not None and all(m in gp.index for m in tt): rev = bal_fc - float((gp["prod"] - gp["cons"]).loc[tt].mean())
+        rows.append([float(np.log(g["opec"].loc[tt[-1]] / g["opec"].loc[t])), bal_fc, float(bal.loc[t]), rev, float(g.stchg.loc[tt].mean()) if "stchg" in g and g.stchg.loc[tt].notna().all() else np.nan])
     X[["opec_fc", "bal_fc", "bal_now", "bal_rev", "stchg_fc"]] = rows; return X
 def main():
     h = 3; res = {}
