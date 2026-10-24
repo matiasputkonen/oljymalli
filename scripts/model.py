@@ -61,7 +61,7 @@ def build(target, feats, P0_date=None):
     fc = []
     for h in H:
         c0, c1 = gapcoef[h]; p = 0.5 * c1 * gap_now; dt = pd.Timestamp(P0_date) + pd.DateOffset(months=h)
-        med = P0 * np.exp(p); cv = curve_at(dt); comb = 0.5 * med + 0.5 * cv if cv else med
+        med = P0 * np.exp(p); cv = curve_at(dt + pd.DateOffset(months=LAG[target]) + pd.Timedelta(days=LAG_DAYS[target])); comb = 0.5 * med + 0.5 * cv if cv else med
         q = {k: v - qs[h][0.5] for k, v in qs[h].items()}   # centred
         fc.append(dict(h=h, date=str(dt.date()), median=round(med, 1), curve=(round(cv, 1) if cv else None), comb=round(comb, 1),
                        p25=round(comb * np.exp(q[0.25]), 1), p75=round(comb * np.exp(q[0.75]), 1), p05=round(comb * np.exp(q[0.05]), 1), p95=round(comb * np.exp(q[0.95]), 1)))
@@ -81,8 +81,12 @@ try:
 except Exception as e: print("no curves_now.json", e)
 if not CURVES:
     try:
-        _pg = json.load(open(f"{D}/page_data.json")); CURVES = {t: _pg["model"][t]["curve"] for t in ["brent", "wti"] if t in _pg.get("model", {}) and "curve" in _pg["model"][t]}; CLABEL = {t: _pg["model"][t].get("curve_label", "") for t in CURVES}
+        _pg = json.load(open(f"{D}/page_data.json")); CURVES = {t: [dict(e, date=e.get("delivery", e["date"])) for e in _pg["model"][t]["curve"]] for t in ["brent", "wti"] if t in _pg.get("model", {}) and "curve" in _pg["model"][t]}; CLABEL = {t: _pg["model"][t].get("curve_label", "") for t in CURVES}
     except Exception as e: print("no curves", e)
+# Contract that is front during a target month: CL expires ~20th of the month before delivery (front = delivery month+1, rolling to +2 after the
+# 20th); Brent on the last business day two months before delivery (front = delivery month+2 all month). The forecast target is the monthly
+# average spot, so the curve is read at the front contract of each target month (WTI: a third of the way to the next contract).
+LAG = {"wti": 1, "brent": 2}; LAG_DAYS = {"wti": 10, "brent": 0}
 # ---- views: STEO weight and the user's discretionary view (data/views.json) ----
 VIEWS = {"steo_weight": 0.0, "user_view": {"weight": 0.0, "type": "p25"}}
 try: VIEWS.update(json.load(open(f"{D}/views.json")))
@@ -128,6 +132,8 @@ def apply_views(out, target):
     return out
 models = {"brent": apply_views(build("brent", BASE), "brent"), "wti": apply_views(build("wti", {**BASE, **WTI_EXTRA}), "wti"), "wti_base": build("wti", BASE)}
 for t in ["brent", "wti"]:
-    models[t]["curve"] = CURVES.get(t, []); models[t]["curve_label"] = CLABEL.get(t, "futuurikäyrä")
+    m0 = pd.Timestamp(models[t]["P0_date"] + "-01")   # plotted at the month in which the contract is front (same convention as the monthly-average forecast)
+    models[t]["curve"] = [dict(date=str((pd.Timestamp(c["date"]) - pd.DateOffset(months=LAG[t])).date()), price=c["price"], contract=f'{c["contract"]} (etukk. {(pd.Timestamp(c["date"]) - pd.DateOffset(months=LAG[t])).strftime("%m/%y")})', delivery=c["date"]) for c in CURVES.get(t, []) if pd.Timestamp(c["date"]) - pd.DateOffset(months=LAG[t]) >= m0]
+    models[t]["curve_label"] = CLABEL.get(t, "futuurikäyrä") + " (sopimus kuukaudessa, jonka etukuukausi se on)"
 pg["model"] = {"brent": models["brent"], "wti": models["wti"]}
 json.dump(pg, open(f"{D}/page_data.json", "w"), ensure_ascii=False); json.dump(models, open(f"{D}/model.json", "w"))
