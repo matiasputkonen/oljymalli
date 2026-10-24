@@ -154,6 +154,8 @@ a{color:var(--accent-ink)}
 <h3>8. Kalibrointi: toteutuneet vs. ennustetut</h3>
 <p class="note" id="eval-note"></p>
 <div class="tbl-wrap"><table id="t-eval"></table></div>
+<p class="note" id="grid-note"></p>
+<div class="tbl-wrap"><table id="t-grid"></table></div>
 
 <h2>Dossieri 23.10.2026: kirjallisuus vs. omat tulokset</h2>
 <p class="lede">Perplexityn syvähaku (oma prompti, 23.10.2026) kävi läpi ennustekirjallisuuden, markkinatilan ja datalähteet. Sen pääväite: 1–12 kuukauden ennusteen tärkein muuttuja on Hormuzin siirtymätodennäköisyys, ja puolustettavin rakenne on ei-muutosta + futuurikäyrä + fyysinen tase + yhdistelmät + optiojakauma. Alla dossierin väitteet rinnakkain tämän aineiston tulosten kanssa, ja neljä asiaa jotka toteutettiin sen perusteella.</p>
@@ -628,6 +630,11 @@ drawHazard();
     const S=E.summary||{}; const keys=Object.keys(S);
     document.getElementById("eval-note").innerHTML=`Kirjattu ${E.n_logged} ennustetta ${E.n_runs} ajosta; ensimmäinen kohdekuukausi ${E.first_target||"–"}. Pisteytetty ${(E.scored||[]).length} (kohdekuukausi päättynyt). Mittarit: PIT (toteuma ennustejakaumassa; tasainen = kalibroitu), peitto 50/90 %, CRPS (kvantiiliapproksimaatio), RMSE vs ei-muutosta ja vs käyrä. Hasardin Brier-pisteet lasketaan, kun avautuminen on ratkennut (kuukausi, jona transitit ≥ 50 % normaalista; nyt ${E.reopen_month||"ei vielä"}).`;
     tbl("t-eval",[["Laatu / h"],["n","num"],["MAE $","num"],["RMSE $","num"],["RMSE ei-muutosta","num"],["RMSE käyrä","num"],["RMSE ilman näkemyksiä","num"],["RMSE oma näkemys","num"],["RMSE STEO","num"],["Peitto 50 %","num"],["Peitto 90 %","num"],["PIT ka","num"],["CRPS","num"]], keys.length? keys.map(k=>{const v=S[k]; return [k.toUpperCase().replace("_"," "), String(v.n), f(v.mae,1), f(v.rmse,1), f(v.rmse_nochange,1), v.rmse_curve==null?"–":f(v.rmse_curve,1), v.rmse_base==null?"–":f(v.rmse_base,1), v.rmse_view==null?"–":f(v.rmse_view,1), v.rmse_steo==null?"–":f(v.rmse_steo,1), f(v.cov50*100)+" %", f(v.cov90*100)+" %", f(v.pit_mean,2), f(v.crps,1)];}) : [["Ei vielä toteutuneita kohdekuukausia – ensimmäiset pisteet 1.12.2026", "", "", "", "", "", "", "", "", "", "", "", ""]]);
+    const G=E.grid; if(G){
+      const gk=Object.keys(G.groups||{}); const wtxt=w=>w.map(x=>fmtNum(x*100)).join("/");
+      document.getElementById("grid-note").innerHTML=`Painoruudukko: ${G.n_combos} yhdistelmää (funda/futuuri/STEO/näkemys, ${fmtNum(G.step*100)} %:n askel) pisteytetään kirjatuista komponenteista, yksi ennuste per kohdekuukausi ja horisontti (lähtökuukauden viimeinen ajo). Nykyiset painot ${wtxt(G.current)}. Tarkka optimi (painot ≥ 0, summa 1) ratkaistaan pienimmän neliösumman menetelmällä; ruudukko näyttää maiseman sen ympärillä. Vähillä kuukausilla paras yhdistelmä on osin sattumaa, joten mediaani ja puhtaat komponentit kertovat enemmän kuin voittaja.`;
+      tbl("t-grid",[["Laatu / h"],["kk","num"],["Paras painot","num"],["RMSE paras","num"],["Optimi (LS)","num"],["RMSE nykyinen (sija)","num"],["RMSE mediaani","num"],["Funda","num"],["Futuuri","num"],["STEO","num"],["Näkemys","num"],["Tasan 25 %","num"]], gk.length? gk.map(k=>{const v=G.groups[k]; return [k.toUpperCase().replace("_"," "), String(v.n), wtxt(v.best[0].w), f(v.best[0].rmse,1), wtxt(v.optimum.w)+" → "+f(v.optimum.rmse,1), f(v.current.rmse,1)+" ("+v.current.rank+".)", f(v.median_rmse,1), f(v.pure.funda,1), f(v.pure.futuuri,1), f(v.pure.steo,1), f(v.pure.nakemys,1), f(v.equal,1)];}) : [["Kertyy: ensimmäinen kohdekuukausi 11/2026 ratkeaa 1.12.2026", "", "", "", "", "", "", "", "", "", "", ""]]);
+    }
   }
 })();
 new MutationObserver(()=>{drawModel(); drawOptions(); drawHazard();}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});

@@ -53,10 +53,11 @@ STATUS["fresh"] = fresh; pg["status"] = STATUS
 try:
     rows = []; now = STATUS["finished"]
     for t in ["wti", "brent"]:
-        md = pg["model"][t]; st = pg.get("d8", {}).get("stack", {}).get(t, {}).get("horizons", {}); w = pg.get("wts", {}).get(t, {})
+        md = pg["model"][t]; st = pg.get("d8", {}).get("stack", {}).get(t, {}).get("horizons", {}); w = pg.get("wts", {}).get(t, {}); vw = md.get("views", {})
         for f in md["forecast"]:
             h = str(f["h"]); rows.append(dict(run=now, target=t, h=f["h"], target_month=f["date"][:7], anchor=md["P0"], anchor_date=md.get("P0_day"), fv_now=md["fv_now"], model_median=f["median"], curve=f["curve"], comb=f["comb"], comb_base=f.get("comb_base"), view=f.get("view"), p25=f["p25"], p75=f["p75"], p05=f["p05"], p95=f["p95"],
-                             stack_dossier=st.get(h, {}).get("stack"), stack_shrunk=w.get(h, {}).get("stack_shrunk_now"), steo=st.get(h, {}).get("steo"), hazard=pg.get("hz", {}).get("now", {}).get("CL" if t == "wti" else "BZ", {}).get("hazard")))
+                             stack_dossier=st.get(h, {}).get("stack"), stack_shrunk=w.get(h, {}).get("stack_shrunk_now"), steo=(f.get("steo") if f.get("steo") is not None else st.get(h, {}).get("steo")), hazard=pg.get("hz", {}).get("now", {}).get("CL" if t == "wti" else "BZ", {}).get("hazard"),
+                             w_steo=vw.get("steo_weight"), w_view=vw.get("user_weight"), view_type=vw.get("user_type")))
     log = pd.DataFrame(rows); fn = f"{D}/forecast_log.csv"
     if os.path.exists(fn): old = pd.read_csv(fn); log = pd.concat([old, log], ignore_index=True)
     log.to_csv(fn, index=False); pg["forecast_log_tail"] = log[log.run == now].to_dict("records")
