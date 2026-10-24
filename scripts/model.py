@@ -108,13 +108,17 @@ def apply_views(out, target):
     ws, uv = float(VIEWS.get("steo_weight", 0)), VIEWS.get("user_view", {}); wu = float(uv.get("weight", 0)); st = steo_path(target)
     if ws <= 0 and wu <= 0: return out
     vtype = uv.get("type", "p25"); opec_eff = None
-    if vtype == "opec_prod":   # production scenario through the model's own OPEC coefficient: Δlog(prod)/sd × standardised coef, phased in with P(open)
-        cur = float(M.opec_prod.dropna().iloc[-1]); tgt = float(uv.get("opec_target_mbd", cur)); sd_log = float(np.log(M.opec_prod.dropna()).std())
-        opec_eff = float(out["coef"].get("OPEC", 0.0)) * (np.log(tgt) - np.log(cur)) / sd_log
-        out["view_detail"] = dict(opec_now=round(cur, 1), opec_target=tgt, full_effect_pct=round(opec_eff * 100, 1))
+    if vtype == "opec_prod":   # production scenario through the model's own OPEC coefficient: Δlog(prod)/sd × standardised coef
+        ser = M.opec_prod.dropna(); cur = float(ser.iloc[-1]); kc = float(out["coef"].get("OPEC", 0.0)) / float(np.log(ser).std()); ramp = float(uv.get("ramp_months") or 0)
+        v_now = uv.get("opec_now_mbd"); v_tgt = float(uv.get("opec_target_mbd", cur))
+        tgt = cur + (v_tgt - float(v_now)) if v_now is not None else v_tgt   # view stated in another source's units (IEA crude): carry the absolute mb/d change into the model's series
+        opec_eff = kc * (np.log(tgt) - np.log(cur))
+        def opec_eff_at(h):   # linear ramp to the target over ramp_months, else the full effect phased in with P(open)
+            return kc * (np.log(cur + (tgt - cur) * min(h / ramp, 1.0)) - np.log(cur)) if ramp > 0 else opec_eff * p_open_at(h)
+        out["view_detail"] = dict(opec_now=round(cur, 2), opec_target=round(tgt, 2), view_now=v_now, view_target=(v_tgt if v_now is not None else None), ramp_months=ramp, full_effect_pct=round(opec_eff * 100, 1), series="EIA STEO OPEC total (kaikki nesteet)", basis=uv.get("basis"), series_month=str(ser.index[-1].date())[:7])
     for f in out["forecast"]:
         base = f["comb"]; f["comb_base"] = base; dt = pd.Timestamp(f["date"]); sv = float(st.get(dt, np.nan)) if len(st) else np.nan
-        if vtype == "opec_prod": view = base * np.exp(opec_eff * p_open_at(f["h"]))
+        if vtype == "opec_prod": view = base * np.exp(opec_eff_at(f["h"]))
         else: view = f["p25"] if vtype == "p25" else (f["p75"] if vtype == "p75" else base * (1 + float(uv.get("pct", 0)) / 100))
         w_s = ws if not np.isnan(sv) else 0.0; final = (1 - w_s - wu) * base + w_s * (sv if not np.isnan(sv) else 0) + wu * view
         ratio = final / base; f["comb"] = round(final, 1); f["steo"] = (round(sv, 1) if not np.isnan(sv) else None); f["view"] = round(view, 1)
