@@ -1,6 +1,13 @@
-{"steo_weight": 0.05,
- "user_view": {"weight": 0.20, "type": "opec_prod",
-   "opec_now_mbd": 21.15, "opec_target_mbd": 27.20, "ramp_months": 3,
-   "basis": "IEA OMR 10/2026: OPEC-raakaöljytuotanto (11 jäsentä, ilman UAE:ta) syyskuu 2026 21,15 mb/d; 27,20 = OPEC-8 kestävässä kapasiteetissa (22,84) + Iran, Libya, Venezuela syyskuun tasolla (4,39)",
-   "label": "oma näkemys: OPEC-tuotanto 21,15 → 27,20 mb/d (IEA) 3 kk:ssa, vaikutus mallin tuotantokertoimen kautta"},
- "note": "Lopullinen ennuste = (1 − w_steo − w_user) × (½ fundamenttimalli + ½ futuurikäyrä) + w_steo × EIA STEO + w_user × näkemys. type: p25 | p75 | pct (kenttä pct) | opec_prod. opec_prod: opec_now_mbd ja opec_target_mbd lähteen yksiköissä (tässä IEA:n raakaöljy); muutos viedään mallin sarjaan (EIA STEO 'OPEC total', kaikki nesteet, samat 11 jäsentä) absoluuttisena lisäyksenä mb/d. ramp_months > 0: lineaarinen nousu tavoitteeseen; 0 tai puuttuu: täysi vaikutus kerrottuna P(auki h kk):lla. Jos opec_now_mbd puuttuu, tavoite tulkitaan mallin sarjan yksiköissä."}
+{
+ "steo_weight": 0.05,
+ "user_view": {
+  "weight": 0.4,
+  "type": "opec_prod",
+  "opec_now_mbd": 21.15,
+  "opec_target_mbd": 27.2,
+  "ramp_months": 3,
+  "basis": "IEA OMR 10/2026: OPEC-raakaöljytuotanto (11 jäsentä, ilman UAE:ta) syyskuu 2026 21,15 mb/d; 27,20 = OPEC-8 kestävässä kapasiteetissa (22,84) + Iran, Libya, Venezuela syyskuun tasolla (4,39)",
+  "label": "oma näkemys: OPEC-tuotanto 21,15 → 27,20 mb/d (IEA) 3 kk:ssa, vaikutus mallin tuotantokertoimen kautta"
+ },
+ "note": "Lopullinen ennuste = (1 − w_steo − w_user) × (½ fundamenttimalli + ½ futuurikäyrä) + w_steo × EIA STEO + w_user × näkemys. type: p25 | p75 | pct (kenttä pct) | opec_prod. opec_prod: opec_now_mbd ja opec_target_mbd lähteen yksiköissä (tässä IEA:n raakaöljy); muutos viedään mallin sarjaan (EIA STEO 'OPEC total', kaikki nesteet, samat 11 jäsentä) absoluuttisena lisäyksenä mb/d. ramp_months > 0: lineaarinen nousu tavoitteeseen; 0 tai puuttuu: täysi vaikutus kerrottuna P(auki h kk):lla. Jos opec_now_mbd puuttuu, tavoite tulkitaan mallin sarjan yksiköissä."
+}
