@@ -88,7 +88,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "diesel_us": {
    "label": "Diesel USA (USD/gal)",
@@ -98,7 +98,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "us_crude_stocks": {
    "label": "USA raakaöljyvarastot pl. SPR (milj. bbl)",
