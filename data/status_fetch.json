@@ -1,31 +1,31 @@
 {
- "run": "2026-10-28 11:36:55Z",
+ "run": "2026-10-28 21:57:12Z",
  "full": false,
  "status": {
   "fred": {
    "ok": true,
-   "info": "48/50 series; {'WTI_d': ['2026-10-20', np.float64(107.89)], 'Brent_d': ['2026-10-20', np.float64(115.22)]}",
-   "secs": 17.0
+   "info": "48/50 series; {'WTI_d': ['2026-10-27', np.float64(103.37)], 'Brent_d': ['2026-10-27', np.float64(123.1)]}",
+   "secs": 17.9
   },
   "eia_weekly_monthly": {
    "ok": true,
-   "info": "20/20; WCESTUS1w [Timestamp('2026-10-16 00:00:00'), np.int64(412517)]",
-   "secs": 1.4
+   "info": "20/20; WCESTUS1w [Timestamp('2026-10-23 00:00:00'), np.int64(410625)]",
+   "secs": 2.7
   },
   "eia_daily_futures_spot": {
    "ok": true,
-   "info": "{'cl1': '2024-04-05', 'cl2': '2024-04-05', 'cl3': '2024-04-05', 'cl4': '2024-04-05', 'ho1': '2024-04-05', 'rb1': '2024-04-05', 'brent_spot': '2026-10-20', 'wti_spot': '2026-10-20'}",
-   "secs": 1.2
+   "info": "{'cl1': '2024-04-05', 'cl2': '2024-04-05', 'cl3': '2024-04-05', 'cl4': '2024-04-05', 'ho1': '2024-04-05', 'rb1': '2024-04-05', 'brent_spot': '2026-10-27', 'wti_spot': '2026-10-27'}",
+   "secs": 1.7
   },
   "eia_totalenergy_steo": {
    "ok": true,
    "info": "STEO vintage Thursday, October 1, 2026",
-   "secs": 8.5
+   "secs": 6.1
   },
   "opec_basket": {
    "ok": false,
    "error": "403 Client Error: Forbidden for url: https://www.opec.org/basket/basketDayArchives.xml",
-   "secs": 0.2
+   "secs": 0.4
   },
   "cftc": {
    "ok": true,
@@ -33,24 +33,24 @@
    "secs": 0.3
   },
   "portwatch": {
-   "ok": true,
-   "info": "14275 rows; Hormuz last 2026-10-25 n_tanker 1",
-   "secs": 29.6
+   "ok": false,
+   "error": "new data ends NaT < existing 2026-10-25; keeping old file",
+   "secs": 86.6
   },
   "gpr": {
    "ok": true,
    "info": "daily last 2026-10-26 00:00:00 GPRD 165",
-   "secs": 0.5
+   "secs": 1.1
   },
   "yahoo_contracts": {
    "ok": true,
    "info": "43/54 contracts",
-   "secs": 29.7
+   "secs": 28.9
   },
   "yahoo_sp500_monthly": {
    "ok": true,
    "info": "240 months, last 2026-10-01",
-   "secs": 0.1
+   "secs": 0.2
   },
   "yahoo_options": {
    "ok": false,
