@@ -2847,6 +2847,13 @@ date,portid,portname,n_tanker,n_cargo,n_total,capacity_tanker,capacity
 2026-10-16,chokepoint1,Suez Canal,16,27,43,722502,1542020
 2026-10-17,chokepoint1,Suez Canal,14,28,42,898024,2180846
 2026-10-18,chokepoint1,Suez Canal,15,28,43,785416,1554286
+2026-10-19,chokepoint1,Suez Canal,16,20,36,610955,1284126
+2026-10-20,chokepoint1,Suez Canal,13,26,39,711603,1852568
+2026-10-21,chokepoint1,Suez Canal,16,24,40,737072,1373546
+2026-10-22,chokepoint1,Suez Canal,16,27,43,627189,1769903
+2026-10-23,chokepoint1,Suez Canal,21,23,44,821044,1805704
+2026-10-24,chokepoint1,Suez Canal,18,23,41,747282,2077496
+2026-10-25,chokepoint1,Suez Canal,14,32,46,362258,1705711
 2019-01-01,chokepoint4,Bab el-Mandeb Strait,21,31,52,1141463,2742136
 2019-01-02,chokepoint4,Bab el-Mandeb Strait,18,41,59,776236,2780443
 2019-01-03,chokepoint4,Bab el-Mandeb Strait,19,40,59,884041,2682135
@@ -5695,6 +5702,13 @@ date,portid,portname,n_tanker,n_cargo,n_total,capacity_tanker,capacity
 2026-10-16,chokepoint4,Bab el-Mandeb Strait,11,14,25,785624,1333613
 2026-10-17,chokepoint4,Bab el-Mandeb Strait,7,22,29,456317,1028126
 2026-10-18,chokepoint4,Bab el-Mandeb Strait,17,15,32,740408,1055547
+2026-10-19,chokepoint4,Bab el-Mandeb Strait,9,27,36,216742,991763
+2026-10-20,chokepoint4,Bab el-Mandeb Strait,10,23,33,410362,1050978
+2026-10-21,chokepoint4,Bab el-Mandeb Strait,6,15,21,280617,661045
+2026-10-22,chokepoint4,Bab el-Mandeb Strait,7,16,23,314995,848233
+2026-10-23,chokepoint4,Bab el-Mandeb Strait,11,21,32,454425,954463
+2026-10-24,chokepoint4,Bab el-Mandeb Strait,11,10,21,429548,844169
+2026-10-25,chokepoint4,Bab el-Mandeb Strait,13,23,36,494335,1157839
 2019-01-01,chokepoint5,Malacca Strait,76,125,201,3712932,8185371
 2019-01-02,chokepoint5,Malacca Strait,66,93,159,3876315,7496931
 2019-01-03,chokepoint5,Malacca Strait,69,85,154,2612893,6016625
@@ -8543,6 +8557,13 @@ date,portid,portname,n_tanker,n_cargo,n_total,capacity_tanker,capacity
 2026-10-16,chokepoint5,Malacca Strait,83,138,221,3683807,8382922
 2026-10-17,chokepoint5,Malacca Strait,78,127,205,3548357,8437996
 2026-10-18,chokepoint5,Malacca Strait,79,148,227,3348109,8458750
+2026-10-19,chokepoint5,Malacca Strait,69,139,208,2785812,8081007
+2026-10-20,chokepoint5,Malacca Strait,85,147,232,3555421,8739005
+2026-10-21,chokepoint5,Malacca Strait,70,158,228,3131318,8149538
+2026-10-22,chokepoint5,Malacca Strait,77,161,238,2537017,8552904
+2026-10-23,chokepoint5,Malacca Strait,83,167,250,3117159,10302728
+2026-10-24,chokepoint5,Malacca Strait,58,170,228,3014587,9397418
+2026-10-25,chokepoint5,Malacca Strait,89,123,212,4084547,7773448
 2019-01-01,chokepoint6,Strait of Hormuz,33,19,52,2390755,2795480
 2019-01-02,chokepoint6,Strait of Hormuz,37,24,61,1022523,1991917
 2019-01-03,chokepoint6,Strait of Hormuz,49,22,71,2841667,3604099
@@ -11391,6 +11412,13 @@ date,portid,portname,n_tanker,n_cargo,n_total,capacity_tanker,capacity
 2026-10-16,chokepoint6,Strait of Hormuz,1,6,7,68520,87360
 2026-10-17,chokepoint6,Strait of Hormuz,0,0,0,0,0
 2026-10-18,chokepoint6,Strait of Hormuz,2,2,4,19163,125163
+2026-10-19,chokepoint6,Strait of Hormuz,1,3,4,0,80025
+2026-10-20,chokepoint6,Strait of Hormuz,1,2,3,5341,36679
+2026-10-21,chokepoint6,Strait of Hormuz,0,3,3,0,37157
+2026-10-22,chokepoint6,Strait of Hormuz,1,3,4,0,3627
+2026-10-23,chokepoint6,Strait of Hormuz,1,4,5,0,207995
+2026-10-24,chokepoint6,Strait of Hormuz,1,1,2,37735,37735
+2026-10-25,chokepoint6,Strait of Hormuz,1,1,2,0,0
 2019-01-01,chokepoint7,Cape of Good Hope,12,38,50,438014,1857609
 2019-01-02,chokepoint7,Cape of Good Hope,4,20,24,553937,1174851
 2019-01-03,chokepoint7,Cape of Good Hope,16,48,64,1127282,3574420
@@ -14239,3 +14267,10 @@ date,portid,portname,n_tanker,n_cargo,n_total,capacity_tanker,capacity
 2026-10-16,chokepoint7,Cape of Good Hope,26,62,88,1920274,5596022
 2026-10-17,chokepoint7,Cape of Good Hope,13,56,69,1015827,4436246
 2026-10-18,chokepoint7,Cape of Good Hope,18,60,78,941599,4242000
+2026-10-19,chokepoint7,Cape of Good Hope,25,65,90,917890,4368835
+2026-10-20,chokepoint7,Cape of Good Hope,13,75,88,794484,6598509
+2026-10-21,chokepoint7,Cape of Good Hope,17,56,73,1473871,5790053
+2026-10-22,chokepoint7,Cape of Good Hope,33,56,89,2059599,5483658
+2026-10-23,chokepoint7,Cape of Good Hope,27,53,80,1805767,4642446
+2026-10-24,chokepoint7,Cape of Good Hope,20,70,90,1192450,5526252
+2026-10-25,chokepoint7,Cape of Good Hope,18,82,100,1639488,6404664
