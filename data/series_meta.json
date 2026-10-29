@@ -448,7 +448,7 @@
    "freq": "quarterly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-04-01"
+   "last": "2026-07-01"
   },
   "gdp_de": {
    "label": "BKT Saksa, reaalinen (mrd EUR 2010, kvartaali→kk)",
@@ -688,7 +688,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-06-01"
+   "last": "2026-07-01"
   },
   "wind_share_us": {
    "label": "Tuulen osuus sähköstä USA (%)",
@@ -698,7 +698,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-06-01"
+   "last": "2026-07-01"
   },
   "bdi": {
    "label": "Baltic Dry Index (kuivarahti)",

@@ -1,40 +1,40 @@
 {
- "started": "2026-10-29 11:42:53Z",
+ "started": "2026-10-29 22:00:38Z",
  "steps": {
   "fetch": {
    "ok": true,
-   "secs": 123.6,
+   "secs": 170.0,
    "tail": "fetch done: {'fred': True, 'eia_weekly_monthly': True, 'eia_daily_futures_spot': True, 'eia_totalenergy_steo': True, 'opec_basket': False, 'cftc': True, 'portwatch': False, 'gpr': True, 'yahoo_contrac",
    "err": ""
   },
   "refresh_daily_files": {
    "ok": true,
-   "secs": 2.6,
+   "secs": 2.5,
    "tail": "cot: 2026-10-20 mm_net 36187",
    "err": ""
   },
   "build_panel": {
    "ok": true,
-   "secs": 1.8,
+   "secs": 1.9,
    "tail": "vehicle_sales_us_avg     17.857083     17.879583     17.563500     17.711583     17.488583     14.879333     15.408833     14.230500     16.011583     16.333083     16.676083     16.478000",
    "err": ""
   },
   "long_panel": {
    "ok": true,
-   "secs": 5.5,
+   "secs": 5.7,
    "tail": "2006-03-01   62.1  62.7      100.4           1685.5            323.1     23.5   685.4      5.1    NaN       35.8           -1.4       2593.3         -8.4          0.0",
    "err": ""
   },
   "analyze": {
    "ok": true,
-   "secs": 4.3,
+   "secs": 4.9,
    "tail": "{'label': 'Rahastojen nettopositio WTI (tuhatta sopimusta)', 'min': np.float64(-20.75), 'min_date': '2025-10', 'max': np.float64(453.61), 'max_date': '2018-02', 'last': np.float64(43.45), 'last_date':",
    "err": ""
   },
   "build_page": {
    "ok": true,
    "secs": 0.4,
-   "tail": "series: 108 events: 32 json bytes: 200215",
+   "tail": "series: 108 events: 32 json bytes: 200236",
    "err": ""
   },
   "extra_series": {
@@ -51,19 +51,19 @@
   },
   "model": {
    "ok": true,
-   "secs": 84.3,
-   "tail": "  6kk {'h': 6, 'date': '2027-04-01', 'median': np.float64(99.3), 'curve': 91.0, 'comb': np.float64(95.1), 'p25': np.float64(84.0), 'p75': np.float64(113.3), 'p05': np.float64(77.6), 'p95': np.float64(",
+   "secs": 101.2,
+   "tail": "  6kk {'h': 6, 'date': '2027-04-01', 'median': np.float64(100.1), 'curve': 91.5, 'comb': np.float64(95.8), 'p25': np.float64(84.6), 'p75': np.float64(114.1), 'p05': np.float64(78.1), 'p95': np.float64",
    "err": ""
   },
   "models17": {
    "ok": true,
-   "secs": 6.5,
+   "secs": 7.3,
    "tail": "DONE",
    "err": ""
   },
   "models8": {
    "ok": true,
-   "secs": 32.5,
+   "secs": 39.0,
    "tail": "saved",
    "err": ""
   },
@@ -75,36 +75,36 @@
   },
   "daily_signals": {
    "ok": true,
-   "secs": 8.0,
+   "secs": 10.2,
    "tail": "saved; now: 2026-10-27 {'dtr7': 0.429, 'disr': 0.982, 'm1m2': 1.84, 'cotz': -0.656, 'dovx5': 3.33, 'dgpr7': 9.613, 'mom5': 0.066, 'mom21': 0.026, 'dstock': -1.892}",
    "err": ""
   },
   "weights": {
    "ok": true,
-   "secs": 15.7,
+   "secs": 17.8,
    "tail": "saved",
    "err": ""
   },
   "models_prob": {
    "ok": true,
-   "secs": 188.8,
+   "secs": 264.4,
    "tail": "saved prob.json",
    "err": ""
   },
   "evaluate_log": {
    "ok": true,
    "secs": 0.4,
-   "tail": "eval: 312 kirjattua ennustetta 26 ajosta; pisteytetty 0; ensimm\u00e4inen kohdekuukausi 2026-11; avautumiskuukausi None",
+   "tail": "eval: 324 kirjattua ennustetta 27 ajosta; pisteytetty 0; ensimm\u00e4inen kohdekuukausi 2026-11; avautumiskuukausi None",
    "err": ""
   }
  },
- "finished": "2026-10-29 11:50:51Z",
+ "finished": "2026-10-29 22:11:08Z",
  "fresh": {
   "WTI/Brent p\u00e4iv\u00e4hinta (FRED)": "2026-10-27",
   "EIA viikkovarastot": "2026-10-23",
   "Hormuz-transitit (PortWatch)": "2026-10-25",
   "CFTC COT": "2026-10-20",
-  "OVX": "2026-10-27",
+  "OVX": "2026-10-28",
   "GPR-p\u00e4iv\u00e4indeksi": "2026-10-26",
   "Futuurik\u00e4yr\u00e4 (Yahoo)": "2026-10-29",
   "Optiot": "2026-10-22 (CME, manuaalinen)",
