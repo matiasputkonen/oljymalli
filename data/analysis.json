@@ -256,10 +256,10 @@
    "series": "us_exports",
    "label": "USA raakaöljyn vienti (mb/d)",
    "group": "Tarjonta & kysyntä",
-   "n": 139,
-   "r": 0.626,
+   "n": 140,
+   "r": 0.628,
    "p": 0.0,
-   "spearman": 0.677
+   "spearman": 0.68
   },
   {
    "series": "ust10y",
@@ -388,6 +388,15 @@
    "spearman": 0.598
   },
   {
+   "series": "us_product_supplied",
+   "label": "USA öljytuotteiden kulutus (mb/d)",
+   "group": "Tarjonta & kysyntä",
+   "n": 140,
+   "r": 0.513,
+   "p": 0.0,
+   "spearman": 0.485
+  },
+  {
    "series": "ip_total",
    "label": "Teollisuustuotanto USA (indeksi)",
    "group": "Toimialat",
@@ -404,15 +413,6 @@
    "r": 0.512,
    "p": 0.0,
    "spearman": 0.554
-  },
-  {
-   "series": "us_product_supplied",
-   "label": "USA öljytuotteiden kulutus (mb/d)",
-   "group": "Tarjonta & kysyntä",
-   "n": 139,
-   "r": 0.51,
-   "p": 0.0,
-   "spearman": 0.484
   },
   {
    "series": "henryhub",
@@ -490,10 +490,19 @@
    "series": "us_ref_util",
    "label": "USA jalostamoiden käyttöaste (%)",
    "group": "Tarjonta & kysyntä",
-   "n": 139,
-   "r": 0.397,
+   "n": 140,
+   "r": 0.405,
    "p": 0.0,
-   "spearman": 0.277
+   "spearman": 0.289
+  },
+  {
+   "series": "us_jet_demand",
+   "label": "USA lentopetrolin kulutus (mb/d)",
+   "group": "Toimialat",
+   "n": 140,
+   "r": 0.392,
+   "p": 0.0,
+   "spearman": 0.25
   },
   {
    "series": "world_prod",
@@ -503,15 +512,6 @@
    "r": 0.388,
    "p": 0.0,
    "spearman": 0.504
-  },
-  {
-   "series": "us_jet_demand",
-   "label": "USA lentopetrolin kulutus (mb/d)",
-   "group": "Toimialat",
-   "n": 139,
-   "r": 0.387,
-   "p": 0.0,
-   "spearman": 0.241
   },
   {
    "series": "us_gasoline_stocks",
@@ -544,10 +544,10 @@
    "series": "us_imports",
    "label": "USA raakaöljyn tuonti (mb/d)",
    "group": "Tarjonta & kysyntä",
-   "n": 139,
-   "r": -0.304,
+   "n": 140,
+   "r": -0.305,
    "p": 0.0003,
-   "spearman": -0.306
+   "spearman": -0.304
   },
   {
    "series": "dubai_brent_spread",
@@ -609,8 +609,8 @@
    "group": "Positiot",
    "n": 142,
    "r": -0.207,
-   "p": 0.0135,
-   "spearman": -0.222
+   "p": 0.0136,
+   "spearman": -0.221
   },
   {
    "series": "ip_manuf",
@@ -636,7 +636,7 @@
    "group": "Positiot",
    "n": 142,
    "r": -0.136,
-   "p": 0.1077,
+   "p": 0.1063,
    "spearman": -0.125
   },
   {
@@ -649,15 +649,6 @@
    "spearman": -0.077
   },
   {
-   "series": "us_rigs",
-   "label": "USA öljynporauslautat (kpl)",
-   "group": "Tarjonta & kysyntä",
-   "n": 140,
-   "r": 0.053,
-   "p": 0.5305,
-   "spearman": 0.072
-  },
-  {
    "series": "ip_refining",
    "label": "Jalostus & hiilituotteet USA (IP)",
    "group": "Toimialat",
@@ -665,6 +656,15 @@
    "r": -0.046,
    "p": 0.5842,
    "spearman": -0.264
+  },
+  {
+   "series": "us_rigs",
+   "label": "USA öljynporauslautat (kpl)",
+   "group": "Tarjonta & kysyntä",
+   "n": 141,
+   "r": 0.043,
+   "p": 0.614,
+   "spearman": 0.065
   },
   {
    "series": "ip_chem",
@@ -681,8 +681,8 @@
    "group": "Makrotalous",
    "n": 142,
    "r": -0.04,
-   "p": 0.6334,
-   "spearman": 0.097
+   "p": 0.6339,
+   "spearman": 0.098
   }
  ],
  "change_corr_vs_brent": [
@@ -888,10 +888,10 @@
    "series": "us_product_supplied",
    "label": "USA öljytuotteiden kulutus (mb/d)",
    "group": "Tarjonta & kysyntä",
-   "n": 138,
-   "r": 0.425,
+   "n": 139,
+   "r": 0.424,
    "p": 0.0,
-   "spearman": 0.067
+   "spearman": 0.063
   },
   {
    "series": "food_idx",
@@ -912,15 +912,6 @@
    "spearman": 0.387
   },
   {
-   "series": "us_jet_demand",
-   "label": "USA lentopetrolin kulutus (mb/d)",
-   "group": "Toimialat",
-   "n": 138,
-   "r": 0.387,
-   "p": 0.0,
-   "spearman": 0.032
-  },
-  {
    "series": "world_prod",
    "label": "Maailman öljyntuotanto (mb/d)",
    "group": "Tarjonta & kysyntä",
@@ -928,6 +919,15 @@
    "r": -0.383,
    "p": 0.0,
    "spearman": -0.089
+  },
+  {
+   "series": "us_jet_demand",
+   "label": "USA lentopetrolin kulutus (mb/d)",
+   "group": "Toimialat",
+   "n": 139,
+   "r": 0.383,
+   "p": 0.0,
+   "spearman": 0.022
   },
   {
    "series": "nonfuel_idx",
@@ -943,9 +943,9 @@
    "label": "Rahastojen nettopositio WTI (tuhatta sopimusta)",
    "group": "Positiot",
    "n": 141,
-   "r": 0.377,
+   "r": 0.376,
    "p": 0.0,
-   "spearman": 0.544
+   "spearman": 0.543
   },
   {
    "series": "vmt",
@@ -1015,7 +1015,7 @@
    "label": "S&P 500",
    "group": "Makrotalous",
    "n": 120,
-   "r": 0.29,
+   "r": 0.289,
    "p": 0.0013,
    "spearman": 0.1
   },
@@ -1101,6 +1101,15 @@
    "spearman": 0.172
   },
   {
+   "series": "us_imports",
+   "label": "USA raakaöljyn tuonti (mb/d)",
+   "group": "Tarjonta & kysyntä",
+   "n": 139,
+   "r": 0.157,
+   "p": 0.065,
+   "spearman": 0.026
+  },
+  {
    "series": "lumber_ppi",
    "label": "Puutavara, PPI USA",
    "group": "Raaka-aineet",
@@ -1110,31 +1119,13 @@
    "spearman": 0.212
   },
   {
-   "series": "us_imports",
-   "label": "USA raakaöljyn tuonti (mb/d)",
-   "group": "Tarjonta & kysyntä",
-   "n": 138,
-   "r": 0.153,
-   "p": 0.074,
-   "spearman": 0.015
-  },
-  {
    "series": "us_ref_util",
    "label": "USA jalostamoiden käyttöaste (%)",
    "group": "Tarjonta & kysyntä",
-   "n": 138,
-   "r": 0.151,
-   "p": 0.0771,
-   "spearman": -0.032
-  },
-  {
-   "series": "us_rigs",
-   "label": "USA öljynporauslautat (kpl)",
-   "group": "Tarjonta & kysyntä",
    "n": 139,
-   "r": -0.151,
-   "p": 0.0751,
-   "spearman": -0.047
+   "r": 0.152,
+   "p": 0.0737,
+   "spearman": -0.03
   },
   {
    "series": "dubai_brent_spread",
@@ -1144,6 +1135,15 @@
    "r": -0.15,
    "p": 0.0778,
    "spearman": -0.371
+  },
+  {
+   "series": "us_rigs",
+   "label": "USA öljynporauslautat (kpl)",
+   "group": "Tarjonta & kysyntä",
+   "n": 140,
+   "r": -0.148,
+   "p": 0.0801,
+   "spearman": -0.047
   },
   {
    "series": "us_spr",
@@ -1230,10 +1230,10 @@
    "series": "us_exports",
    "label": "USA raakaöljyn vienti (mb/d)",
    "group": "Tarjonta & kysyntä",
-   "n": 138,
-   "r": 0.07,
-   "p": 0.4132,
-   "spearman": 0.032
+   "n": 139,
+   "r": 0.073,
+   "p": 0.3928,
+   "spearman": 0.041
   },
   {
    "series": "us_distillate_stocks",
@@ -1268,8 +1268,8 @@
    "group": "Positiot",
    "n": 141,
    "r": 0.052,
-   "p": 0.5386,
-   "spearman": 0.215
+   "p": 0.537,
+   "spearman": 0.216
   },
   {
    "series": "us_crude_stocks",
@@ -1628,9 +1628,9 @@
    "iron_ore": 0.711,
    "world_stock_draw": 0.675,
    "world_balance": -0.675,
+   "us_rigs": -0.665,
    "aluminum": 0.664,
    "ppi_all": 0.662,
-   "us_rigs": -0.639,
    "eugas": 0.627,
    "ip_drilling": -0.626,
    "freight_ccfi": -0.542,
@@ -1640,12 +1640,14 @@
    "ip_mining": -0.47,
    "world_cons": -0.461,
    "nonfuel_idx": 0.433,
+   "us_product_supplied": -0.426,
    "ip_autos": -0.401,
    "vix": 0.395,
    "ust10y": 0.385,
    "ip_chem": 0.338,
    "steel_ppi": -0.337,
    "us_prod": -0.325,
+   "us_exports": 0.325,
    "metals_idx": 0.32,
    "cass": 0.315,
    "fedfunds": 0.295,
@@ -1656,10 +1658,11 @@
    "unemp_us": 0.198,
    "ip_manuf": 0.168,
    "lumber_ppi": -0.163,
-   "oi_wti": 0.161,
+   "oi_wti": 0.162,
+   "us_ref_util": -0.161,
    "ip_oilgas": -0.151,
    "henryhub": -0.148,
-   "mm_net_wti": 0.138,
+   "mm_net_wti": 0.133,
    "us_distillate_stocks": -0.13,
    "usd_broad": 0.13,
    "temp_nh": -0.128,
@@ -1667,7 +1670,9 @@
    "bdi": 0.102,
    "freight_scfi": -0.101,
    "us_gasoline_stocks": -0.09,
+   "us_imports": 0.078,
    "china_cons": 0.069,
+   "us_jet_demand": 0.05,
    "ip_refining": -0.036,
    "temp_global": -0.031,
    "vehicle_sales_us": -0.02,
@@ -2495,24 +2500,24 @@
    "label": "USA raakaöljyn vienti (mb/d)",
    "group": "Tarjonta & kysyntä",
    "best_lag": -10,
-   "best_r": 0.205,
-   "contemporaneous": 0.07,
+   "best_r": 0.202,
+   "contemporaneous": 0.073,
    "curve": {
-    "-12": -0.099,
+    "-12": -0.101,
     "-11": 0.135,
-    "-10": 0.205,
+    "-10": 0.202,
     "-9": -0.046,
-    "-8": 0.022,
-    "-7": -0.035,
-    "-6": -0.006,
-    "-5": 0.008,
-    "-4": -0.147,
-    "-3": -0.077,
-    "-2": 0.038,
-    "-1": 0.176,
-    "0": 0.07,
-    "1": -0.026,
-    "2": -0.049,
+    "-8": 0.021,
+    "-7": -0.033,
+    "-6": -0.003,
+    "-5": 0.023,
+    "-4": -0.141,
+    "-3": -0.081,
+    "-2": 0.029,
+    "-1": 0.175,
+    "0": 0.073,
+    "1": -0.018,
+    "2": -0.045,
     "3": -0.015,
     "4": -0.077,
     "5": 0.086,
@@ -2529,24 +2534,24 @@
    "label": "USA raakaöljyn tuonti (mb/d)",
    "group": "Tarjonta & kysyntä",
    "best_lag": -2,
-   "best_r": -0.231,
-   "contemporaneous": 0.153,
+   "best_r": -0.243,
+   "contemporaneous": 0.157,
    "curve": {
-    "-12": 0.026,
+    "-12": 0.023,
     "-11": -0.078,
-    "-10": 0.115,
+    "-10": 0.111,
     "-9": -0.035,
-    "-8": -0.04,
-    "-7": -0.006,
-    "-6": 0.027,
-    "-5": 0.071,
-    "-4": 0.081,
-    "-3": 0.097,
-    "-2": -0.231,
-    "-1": 0.04,
-    "0": 0.153,
-    "1": 0.031,
-    "2": -0.012,
+    "-8": -0.041,
+    "-7": -0.001,
+    "-6": 0.031,
+    "-5": 0.094,
+    "-4": 0.088,
+    "-3": 0.089,
+    "-2": -0.243,
+    "-1": 0.038,
+    "0": 0.157,
+    "1": 0.045,
+    "2": -0.007,
     "3": 0.021,
     "4": -0.131,
     "5": 0.026,
@@ -2563,8 +2568,8 @@
    "label": "USA öljytuotteiden kulutus (mb/d)",
    "group": "Tarjonta & kysyntä",
    "best_lag": 0,
-   "best_r": 0.425,
-   "contemporaneous": 0.425,
+   "best_r": 0.424,
+   "contemporaneous": 0.424,
    "curve": {
     "-12": -0.074,
     "-11": -0.078,
@@ -2573,12 +2578,12 @@
     "-8": 0.018,
     "-7": -0.075,
     "-6": -0.013,
-    "-5": 0.007,
-    "-4": -0.089,
+    "-5": 0.006,
+    "-4": -0.088,
     "-3": -0.05,
-    "-2": -0.094,
+    "-2": -0.092,
     "-1": 0.28,
-    "0": 0.425,
+    "0": 0.424,
     "1": -0.065,
     "2": -0.162,
     "3": 0.018,
@@ -2598,23 +2603,23 @@
    "group": "Toimialat",
    "best_lag": -1,
    "best_r": 0.566,
-   "contemporaneous": 0.387,
+   "contemporaneous": 0.383,
    "curve": {
-    "-12": -0.093,
+    "-12": -0.091,
     "-11": -0.019,
-    "-10": 0.14,
-    "-9": 0.012,
-    "-8": -0.024,
-    "-7": -0.11,
-    "-6": 0.045,
-    "-5": 0.056,
-    "-4": -0.185,
-    "-3": -0.1,
-    "-2": 0.116,
+    "-10": 0.142,
+    "-9": 0.013,
+    "-8": -0.023,
+    "-7": -0.112,
+    "-6": 0.042,
+    "-5": 0.04,
+    "-4": -0.189,
+    "-3": -0.096,
+    "-2": 0.123,
     "-1": 0.566,
-    "0": 0.387,
-    "1": -0.15,
-    "2": -0.18,
+    "0": 0.383,
+    "1": -0.156,
+    "2": -0.183,
     "3": -0.064,
     "4": -0.078,
     "5": 0.055,
@@ -2631,24 +2636,24 @@
    "label": "USA jalostamoiden käyttöaste (%)",
    "group": "Tarjonta & kysyntä",
    "best_lag": -10,
-   "best_r": 0.286,
-   "contemporaneous": 0.151,
+   "best_r": 0.285,
+   "contemporaneous": 0.152,
    "curve": {
     "-12": -0.19,
     "-11": 0.023,
-    "-10": 0.286,
-    "-9": -0.097,
-    "-8": -0.018,
-    "-7": -0.072,
-    "-6": 0.008,
-    "-5": 0.027,
-    "-4": -0.056,
-    "-3": 0.028,
-    "-2": 0.151,
-    "-1": 0.21,
-    "0": 0.151,
-    "1": -0.028,
-    "2": -0.095,
+    "-10": 0.285,
+    "-9": -0.098,
+    "-8": -0.019,
+    "-7": -0.071,
+    "-6": 0.009,
+    "-5": 0.033,
+    "-4": -0.053,
+    "-3": 0.026,
+    "-2": 0.144,
+    "-1": 0.209,
+    "0": 0.152,
+    "1": -0.024,
+    "2": -0.094,
     "3": -0.009,
     "4": -0.046,
     "5": 0.006,
@@ -2666,7 +2671,7 @@
    "group": "Tarjonta & kysyntä",
    "best_lag": -2,
    "best_r": 0.47,
-   "contemporaneous": -0.151,
+   "contemporaneous": -0.148,
    "curve": {
     "-12": -0.064,
     "-11": 0.052,
@@ -2674,14 +2679,14 @@
     "-9": -0.006,
     "-8": -0.028,
     "-7": -0.019,
-    "-6": 0.086,
+    "-6": 0.084,
     "-5": 0.158,
-    "-4": 0.257,
-    "-3": 0.373,
+    "-4": 0.256,
+    "-3": 0.367,
     "-2": 0.47,
     "-1": 0.278,
-    "0": -0.151,
-    "1": -0.237,
+    "0": -0.148,
+    "1": -0.236,
     "2": -0.069,
     "3": 0.066,
     "4": 0.127,
@@ -3413,8 +3418,8 @@
    "label": "S&P 500",
    "group": "Makrotalous",
    "best_lag": 0,
-   "best_r": 0.29,
-   "contemporaneous": 0.29,
+   "best_r": 0.289,
+   "contemporaneous": 0.289,
    "curve": {
     "-12": -0.219,
     "-11": -0.049,
@@ -3424,11 +3429,11 @@
     "-7": -0.039,
     "-6": 0.017,
     "-5": 0.075,
-    "-4": -0.169,
+    "-4": -0.168,
     "-3": -0.17,
     "-2": -0.018,
     "-1": 0.095,
-    "0": 0.29,
+    "0": 0.289,
     "1": 0.272,
     "2": -0.111,
     "3": -0.129,
@@ -3461,7 +3466,7 @@
     "-4": 0.106,
     "-3": 0.171,
     "-2": 0.042,
-    "-1": 0.0,
+    "-1": 0.001,
     "0": -0.262,
     "1": -0.322,
     "2": 0.046,
@@ -4195,22 +4200,22 @@
    "label": "Rahastojen nettopositio WTI (tuhatta sopimusta)",
    "group": "Positiot",
    "best_lag": 0,
-   "best_r": 0.377,
-   "contemporaneous": 0.377,
+   "best_r": 0.376,
+   "contemporaneous": 0.376,
    "curve": {
-    "-12": -0.146,
+    "-12": -0.145,
     "-11": 0.038,
     "-10": 0.022,
     "-9": -0.108,
-    "-8": -0.04,
-    "-7": -0.025,
-    "-6": 0.098,
+    "-8": -0.041,
+    "-7": -0.026,
+    "-6": 0.097,
     "-5": -0.006,
     "-4": -0.029,
     "-3": -0.135,
     "-2": -0.225,
-    "-1": -0.174,
-    "0": 0.377,
+    "-1": -0.175,
+    "0": 0.376,
     "1": 0.301,
     "2": 0.144,
     "3": -0.178,
@@ -4237,7 +4242,7 @@
     "-10": -0.232,
     "-9": -0.041,
     "-8": 0.08,
-    "-7": 0.041,
+    "-7": 0.042,
     "-6": -0.124,
     "-5": -0.138,
     "-4": -0.042,
@@ -5123,7 +5128,7 @@
    "2026-07": 0.349,
    "2026-08": 0.343,
    "2026-09": 0.321,
-   "2026-10": 0.274
+   "2026-10": 0.271
   },
   "vix": {
    "2015-01": null,
@@ -5842,8 +5847,8 @@
    "2026-06": -0.256,
    "2026-07": -0.247,
    "2026-08": -0.219,
-   "2026-09": -0.207,
-   "2026-10": -0.206
+   "2026-09": -0.179,
+   "2026-10": -0.179
   },
   "world_balance": {
    "2015-01": null,
@@ -6240,9 +6245,9 @@
    "cause_label": "USA öljynporauslautat (kpl)",
    "effect_label": "Brent (USD/bbl)",
    "p": {
-    "lag1": 0.0131,
-    "lag2": 0.0284,
-    "lag3": 0.1306
+    "lag1": 0.0156,
+    "lag2": 0.0272,
+    "lag3": 0.1215
    }
   },
   {
@@ -6350,9 +6355,9 @@
    "cause_label": "Brent (USD/bbl)",
    "effect_label": "Rahastojen nettopositio WTI (tuhatta sopimusta)",
    "p": {
-    "lag1": 0.0056,
-    "lag2": 0.056,
-    "lag3": 0.2379
+    "lag1": 0.0055,
+    "lag2": 0.055,
+    "lag3": 0.2344
    }
   },
   {
@@ -6394,9 +6399,9 @@
    "cause_label": "Brent (USD/bbl)",
    "effect_label": "S&P 500",
    "p": {
-    "lag1": 0.4318,
-    "lag2": 0.4468,
-    "lag3": 0.3402
+    "lag1": 0.432,
+    "lag2": 0.447,
+    "lag3": 0.3404
    }
   },
   {
@@ -6427,9 +6432,9 @@
    "cause_label": "Brent (USD/bbl)",
    "effect_label": "USA raakaöljyn vienti (mb/d)",
    "p": {
-    "lag1": 0.0181,
-    "lag2": 0.037,
-    "lag3": 0.0834
+    "lag1": 0.0177,
+    "lag2": 0.0353,
+    "lag3": 0.0804
    }
   }
  ],
@@ -6447,62 +6452,62 @@
    "brent_lag"
   ],
   "oos_from": "2020-01",
-  "n_oos": 80,
+  "n_oos": 81,
   "rmse_monthly_logret": {
-   "model": 0.1715,
-   "rw": 0.1415,
-   "ar1": 0.1531,
-   "mean": 0.1427
+   "model": 0.1705,
+   "rw": 0.1409,
+   "ar1": 0.1521,
+   "mean": 0.1421
   },
-  "insample_r2": 0.257,
-  "insample_adj_r2": 0.187,
+  "insample_r2": 0.258,
+  "insample_adj_r2": 0.19,
   "coef": {
    "const": {
-    "coef": 0.0078,
-    "p": 0.509
+    "coef": 0.0083,
+    "p": 0.48
    },
    "us_crude_stocks": {
-    "coef": 0.353,
-    "p": 0.356
+    "coef": 0.3524,
+    "p": 0.355
    },
    "mm_net_wti": {
-    "coef": 0.0005,
-    "p": 0.044
+    "coef": 0.0004,
+    "p": 0.045
    },
    "usd_broad": {
-    "coef": -0.255,
-    "p": 0.803
+    "coef": -0.2462,
+    "p": 0.808
    },
    "sp500": {
-    "coef": -0.2228,
-    "p": 0.664
+    "coef": -0.2351,
+    "p": 0.645
    },
    "bdi": {
-    "coef": 0.0575,
-    "p": 0.194
+    "coef": 0.0578,
+    "p": 0.19
    },
    "copper": {
-    "coef": 0.2778,
-    "p": 0.302
+    "coef": 0.276,
+    "p": 0.303
    },
    "us_rigs": {
-    "coef": -0.2128,
-    "p": 0.175
+    "coef": -0.215,
+    "p": 0.169
    },
    "world_balance": {
-    "coef": 0.0007,
-    "p": 0.897
+    "coef": 0.0009,
+    "p": 0.856
    },
    "vix": {
-    "coef": -0.2,
-    "p": 0.018
+    "coef": -0.2006,
+    "p": 0.017
    },
    "brent_lag": {
-    "coef": 0.1066,
-    "p": 0.365
+    "coef": 0.1172,
+    "p": 0.306
    }
   },
-  "directional_accuracy_model": 0.512
+  "directional_accuracy_model": 0.519
  },
  "inventory_curve": {
   "n": 119,
@@ -7059,7 +7064,7 @@
     -0.13,
     -0.37,
     0.14,
-    0.19,
+    0.18,
     0.17,
     0.05,
     -0.08,
@@ -7239,7 +7244,7 @@
     -0.16,
     -0.11,
     0.02,
-    0.19,
+    0.18,
     -0.36,
     -0.41,
     0.26,
@@ -7900,7 +7905,7 @@
     -0.27,
     -0.53,
     0.59,
-    0.05,
+    0.04,
     -0.14,
     0.42,
     0.52,
@@ -7962,7 +7967,7 @@
     -0.26,
     -0.54,
     0.62,
-    0.04,
+    0.03,
     -0.12,
     0.45,
     0.52,
@@ -7993,7 +7998,7 @@
     -0.2,
     -0.6,
     0.63,
-    -0.08,
+    -0.09,
     -0.26,
     0.51,
     0.62,
@@ -8024,7 +8029,7 @@
     -0.14,
     -0.63,
     0.67,
-    -0.03,
+    -0.05,
     -0.32,
     0.55,
     0.63,
@@ -8055,7 +8060,7 @@
     -0.1,
     0.19,
     -0.44,
-    -0.41,
+    -0.4,
     0.23,
     -0.12,
     -0.44,
@@ -8086,7 +8091,7 @@
     0.07,
     0.4,
     -0.58,
-    -0.25,
+    -0.24,
     0.26,
     -0.33,
     -0.56,
@@ -8117,7 +8122,7 @@
     1.0,
     0.25,
     0.06,
-    0.18,
+    0.19,
     -0.17,
     0.11,
     -0.11,
@@ -8179,7 +8184,7 @@
     0.06,
     -0.8,
     1.0,
-    -0.16,
+    -0.17,
     -0.42,
     0.76,
     0.79,
@@ -8200,16 +8205,16 @@
     0.66
    ],
    [
-    0.05,
-    -0.01,
     0.04,
-    -0.08,
-    -0.03,
-    -0.41,
-    -0.25,
-    0.18,
+    -0.01,
+    0.03,
+    -0.09,
+    -0.05,
+    -0.4,
+    -0.24,
+    0.19,
     0.53,
-    -0.16,
+    -0.17,
     1.0,
     0.07,
     -0.35,
@@ -8218,17 +8223,17 @@
     -0.35,
     -0.39,
     -0.31,
-    -0.17,
-    -0.29,
+    -0.18,
+    -0.3,
     -0.33,
     0.36,
     0.02,
-    0.56,
+    0.55,
     0.28,
     -0.26,
     -0.37,
     -0.01,
-    0.06
+    0.05
    ],
    [
     -0.14,
@@ -8458,7 +8463,7 @@
     -0.14,
     -0.72,
     0.77,
-    -0.17,
+    -0.18,
     -0.4,
     0.66,
     0.8,
@@ -8489,7 +8494,7 @@
     -0.32,
     -0.56,
     0.45,
-    -0.29,
+    -0.3,
     -0.03,
     0.23,
     0.51,
@@ -8613,7 +8618,7 @@
     -0.27,
     0.03,
     0.22,
-    0.56,
+    0.55,
     -0.24,
     -0.11,
     0.19,
@@ -8768,7 +8773,7 @@
     -0.02,
     -0.48,
     0.66,
-    0.06,
+    0.05,
     -0.51,
     0.6,
     0.67,
@@ -8907,9 +8912,9 @@
    "min_date": "2025-10",
    "max": 453.61,
    "max_date": "2018-02",
-   "last": 43.45,
+   "last": 40.37,
    "last_date": "2026-10",
-   "mean": 199.77
+   "mean": 199.75
   }
  }
 }

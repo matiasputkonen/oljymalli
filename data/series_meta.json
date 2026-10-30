@@ -258,7 +258,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-08-01"
   },
   "us_imports": {
    "label": "USA raakaöljyn tuonti (mb/d)",
@@ -268,7 +268,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-08-01"
   },
   "us_product_supplied": {
    "label": "USA öljytuotteiden kulutus (mb/d)",
@@ -278,7 +278,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-08-01"
   },
   "us_jet_demand": {
    "label": "USA lentopetrolin kulutus (mb/d)",
@@ -288,7 +288,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-08-01"
   },
   "us_ref_util": {
    "label": "USA jalostamoiden käyttöaste (%)",
@@ -298,7 +298,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-08-01"
   },
   "us_rigs": {
    "label": "USA öljynporauslautat (kpl)",
@@ -308,7 +308,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-08-01"
+   "last": "2026-09-01"
   },
   "ip_total": {
    "label": "Teollisuustuotanto USA (indeksi)",
