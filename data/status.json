@@ -1,9 +1,9 @@
 {
- "started": "2026-10-29 22:00:38Z",
+ "started": "2026-10-30 11:35:18Z",
  "steps": {
   "fetch": {
    "ok": true,
-   "secs": 170.0,
+   "secs": 258.9,
    "tail": "fetch done: {'fred': True, 'eia_weekly_monthly': True, 'eia_daily_futures_spot': True, 'eia_totalenergy_steo': True, 'opec_basket': False, 'cftc': True, 'portwatch': False, 'gpr': True, 'yahoo_contrac",
    "err": ""
   },
@@ -21,7 +21,7 @@
   },
   "long_panel": {
    "ok": true,
-   "secs": 5.7,
+   "secs": 5.4,
    "tail": "2006-03-01   62.1  62.7      100.4           1685.5            323.1     23.5   685.4      5.1    NaN       35.8           -1.4       2593.3         -8.4          0.0",
    "err": ""
   },
@@ -51,8 +51,8 @@
   },
   "model": {
    "ok": true,
-   "secs": 101.2,
-   "tail": "  6kk {'h': 6, 'date': '2027-04-01', 'median': np.float64(100.1), 'curve': 91.5, 'comb': np.float64(95.8), 'p25': np.float64(84.6), 'p75': np.float64(114.1), 'p05': np.float64(78.1), 'p95': np.float64",
+   "secs": 101.6,
+   "tail": "  6kk {'h': 6, 'date': '2027-04-01', 'median': np.float64(100.7), 'curve': 92.5, 'comb': np.float64(96.6), 'p25': np.float64(85.3), 'p75': np.float64(115.1), 'p05': np.float64(78.8), 'p95': np.float64",
    "err": ""
   },
   "models17": {
@@ -63,42 +63,42 @@
   },
   "models8": {
    "ok": true,
-   "secs": 39.0,
+   "secs": 39.2,
    "tail": "saved",
    "err": ""
   },
   "hazard": {
    "ok": true,
-   "secs": 2.5,
-   "tail": "saved 208 days; hazard non-NaN 135",
+   "secs": 2.4,
+   "tail": "saved 209 days; hazard non-NaN 136",
    "err": ""
   },
   "daily_signals": {
    "ok": true,
-   "secs": 10.2,
+   "secs": 10.1,
    "tail": "saved; now: 2026-10-27 {'dtr7': 0.429, 'disr': 0.982, 'm1m2': 1.84, 'cotz': -0.656, 'dovx5': 3.33, 'dgpr7': 9.613, 'mom5': 0.066, 'mom21': 0.026, 'dstock': -1.892}",
    "err": ""
   },
   "weights": {
    "ok": true,
-   "secs": 17.8,
+   "secs": 18.0,
    "tail": "saved",
    "err": ""
   },
   "models_prob": {
    "ok": true,
-   "secs": 264.4,
+   "secs": 268.2,
    "tail": "saved prob.json",
    "err": ""
   },
   "evaluate_log": {
    "ok": true,
    "secs": 0.4,
-   "tail": "eval: 324 kirjattua ennustetta 27 ajosta; pisteytetty 0; ensimm\u00e4inen kohdekuukausi 2026-11; avautumiskuukausi None",
+   "tail": "eval: 336 kirjattua ennustetta 28 ajosta; pisteytetty 0; ensimm\u00e4inen kohdekuukausi 2026-11; avautumiskuukausi None",
    "err": ""
   }
  },
- "finished": "2026-10-29 22:11:08Z",
+ "finished": "2026-10-30 11:47:20Z",
  "fresh": {
   "WTI/Brent p\u00e4iv\u00e4hinta (FRED)": "2026-10-27",
   "EIA viikkovarastot": "2026-10-23",
@@ -106,7 +106,7 @@
   "CFTC COT": "2026-10-20",
   "OVX": "2026-10-28",
   "GPR-p\u00e4iv\u00e4indeksi": "2026-10-26",
-  "Futuurik\u00e4yr\u00e4 (Yahoo)": "2026-10-29",
+  "Futuurik\u00e4yr\u00e4 (Yahoo)": "2026-10-30",
   "Optiot": "2026-10-22 (CME, manuaalinen)",
   "EIA STEO": "Thursday, October 1, 2026"
  }
