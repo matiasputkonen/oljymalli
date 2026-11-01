@@ -178,7 +178,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-10-01"
+   "last": "2026-11-01"
   },
   "world_cons": {
    "label": "Maailman öljynkulutus (mb/d)",
@@ -188,7 +188,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-10-01"
+   "last": "2026-11-01"
   },
   "opec_prod": {
    "label": "OPEC-tuotanto (mb/d)",
@@ -198,7 +198,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-10-01"
+   "last": "2026-11-01"
   },
   "china_cons": {
    "label": "Kiinan öljynkulutus (mb/d)",
@@ -208,7 +208,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-10-01"
+   "last": "2026-11-01"
   },
   "world_stock_draw": {
    "label": "Maailman varastojen nettopurku (mb/d, + = purku)",
@@ -218,7 +218,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-10-01"
+   "last": "2026-11-01"
   },
   "world_balance": {
    "label": "Tarjonta–kysyntä-tase (mb/d)",
@@ -228,7 +228,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-10-01"
+   "last": "2026-11-01"
   },
   "oecd_stocks": {
    "label": "OECD kaupalliset varastot (milj. bbl)",
@@ -238,7 +238,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-10-01"
+   "last": "2026-11-01"
   },
   "us_prod": {
    "label": "USA raakaöljyn tuotanto (mb/d)",
