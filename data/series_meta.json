@@ -398,7 +398,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-06-01"
+   "last": "2026-07-01"
   },
   "vmt": {
    "label": "Ajosuorite USA (mrd mailia/kk)",
@@ -418,7 +418,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-07-01"
+   "last": "2026-08-01"
   },
   "cass": {
    "label": "Cass Freight -lähetysindeksi USA",
