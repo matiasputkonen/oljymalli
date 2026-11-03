@@ -528,7 +528,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2016-11-01",
-   "last": "2026-10-01"
+   "last": "2026-11-01"
   },
   "vix": {
    "label": "VIX-volatiliteetti",
@@ -538,7 +538,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-10-01"
+   "last": "2026-11-01"
   },
   "copper": {
    "label": "Kupari (USD/t)",
