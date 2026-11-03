@@ -488,7 +488,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "ust10y": {
    "label": "USA 10 v korko (%)",
@@ -498,7 +498,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "unemp_us": {
    "label": "Työttömyys USA (%)",
@@ -527,7 +527,7 @@
    "source": "FRED (SP500)",
    "freq": "monthly",
    "note": "",
-   "first": "2016-10-01",
+   "first": "2016-11-01",
    "last": "2026-10-01"
   },
   "vix": {
