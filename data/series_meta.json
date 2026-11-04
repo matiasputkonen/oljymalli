@@ -8,7 +8,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-10-01"
+   "last": "2026-11-01"
   },
   "wti": {
    "label": "WTI (USD/bbl)",
@@ -18,7 +18,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-10-01"
+   "last": "2026-11-01"
   },
   "dubai": {
    "label": "Dubai Fateh (USD/bbl)",
@@ -48,7 +48,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-10-01"
+   "last": "2026-11-01"
   },
   "dubai_brent_spread": {
    "label": "Dubai–Brent-ero (USD/bbl)",
@@ -68,7 +68,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "eugas": {
    "label": "Maakaasu Eurooppa (USD/MMBtu)",
