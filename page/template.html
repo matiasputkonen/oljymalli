@@ -462,7 +462,6 @@ function drawModel(){
     showlegend:!isNarrow(), legend:{orientation:"h", y:1.02, yanchor:"bottom", x:0, font:{size:11}}, xaxis:{gridcolor:grid, linecolor:css("--line"), tickformat:"%m/%Y", dtick:"M3", range:[x0,"2028-01-15"]},
     yaxis:{title:{text:NAME+", USD/bbl", font:{size:12}}, gridcolor:grid, zeroline:false, linecolor:css("--line"), range:yr, dtick:5, tickfont:{size:11}},
     shapes:[{type:"line", xref:"x", yref:"paper", x0:X0, x1:X0, y0:0, y1:1, line:{color:ink2, width:1, dash:"dot"}}],
-    annotations:[{x:X0, y:1, xref:"x", yref:"paper", text:"ennuste →", showarrow:false, xanchor:"left", font:{size:11, color:ink2}}],
     hoverlabel:{bgcolor:css("--surface"), bordercolor:css("--line"), font:{color:css("--ink")}}};
   Plotly.react("chart2", tr, lay, {responsive:true, displaylogo:false, modeBarButtonsToRemove:["lasso2d","select2d"]});
   const q1=md.quantiles["1"], q3=md.quantiles["3"]; const f1=md.forecast[0], f3=md.forecast[2], f6=md.forecast[5];
