@@ -19,6 +19,14 @@ def fit(df, alpha=0.0015):
     def pred(Xn): return float(np.dot(np.r_[1.0, ((Xn - mu) / sd).values.ravel()], m.params))
     return m, pred, pd.Series([pred(Xs.loc[[t]]) for t in Xs.index], index=Xs.index)
 
+def cm_blend(cm, rest):
+    """Current-month average = realised days (spot, plus futures-estimated days = futures + latest basis) + remaining business days at `rest`.
+    The cone covers only the remaining share of the month: centred 1-month error quantiles scaled by the remaining fraction."""
+    frac = cm["n_rem"] / cm["n_tot"]; avg = (cm["real_sum"] + cm["n_rem"] * rest) / cm["n_tot"]
+    cm.update(rest=round(rest, 1), comb=round(avg, 1), rem_frac=round(frac, 3), realized_avg=round(cm["real_sum"] / max(cm["n_real"], 1), 1))
+    for k in ["p05", "p25", "p75", "p95"]: cm[k] = round(avg * float(np.exp(frac * cm["q"][k])), 1)
+    return cm
+
 def build(target, feats, P0_date=None):
     y = np.log(M[target]); X = pd.DataFrame(feats); d = pd.concat([y.rename("y"), X], axis=1).dropna()
     P0_date = P0_date or str(M[target].dropna().index[-1].date())   # latest month with a price (current month = daily average so far)
@@ -40,7 +48,7 @@ def build(target, feats, P0_date=None):
         gaps = yo - fitted; g2 = pd.concat([(d.y.shift(-h) - yo).rename("dy"), gaps.rename("g")], axis=1).dropna(); mg = sm.OLS(g2.dy, sm.add_constant(g2[["g"]], has_constant="add")).fit(); gapcoef[h] = (float(mg.params["const"]), float(mg.params["g"]))
     qs = {h: {q: float(np.quantile(errs[h], q)) for q in [0.05, 0.25, 0.5, 0.75, 0.95]} for h in H}
     P0 = float(dd.iloc[-1]); P0_day = str(dd.index[-1].date()); anchor_src = "FRED/EIA spot"
-    basis_note = None
+    basis_note = None; dd_spot = dd
     if FRONT.get(target):   # anchor = front-month futures' latest close when newer than the EIA spot series (WTI spot ≈ front; Brent spot is Dated, basis noted)
         fh = FRONT[target]["history"]; fl = fh[-1]
         if pd.Timestamp(fl["date"]) > dd.index[-1]:
@@ -65,12 +73,21 @@ def build(target, feats, P0_date=None):
         q = {k: v - qs[h][0.5] for k, v in qs[h].items()}   # centred
         fc.append(dict(h=h, date=str(dt.date()), median=round(med, 1), curve=(round(cv, 1) if cv else None), comb=round(comb, 1),
                        p25=round(comb * np.exp(q[0.25]), 1), p75=round(comb * np.exp(q[0.75]), 1), p05=round(comb * np.exp(q[0.05]), 1), p95=round(comb * np.exp(q[0.95]), 1)))
+    cm = None   # the month that is already under way: its average is partly realised
+    ms = pd.Timestamp(P0_date); me = ms + pd.DateOffset(months=1)
+    if pd.Timestamp(P0_day).to_period("M") == ms.to_period("M"):
+        n_tot = int(np.busday_count(ms.date(), me.date())); sp = dd_spot[(dd_spot.index >= ms) & (dd_spot.index < me)]; es = dd[(dd.index > dd_spot.index[-1]) & (dd.index >= ms) & (dd.index < me)]
+        bas = float(basis_note["basis"]) if basis_note else 0.0; n_real = len(sp) + len(es)
+        cv0 = curve_at(ms + pd.DateOffset(months=LAG[target]) + pd.Timedelta(days=LAG_DAYS[target])); rest0 = 0.5 * P0 + 0.5 * cv0 if cv0 else P0
+        cm = dict(month=str(ms.date())[:7], date=str(ms.date()), n_tot=n_tot, n_spot=len(sp), n_est=len(es), n_real=n_real, n_rem=max(n_tot - n_real, 0), basis_used=round(bas, 2),
+                  real_sum=float(sp.sum() + (es + bas).sum()), rest_base=round(rest0, 1), q={k: qs[1][k] - qs[1][0.5] for k in [0.05, 0.25, 0.75, 0.95]})
+        cm["q"] = {"p%02d" % round(k * 100): v for k, v in cm["q"].items()}; cm_blend(cm, rest0)
     rm = {h: (round(np.sqrt(np.mean(np.square(errs[h]))) * 100, 1), round(np.sqrt(np.mean(np.square(e0[h]))) * 100, 1)) for h in H}
     out = dict(target=target, dates=[str(t.date()) for t in d.index], actual=[round(float(v), 2) for v in act], fv_insample=[round(float(v), 2) for v in fv_in],
                fv_walkforward={str(k.date()): round(v, 2) for k, v in wf.items()}, coef=coef, r2=round(float(r2), 3),
                insample_rmse=round(float(np.sqrt(((act - fv_in) ** 2).mean())), 1), insample_med=round(float((act - fv_in).abs().median()), 1),
                wf_med=round(float(ew.abs().median()), 1), wf_90=round(float(ew.abs().quantile(.9)), 1), wf_max=round(float(ew.abs().max()), 1), forecast=fc, P0=round(P0, 2), P0_date=P0_date[:7], P0_day=P0_day, P0_month=round(P0_month, 2), anchor_src=anchor_src, basis_note=basis_note, daily_recent=[dict(date=str(t.date()), price=round(float(v), 2)) for t, v in dd.loc[dd.index >= pd.Timestamp(P0_date) - pd.DateOffset(months=2)].items()],
-               fv_now=round(fv_now, 1), gap_pct=round(gap_now * 100, 1), quantiles={h: {str(q): round(v * 100, 1) for q, v in qs[h].items()} for h in H}, rmse_vs_rw=rm)
+               current_month=cm, fv_now=round(fv_now, 1), gap_pct=round(gap_now * 100, 1), quantiles={h: {str(q): round(v * 100, 1) for q, v in qs[h].items()} for h in H}, rmse_vs_rw=rm)
     print(f"{target}: R2 {r2:.2f} in-sample med ±{out['insample_med']} | wf med ±{out['wf_med']} 90% ±{out['wf_90']} max {out['wf_max']} | fv_now {fv_now:.0f} P0 {P0:.0f} gap {gap_now*100:+.0f}% | rmse model/rw {rm}")
     print("  coef:", coef); print("  1kk", fc[0], "\n  3kk", fc[2], "\n  6kk", fc[5])
     return out
@@ -127,6 +144,10 @@ def apply_views(out, target):
         w_s = ws if not np.isnan(sv) else 0.0; final = (1 - w_s - wu) * base + w_s * (sv if not np.isnan(sv) else 0) + wu * view
         ratio = final / base; f["comb"] = round(final, 1); f["steo"] = (round(sv, 1) if not np.isnan(sv) else None); f["view"] = round(view, 1)
         for k in ["p25", "p75", "p05", "p95"]: f[k] = round(f[k] * ratio, 1)   # cone re-centred on the final forecast
+    cm = out.get("current_month")
+    if cm:   # same blend of funda/futuuri, STEO and view for the remaining days (view effect is zero at h=0)
+        sv0 = float(st.get(pd.Timestamp(cm["date"]), np.nan)) if len(st) else np.nan; w0 = ws if not np.isnan(sv0) else 0.0
+        cm["steo"] = (round(sv0, 1) if not np.isnan(sv0) else None); cm_blend(cm, (1 - w0 - wu) * cm["rest_base"] + w0 * (sv0 if not np.isnan(sv0) else 0) + wu * cm["rest_base"])
     out["views"] = dict(steo_weight=ws, user_weight=wu, user_type=uv.get("type", "p25"), user_label=uv.get("label", ""), base_weights={"malli": round((1 - ws - wu) / 2, 3), "käyrä": round((1 - ws - wu) / 2, 3)})
     print(f"  views: STEO {ws:.0%}, oma näkemys {wu:.0%} ({vtype}{' ' + str(out.get('view_detail')) if opec_eff is not None else ''}) → 3 kk {out['forecast'][2]['comb_base']} → {out['forecast'][2]['comb']} (näkemys {out['forecast'][2]['view']})")
     return out
