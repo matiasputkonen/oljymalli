@@ -154,7 +154,7 @@ def apply_views(out, target):
 models = {"brent": apply_views(build("brent", BASE), "brent"), "wti": apply_views(build("wti", {**BASE, **WTI_EXTRA}), "wti"), "wti_base": build("wti", BASE)}
 for t in ["brent", "wti"]:
     m0 = pd.Timestamp(models[t]["P0_date"] + "-01")   # plotted at the month in which the contract is front (same convention as the monthly-average forecast)
-    models[t]["curve"] = [dict(date=str((pd.Timestamp(c["date"]) - pd.DateOffset(months=LAG[t])).date()), price=c["price"], contract=f'{c["contract"]} (etukk. {(pd.Timestamp(c["date"]) - pd.DateOffset(months=LAG[t])).strftime("%m/%y")})', delivery=c["date"]) for c in CURVES.get(t, []) if pd.Timestamp(c["date"]) - pd.DateOffset(months=LAG[t]) >= m0]
+    models[t]["curve"] = [dict(date=str((pd.Timestamp(c["date"]) - pd.DateOffset(months=LAG[t])).date()), price=c["price"], contract=f'{(pd.Timestamp(c["date"]) - pd.DateOffset(months=LAG[t])).strftime("%m/%y")} ({c["contract"]} -sopimus)', delivery=c["date"]) for c in CURVES.get(t, []) if pd.Timestamp(c["date"]) - pd.DateOffset(months=LAG[t]) >= m0]
     models[t]["curve_label"] = CLABEL.get(t, "futuurikäyrä") + " (sopimus kuukaudessa, jonka etukuukausi se on)"
 pg["model"] = {"brent": models["brent"], "wti": models["wti"]}
 json.dump(pg, open(f"{D}/page_data.json", "w"), ensure_ascii=False); json.dump(models, open(f"{D}/model.json", "w"))

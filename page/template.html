@@ -442,7 +442,7 @@ function drawModel(){
   const wfd=Object.keys(md.fv_walkforward), wfv=Object.values(md.fv_walkforward);
   const X0=md.P0_day||(md.P0_date+"-01"); const fcd=[X0].concat(md.forecast.map(f=>f.date));
   const med=[md.P0].concat(md.forecast.map(f=>f.median)), comb=[md.P0].concat(md.forecast.map(f=>f.comb)), p25=[md.P0].concat(md.forecast.map(f=>f.p25)), p75=[md.P0].concat(md.forecast.map(f=>f.p75)), p05=[md.P0].concat(md.forecast.map(f=>f.p05)), p95=[md.P0].concat(md.forecast.map(f=>f.p95));
-  const band=(x,lo,hi,fill,name)=>[{x, y:hi, mode:"lines", line:{width:0}, hoverinfo:"skip", showlegend:false},{x, y:lo, mode:"lines", line:{width:0}, fill:"tonexty", fillcolor:fill, name, hovertemplate:name+"<br>%{x|%Y-%m}: %{y:.0f} $<extra></extra>"}];
+  const band=(x,lo,hi,fill,name)=>[{x, y:hi, mode:"lines", line:{width:0}, hoverinfo:"skip", showlegend:false},{x, y:lo, customdata:hi, mode:"lines", line:{width:0}, fill:"tonexty", fillcolor:fill, name, hovertemplate:name+"<br>%{x|%Y-%m}: %{y:.0f}–%{customdata:.0f} $<extra></extra>"}];
   const tr=[
     ...band(fcd,p05,p95, dark?"rgba(240,239,236,0.10)":"rgba(11,11,11,0.07)", "90 % väli"),
     ...band(fcd,p25,p75, dark?"rgba(240,239,236,0.20)":"rgba(11,11,11,0.14)", "50 % väli"),
@@ -450,7 +450,7 @@ function drawModel(){
     {x:wfd, y:wfv, mode:"lines", name:"Fair value etukäteen (walk-forward 2020→)", visible:"legendonly", line:{color:css("--c-orange"), width:1.2, dash:"dot"}, hovertemplate:"Walk-forward %{y:.0f} $<br>%{x|%Y-%m}<extra></extra>"},
     {x:md.dates, y:md.actual, mode:"lines", name:NAME+" toteutunut (kuukausikeskiarvo)", line:{color:blue, width:2.6}, hovertemplate:NAME+" %{y:.1f} $<br>%{x|%Y-%m}<extra></extra>"},
     ...(md.daily_recent?[{x:md.daily_recent.map(d=>d.date), y:md.daily_recent.map(d=>d.price), mode:"lines", name:"Päivähinta (viimeiset viikot)", line:{color:blue, width:1}, opacity:0.7, hovertemplate:NAME+" %{y:.1f} $<br>%{x|%d.%m.%Y}<extra>päivä</extra>"}]:[]),
-    {x:[X0], y:[md.P0], mode:"markers", name:"Viimeisin päivähinta ("+X0.slice(8,10)+"."+X0.slice(5,7)+".) = ennusteen lähtöpiste", marker:{color:blue, size:9, symbol:"diamond"}, hovertemplate:NAME+" %{y:.1f} $<br>%{x|%d.%m.%Y}<extra></extra>"},
+    {x:[X0], y:[md.P0], mode:"markers", name:"Viimeisin päivähinta ("+X0.slice(8,10)+"."+X0.slice(5,7)+".) = ennusteen lähtöpiste", marker:{color:blue, size:9, symbol:"diamond"}, hoverinfo:"skip"},
     {x:fcd, y:med, mode:"lines", name:"Pelkkä fundamenttimalli", line:{color:css("--c-orange"), width:1.4, dash:"dashdot"}, hovertemplate:"Malli %{y:.0f} $<br>%{x|%Y-%m}<extra></extra>"},
     {x:fcd, y:comb, mode:"lines+markers", name:"Ennuste", line:{color:blue, width:2.6, dash:"dashdot"}, marker:{size:6}, hovertemplate:"Ennuste %{y:.0f} $<br>%{x|%Y-%m}<extra></extra>"}];
   if(md.current_month){ const cm=md.current_month, cx=cm.date.slice(0,7)+"-15", mo=cm.date.slice(5,7)+"/"+cm.date.slice(0,4);
@@ -477,7 +477,7 @@ function drawOptions(){
   const m=DATA.m17; if(!m||!m.options) return; const md=DATA.model.wti; const dark=isDark();
   const X0=md.P0_day||(md.P0_date+"-01"); const ex=Object.entries(m.options).sort((a,b)=>a[1].days-b[1].days); const xd=[X0].concat(ex.map(e=>e[1].expiry));
   const qq=(p)=>[md.P0].concat(ex.map(e=>e[1].q[p]));
-  const band=(x,lo,hi,fill,name)=>[{x, y:hi, mode:"lines", line:{width:0}, hoverinfo:"skip", showlegend:false},{x, y:lo, mode:"lines", line:{width:0}, fill:"tonexty", fillcolor:fill, name, hovertemplate:name+"<br>%{x|%Y-%m}: %{y:.0f} $<extra></extra>"}];
+  const band=(x,lo,hi,fill,name)=>[{x, y:hi, mode:"lines", line:{width:0}, hoverinfo:"skip", showlegend:false},{x, y:lo, customdata:hi, mode:"lines", line:{width:0}, fill:"tonexty", fillcolor:fill, name, hovertemplate:name+"<br>%{x|%Y-%m}: %{y:.0f}–%{customdata:.0f} $<extra></extra>"}];
   const fcd=[X0].concat(md.forecast.map(f=>f.date)); const d8=DATA.d8||{};
   const tr=[...band(xd,qq("0.05"),qq("0.95"), dark?"rgba(57,135,229,0.12)":"rgba(42,120,214,0.10)", "Optiot 90 % väli"), ...band(xd,qq("0.25"),qq("0.75"), dark?"rgba(57,135,229,0.25)":"rgba(42,120,214,0.20)", "Optiot 50 % väli"),
     {x:xd, y:qq("0.5"), mode:"lines+markers", name:"Optioiden mediaani (riskineutraali)", line:{color:css("--c-blue"), width:2}, marker:{size:5}, hovertemplate:"Optiomediaani %{y:.0f} $<br>%{x|%Y-%m-%d}<extra></extra>"},
