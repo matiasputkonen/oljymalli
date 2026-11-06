@@ -1,26 +1,26 @@
 {
- "run": "2026-11-06 20:22:00Z",
+ "run": "2026-11-06 20:28:00Z",
  "full": false,
  "status": {
   "fred": {
    "ok": true,
    "info": "48/50 series; {'WTI_d': ['2026-11-03', np.float64(99.64)], 'Brent_d': ['2026-11-03', np.float64(107.03)]}",
-   "secs": 25.8
+   "secs": 17.5
   },
   "eia_weekly_monthly": {
    "ok": true,
    "info": "20/20; WCESTUS1w [Timestamp('2026-10-30 00:00:00'), np.int64(409760)]",
-   "secs": 1.8
+   "secs": 2.2
   },
   "eia_daily_futures_spot": {
    "ok": true,
    "info": "{'cl1': '2024-04-05', 'cl2': '2024-04-05', 'cl3': '2024-04-05', 'cl4': '2024-04-05', 'ho1': '2024-04-05', 'rb1': '2024-04-05', 'brent_spot': '2026-11-03', 'wti_spot': '2026-11-03'}",
-   "secs": 1.0
+   "secs": 1.6
   },
   "eia_totalenergy_steo": {
    "ok": true,
    "info": "STEO vintage Thursday, October 1, 2026",
-   "secs": 5.5
+   "secs": 6.3
   },
   "opec_basket": {
    "ok": false,
@@ -35,17 +35,17 @@
   "portwatch": {
    "ok": false,
    "error": "too few rows",
-   "secs": 0.3
+   "secs": 0.5
   },
   "gpr": {
    "ok": true,
    "info": "daily last 2026-11-02 00:00:00 GPRD 98",
-   "secs": 0.5
+   "secs": 0.7
   },
   "yahoo_contracts": {
    "ok": true,
    "info": "42/52 contracts",
-   "secs": 24.9
+   "secs": 28.8
   },
   "yahoo_sp500_monthly": {
    "ok": true,
