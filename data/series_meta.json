@@ -758,7 +758,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-10-01"
+   "last": "2026-11-01"
   },
   "oi_wti": {
    "label": "Avoin positio WTI (tuhatta sopimusta)",
@@ -768,7 +768,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-10-01"
+   "last": "2026-11-01"
   }
  },
  "annual": {
