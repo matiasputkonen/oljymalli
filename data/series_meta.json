@@ -468,7 +468,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "cpi_energy_us": {
    "label": "Energian kuluttajahinnat USA (CPI energy)",
@@ -478,7 +478,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "fedfunds": {
    "label": "Fed-ohjauskorko (%)",
