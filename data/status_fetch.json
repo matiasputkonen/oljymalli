@@ -1,11 +1,11 @@
 {
- "run": "2026-11-11 23:43:56Z",
+ "run": "2026-11-12 13:58:49Z",
  "full": false,
  "status": {
   "fred": {
    "ok": true,
    "info": "48/50 series; {'WTI_d': ['2026-11-03', np.float64(99.64)], 'Brent_d': ['2026-11-03', np.float64(107.03)]}",
-   "secs": 25.8
+   "secs": 20.7
   },
   "eia_weekly_monthly": {
    "ok": true,
@@ -15,12 +15,12 @@
   "eia_daily_futures_spot": {
    "ok": true,
    "info": "{'cl1': '2024-04-05', 'cl2': '2024-04-05', 'cl3': '2024-04-05', 'cl4': '2024-04-05', 'ho1': '2024-04-05', 'rb1': '2024-04-05', 'brent_spot': '2026-11-03', 'wti_spot': '2026-11-03'}",
-   "secs": 1.1
+   "secs": 1.3
   },
   "eia_totalenergy_steo": {
    "ok": true,
    "info": "STEO vintage Thursday, November 5, 2026",
-   "secs": 5.3
+   "secs": 7.1
   },
   "opec_basket": {
    "ok": false,
@@ -30,32 +30,32 @@
   "cftc": {
    "ok": true,
    "info": "[2025, 2026, 'deacot2026']",
-   "secs": 0.2
+   "secs": 0.1
   },
   "portwatch": {
    "ok": true,
    "info": "14345 rows; Hormuz last 2026-11-08 n_tanker 1",
-   "secs": 6.0
+   "secs": 5.4
   },
   "gpr": {
    "ok": true,
    "info": "daily last 2026-11-02 00:00:00 GPRD 114",
-   "secs": 0.6
+   "secs": 0.5
   },
   "yahoo_contracts": {
    "ok": true,
    "info": "42/52 contracts",
-   "secs": 24.8
+   "secs": 24.1
   },
   "yahoo_sp500_monthly": {
    "ok": true,
    "info": "240 months, last 2026-11-01",
-   "secs": 0.1
+   "secs": 0.2
   },
   "yahoo_options": {
    "ok": false,
    "error": "no expirations",
-   "secs": 0.1
+   "secs": 0.0
   }
  }
 }
