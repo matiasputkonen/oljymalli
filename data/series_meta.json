@@ -458,7 +458,7 @@
    "freq": "quarterly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-04-01"
+   "last": "2026-07-01"
   },
   "cpi_us": {
    "label": "Kuluttajahinnat USA (CPI)",
@@ -588,7 +588,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "lumber_ppi": {
    "label": "Puutavara, PPI USA",
@@ -598,7 +598,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "commod_all": {
    "label": "Raaka-aineindeksi, kaikki (IMF)",
@@ -658,7 +658,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "temp_global": {
    "label": "Lämpötilapoikkeama, maapallo (°C vs 1951–80)",
