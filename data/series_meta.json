@@ -428,7 +428,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2016-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "vehicle_sales_us": {
    "label": "Autojen myynti USA (milj./v, SAAR)",
