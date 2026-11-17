@@ -318,7 +318,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "ip_manuf": {
    "label": "Valmistava teollisuus USA",
@@ -328,7 +328,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "ip_mining": {
    "label": "Kaivannaisteollisuus USA",
@@ -338,7 +338,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "ip_oilgas": {
    "label": "Öljyn & kaasun tuotanto USA (IP)",
@@ -348,7 +348,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "ip_drilling": {
    "label": "Poraustoiminta USA (IP)",
@@ -358,7 +358,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "ip_chem": {
    "label": "Kemianteollisuus USA (IP)",
@@ -368,7 +368,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "ip_autos": {
    "label": "Autoteollisuus USA (IP)",
@@ -378,7 +378,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "ip_refining": {
    "label": "Jalostus & hiilituotteet USA (IP)",
@@ -388,7 +388,7 @@
    "freq": "monthly",
    "note": "",
    "first": "2015-01-01",
-   "last": "2026-09-01"
+   "last": "2026-10-01"
   },
   "air_rpm": {
    "label": "Lentoliikenne USA (mrd matkustaja-mailia)",
@@ -527,7 +527,7 @@
    "source": "FRED (SP500)",
    "freq": "monthly",
    "note": "",
-   "first": "2016-11-01",
+   "first": "2025-11-01",
    "last": "2026-11-01"
   },
   "vix": {
@@ -1169,7 +1169,7 @@
    "source": "FRED (SP500)",
    "freq": "annual",
    "note": "",
-   "first": 2017,
+   "first": 2026,
    "last": 2026
   },
   "temp_global_avg": {
