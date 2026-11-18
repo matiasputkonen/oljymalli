@@ -527,7 +527,7 @@
    "source": "FRED (SP500)",
    "freq": "monthly",
    "note": "",
-   "first": "2025-11-01",
+   "first": "2016-11-01",
    "last": "2026-11-01"
   },
   "vix": {
@@ -1169,7 +1169,7 @@
    "source": "FRED (SP500)",
    "freq": "annual",
    "note": "",
-   "first": 2026,
+   "first": 2017,
    "last": 2026
   },
   "temp_global_avg": {
