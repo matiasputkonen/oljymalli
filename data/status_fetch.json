@@ -1,51 +1,51 @@
 {
- "run": "2026-11-18 23:36:01Z",
+ "run": "2026-11-19 14:41:07Z",
  "full": false,
  "status": {
   "fred": {
    "ok": true,
    "info": "48/50 series; {'WTI_d': ['2026-11-17', np.float64(89.53)], 'Brent_d': ['2026-11-17', np.float64(92.94)]}",
-   "secs": 23.7
+   "secs": 22.1
   },
   "eia_weekly_monthly": {
    "ok": true,
    "info": "20/20; WCESTUS1w [Timestamp('2026-11-13 00:00:00'), np.int64(417797)]",
-   "secs": 1.2
+   "secs": 3.6
   },
   "eia_daily_futures_spot": {
    "ok": true,
    "info": "{'cl1': '2024-04-05', 'cl2': '2024-04-05', 'cl3': '2024-04-05', 'cl4': '2024-04-05', 'ho1': '2024-04-05', 'rb1': '2024-04-05', 'brent_spot': '2026-11-17', 'wti_spot': '2026-11-17'}",
-   "secs": 1.0
+   "secs": 1.6
   },
   "eia_totalenergy_steo": {
    "ok": true,
    "info": "STEO vintage Thursday, November 5, 2026",
-   "secs": 5.4
+   "secs": 7.1
   },
   "opec_basket": {
    "ok": false,
    "error": "403 Client Error: Forbidden for url: https://www.opec.org/basket/basketDayArchives.xml",
-   "secs": 0.2
+   "secs": 0.1
   },
   "cftc": {
    "ok": true,
    "info": "[2025, 2026, 'deacot2026']",
-   "secs": 0.2
+   "secs": 0.1
   },
   "portwatch": {
    "ok": true,
    "info": "14380 rows; Hormuz last 2026-11-15 n_tanker 0",
-   "secs": 2.3
+   "secs": 3.4
   },
   "gpr": {
    "ok": true,
    "info": "daily last 2026-11-16 00:00:00 GPRD 190",
-   "secs": 0.5
+   "secs": 0.6
   },
   "yahoo_contracts": {
    "ok": true,
    "info": "42/52 contracts",
-   "secs": 23.9
+   "secs": 21.0
   },
   "yahoo_sp500_monthly": {
    "ok": true,
@@ -55,7 +55,7 @@
   "yahoo_options": {
    "ok": false,
    "error": "no expirations",
-   "secs": 0.1
+   "secs": 0.0
   }
  }
 }
