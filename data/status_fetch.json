@@ -1,16 +1,16 @@
 {
- "run": "2026-11-23 16:28:20Z",
- "full": true,
+ "run": "2026-11-24 03:29:10Z",
+ "full": false,
  "status": {
   "fred": {
    "ok": true,
    "info": "48/50 series; {'WTI_d': ['2026-11-17', np.float64(89.53)], 'Brent_d': ['2026-11-17', np.float64(92.94)]}",
-   "secs": 16.2
+   "secs": 20.3
   },
   "eia_weekly_monthly": {
    "ok": true,
    "info": "20/20; WCESTUS1w [Timestamp('2026-11-13 00:00:00'), np.int64(417797)]",
-   "secs": 2.7
+   "secs": 3.9
   },
   "eia_daily_futures_spot": {
    "ok": true,
@@ -20,7 +20,7 @@
   "eia_totalenergy_steo": {
    "ok": true,
    "info": "STEO vintage Thursday, November 5, 2026",
-   "secs": 6.2
+   "secs": 9.6
   },
   "opec_basket": {
    "ok": false,
@@ -30,12 +30,12 @@
   "cftc": {
    "ok": true,
    "info": "[2025, 2026, 'deacot2026']",
-   "secs": 0.1
+   "secs": 0.3
   },
   "portwatch": {
    "ok": false,
-   "error": "new data ends 2024-06-22 < existing 2026-11-15; keeping old file",
-   "secs": 44.6
+   "error": "too few rows",
+   "secs": 0.4
   },
   "gpr": {
    "ok": true,
@@ -45,32 +45,17 @@
   "yahoo_contracts": {
    "ok": true,
    "info": "42/52 contracts",
-   "secs": 24.0
+   "secs": 25.0
   },
   "yahoo_sp500_monthly": {
    "ok": true,
    "info": "240 months, last 2026-11-01",
-   "secs": 0.1
+   "secs": 0.2
   },
   "yahoo_options": {
    "ok": false,
    "error": "no expirations",
-   "secs": 0.0
-  },
-  "nasa_gistemp": {
-   "ok": true,
-   "info": "ok",
-   "secs": 0.4
-  },
-  "worldbank": {
-   "ok": false,
-   "error": "HTTPSConnectionPool(host='api.worldbank.org', port=443): Read timed out. (read timeout=60)",
-   "secs": 60.1
-  },
-  "owid": {
-   "ok": true,
-   "info": "11/14",
-   "secs": 7.4
+   "secs": 0.1
   }
  }
 }
